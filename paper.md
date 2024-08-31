@@ -18,11 +18,11 @@ authors:
   - name: Tuomas Eerola
     orcid: 
     equal-contrib: true
-    affiliation: 4
+    affiliation: 3
   - name: Roger Dannenberg
     orcid: 
     equal-contrib: true
-    affiliation: 3
+    affiliation: 4
 affiliations:
  - name: KCL, England
    index: 1
