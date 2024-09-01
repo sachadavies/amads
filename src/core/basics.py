@@ -27,8 +27,11 @@ Score (one per musical work or movement)
 
 from math import floor
 import weakref
-from timemap import Timemap, Mapbeat
+import sys
 
+sys.path.append('..')
+
+from core.timemap import Timemap, Mapbeat
 
 class Event:
     """Event is a superclass for Note, Rest, Mgroup, and just about
@@ -504,15 +507,19 @@ class Mgroup (Event):
         return self
 
 
-    def find_all(self, type):
+    def find_all(self, elemType):
         """This is a generator that returns all contained instances of
         type using depth-first search.
         """
+        print("asjdalsdajsdl")
+        print(elemType)
         for elem in self.content:
-            if isinstance(elem, type):
+            # print instance type of elem
+            print(type(elem))
+            if isinstance(elem, elemType):
                 yield elem
             elif isinstance(elem, Mgroup):
-                yield from elem.find_all(type)
+                yield from elem.find_all(elemType)
 
 
 
@@ -879,7 +886,7 @@ class Score (Concurrence):
         """
         containers = []
         for part in self.content:
-            if len(part.content) > 0 and is_instance(part.content[0], Staff):
+            if len(part.content) > 0 and isinstance(part.content[0], Staff):
                 containers += part.content
             else:
                 containers.append(part)

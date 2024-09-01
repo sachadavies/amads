@@ -1,6 +1,10 @@
 import partitura as pt
-from basics import *
-from partitura_xml_import import partitura_convert_part
+import sys
+sys.path.append('..')
+
+from core.basics import *
+from io_tools.partitura_xml_import import partitura_convert_part
+
 
 # plan: multiple passes over iter_all()
 # for each part: add the part to a Concurrence

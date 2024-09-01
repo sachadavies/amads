@@ -3,8 +3,9 @@ This module provides the `pcdist1` function.
 
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=80.
 """
-
-from basics import Score, Note
+import sys
+sys.path.append('..')
+from core.basics import Score, Note
 
 
 def pcdist1(score: Score, weighted=True):
@@ -24,12 +25,15 @@ def pcdist1(score: Score, weighted=True):
               elements set to zero.
     """
     pcd = [0] * 12
-    for note in score.find_all(Note):
-        pc = note.pitch.pitch_class
-        if weighted:
-            pcd[pc] += note.dur
-        else:
-            pcd[pc] += 1
+    
+    for container in score.note_containers():
+        container.show()
+        for note in container.find_all(Note):
+            pc = note.pitch.pitch_class
+            if weighted:
+                pcd[pc] += note.dur
+            else:
+                pcd[pc] += 1
     total = sum(pcd)
     if total > 0:
         pcd = [i/total for i in pcd]
