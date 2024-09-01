@@ -51,5 +51,5 @@ We sincerely believe that everything here is included legitimately.
 Please get in touch if you have any questions or concerns.
 
 For new content, where not specified directly in the document, the licenses is CC-by-SA 4.0.
-I.e., if you contribute and do not specify otherwise, you agree to the [CC-by-SA 4.0[(https://creativecommons.org/licenses/by-sa/4.0/deed.en) license or a more permissive one.
+I.e., if you contribute and do not specify otherwise, you agree to the [CC-by-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en) license or a more permissive one.
 Very briefly, CC-by-SA gives you the right to share and adapt this material, including for commercial purposes, provided you give appropriate credit and share under the same or compatible (e.g. GPL v3) license. [Full details are here](https://creativecommons.org/licenses/by-sa/4.0/legalcode.en).
