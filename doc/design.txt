@@ -123,7 +123,7 @@ Flattened Scores
     .part_count() - returns number of parts
     .collapse_parts() - merge multiple Parts into a single Part.
         Optional parameters allow for selecting only certain Parts
-        and/or Staff objects.
+        and/or Staff objects.f
 
 Other Scores
     Scores which are neither Measured nor Flattened are at possible
