@@ -511,11 +511,7 @@ class Mgroup (Event):
         """This is a generator that returns all contained instances of
         type using depth-first search.
         """
-        print("asjdalsdajsdl")
-        print(elemType)
         for elem in self.content:
-            # print instance type of elem
-            print(type(elem))
             if isinstance(elem, elemType):
                 yield elem
             elif isinstance(elem, Mgroup):
