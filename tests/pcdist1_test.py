@@ -6,8 +6,8 @@ How to run:
 
 import matplotlib.pyplot as plt
 import os
-from mustart.io_tools.partitura_midi_import import partitura_midi_import
-from mustart.algorithm.pcdist1 import pcdist1
+from musmart.io_tools.partitura_midi_import import partitura_midi_import
+from musmart.algorithm.pcdist1 import pcdist1
 
 # for some reason, could not open file with just the relative path
 my_midi_file = os.getcwd() + "/music/midi/twochan.mid"

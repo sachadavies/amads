@@ -30,7 +30,7 @@ import weakref
 import sys
 
 
-from mustart.core.timemap import Timemap, Mapbeat
+from musmart.core.timemap import Timemap, Mapbeat
 
 class Event:
     """Event is a superclass for Note, Rest, Mgroup, and just about

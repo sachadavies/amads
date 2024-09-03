@@ -5,7 +5,7 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 import sys
 
-from mustart.core.basics import Score, Note
+from musmart.core.basics import Score, Note
 
 
 def pcdist1(score: Score, weighted=True):
