@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from partitura_midi_import import partitura_midi_import
-from durdist2 import durdist2
+from musmart.pt_midi_import import partitura_midi_import
+from musmart.durdist2 import durdist2
 
-my_midi_file = "../music/midi/sarabande.mid"
+my_midi_file = example.fullpath("midi/sarabande.mid")
 
 print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)

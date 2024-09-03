@@ -2,8 +2,8 @@ import partitura as pt
 import sys
 
 
-from musmart.core.basics import *
-from musmart.io_tools.partitura_xml_import import partitura_convert_part
+from musmart import Score
+from musmart.pt_xml_import import partitura_convert_part
 
 
 # plan: multiple passes over iter_all()

@@ -1,11 +1,12 @@
 # partitura_midi_test.py - some tests for partitura_midi_import.py
 
-from partitura_midi_import import partitura_midi_import
-from pitch_mean import pitch_mean
+from musmart.pt_midi_import import partitura_midi_import
+from musmart.pitch_mean import pitch_mean
+from musmart import example
 
-# my_midi_file = "../music/midi/tones.mid"
-my_midi_file = "../music/midi/twochan.mid"
-# my_midi_file = "../music/midi/tempo.mid"
+# "midi/tones.mid"
+my_midi_file = example.fullpath("midi/twochan.mid")
+# "midi/tempo.mid"
 
 print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=True)

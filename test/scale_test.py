@@ -1,12 +1,12 @@
-# partitura_midi_test.py - some tests for partitura_midi_import.py
+# scale_test.py - simple test for scale() function
 
-from partitura_midi_import import partitura_midi_import
+from musmart.pt_midi_import import partitura_midi_import
+from musmart.scale import scale
+from musmart import example
 
-from scale import scale
-
-# my_midi_file = "../music/midi/tones.mid"
-my_midi_file = "../music/midi/twochan.mid"
-# my_midi_file = "../music/midi/tempo.mid"
+# "midi/tones.mid"
+my_midi_file = example.fullpath("midi/twochan.mid")
+# "midi/tempo.mid"
 
 print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)

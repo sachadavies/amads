@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
-from partitura_midi_import import partitura_midi_import
+from musmart.pt_midi_import import partitura_midi_import
 from ivdist1 import ivdist1
 import os
+from musmart import example
 
-my_midi_file = os.getcwd() + "/../music/midi/twochan.mid"
+my_midi_file = example.fullpath("midi/twochan.mid")
 
 print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)

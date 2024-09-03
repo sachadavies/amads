@@ -1,8 +1,11 @@
-import matplotlib.pyplot as plt
-from partitura_midi_import import partitura_midi_import
-from durdist1 import durdist1
+# durdist1_test.py -- a test for durdist1 function
 
-my_midi_file = "../music/midi/sarabande.mid"
+import matplotlib.pyplot as plt
+from musmart import example
+from musmart.pt_midi_import import partitura_midi_import
+from musmart.durdist1 import durdist1
+
+my_midi_file = example.fullpath("midi/sarabande.mid")
 
 print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)

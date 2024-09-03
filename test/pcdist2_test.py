@@ -1,14 +1,14 @@
+# pcdist2_test.py - simple test of pcdist2()
+
 import matplotlib.pyplot as plt
 import numpy as np
-# partitura_midi_test.py - some tests for partitura_midi_import.py
+from musmart import example
+from musmart.pt_midi_import import partitura_midi_import
+from musmart.pcdist2 import pcdist2
 
-from partitura_midi_import import partitura_midi_import
-
-from pcdist2 import pcdist2
-
-# my_midi_file = "../music/midi/tones.mid"
-my_midi_file = "../music/midi/twochan.mid"
-# my_midi_file = "../music/midi/tempo.mid"
+# "midi/tones.mid"
+my_midi_file = example.fullpath("midi/twochan.mid")
+# "midi/tempo.mid"
 
 print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)

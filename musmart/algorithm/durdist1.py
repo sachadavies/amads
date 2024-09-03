@@ -5,10 +5,10 @@ Provides the `durdist1` function
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=58
 """
 
-from basics import Score, Note
+from musmart import Score, Note
 import math
 
-
+print("importing durdist1.py")  # TODO: remove this
 
 
 def durdist1(score: Score) -> list[float]:

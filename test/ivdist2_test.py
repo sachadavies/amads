@@ -1,16 +1,16 @@
+# ivdist2_test - simple test for ivdist2() function
+
 import matplotlib.pyplot as plt
 import numpy as np
-# partitura_midi_test.py - some tests for partitura_midi_import.py
-
-from partitura_midi_import import partitura_midi_import
-
+from musmart.pt_midi_import import partitura_midi_import
+from musmart import example
 from ivdist2 import ivdist2
 
 import os
 
-# my_midi_file = "../music/midi/tones.mid"
-my_midi_file = os.getcwd() + "/../music/midi/twochan.mid"
-# my_midi_file = "../music/midi/tempo.mid"
+# "midi/tones.mid"
+my_midi_file = example.fullpath("midi/twochan.mid")
+# "midi/tempo.mid"
 
 print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)

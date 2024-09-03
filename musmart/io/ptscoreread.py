@@ -1,8 +1,8 @@
 # ptscoreread.py -- file input 
 #
 import pathlib
-from partitura_xml_import import partitura_xml_import
-from partitura_midi_import import partitura_midi_import
+from pt_xml_import import partitura_xml_import
+from pt_midi_import import partitura_midi_import
 
 def score_read(filename, pprint=False, format=None):
     """read a file with the given format, 'xml', 'midi', 'kern', 'mei'.
