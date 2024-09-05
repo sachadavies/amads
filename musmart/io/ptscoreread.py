@@ -27,5 +27,14 @@ def score_read(filename, pprint=False, format=None):
         raise Exception("Kern format input using Partitura not implemented")
     elif format == 'mei':
         raise Exception("MEI format input using Partitura not implemented")
-    else
+    else:
         raise Exception(str(format) + " format specification is unknown")
+
+def score_read_extensions():
+    """
+    Returns a list of supported file extensions for score reading.
+
+    Returns:
+    list of str: Supported file extensions.
+    """
+    return ['.xml', '.musicxml', '.mid', '.midi', '.smf', '.kern', '.mei']
