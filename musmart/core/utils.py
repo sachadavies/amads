@@ -1,6 +1,7 @@
 import math
-from basics import Pitch, Score, Part, Staff, Measure, Note, Chord
-from io.ptscoreread import score_read, score_read_extensions
+from musmart import Pitch, Score, Part, Staff, Measure, Note, Chord
+from musmart.ptscoreread import score_read, score_read_extensions
+
 
 def dir2coll(filenames):
     """
@@ -27,6 +28,7 @@ def dir2coll(filenames):
             print(f"Unsupported file format: {file}")
 
     return scores
+
 
 def hz2keynum(hertz):
     """
@@ -72,6 +74,7 @@ def keynum2hz(keynum):
         return [keynum_to_hz_single(k) for k in keynum]
     else:
         return keynum_to_hz_single(keynum)
+
 
 def keyname(n, detail='nameoctave'):
     """
