@@ -6,12 +6,10 @@ from musmart import example
 my_midi_file = example.fullpath("midi/sarabande.mid")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)
 
-pr_fig = pianoroll(myscore)
-plt.show() 
-
+pianoroll(myscore)
 
 my_midi_file = example.fullpath("midi/twochan.mid")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)
 
-pr_fig = pianoroll(myscore)
-plt.show() 
+pianoroll(myscore)
+plt.show()

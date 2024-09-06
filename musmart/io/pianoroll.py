@@ -1,5 +1,4 @@
-"""
-Ports `pianoroll` Function
+"""Ports `pianoroll` Function
 
 Original Doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=82
 """
@@ -12,15 +11,16 @@ from musmart import Score, Note
 
 
 def midi_num_to_name(midi_num: int, accidental) -> str:
-    """
-    Converts midi numbers to note names
+    """Converts midi numbers to note names
 
     Helper function for pianoroll
 
     Args:
-        midi_num (int): The midi number to be converted
-        accidental (str): If the note has an accidental, determines if
-        it is a sharp or a flat. Valid input: 'sharp' or 'flat'.
+        midi_num (int): 
+            The midi number to be converted
+        accidental (str): 
+            If the note has an accidental, determines if
+            it is a sharp or a flat. Valid input: 'sharp' or 'flat'.
 
     Returns:
         A string representing the name of the note that matches the
@@ -45,17 +45,20 @@ def midi_num_to_name(midi_num: int, accidental) -> str:
 
 def pianoroll(score: Score, y_label='name', x_label='beat',
               color='skyblue', accidental='sharp') -> figure.Figure:
-    """
-    Converts a Score to a piano roll display of a musical score.
+    """Converts a Score to a piano roll display of a musical score.
 
     Args:
-        score (Score): The musical score to display
-        y_label (str, optional): Determines whether the y-axis is 
+        score (Score): 
+            The musical score to display
+        y_label (str, optional): 
+            Determines whether the y-axis is 
             labeled with note names or MIDI numbers.
             Valid Input: 'name' or 'num'.
-        x_label (str, optional): Determines whether the x-axis is labeled
+        x_label (str, optional): 
+            Determines whether the x-axis is labeled
             with beats or seconds. Valid input: 'beat' or 'sec'.
-        accidental (str, optional): Determines whether the y-axis is 
+        accidental (str, optional): 
+            Determines whether the y-axis is 
             labeled with sharps or flats. O nly useful if argument
             y_label is 'name'. Raises exception on inputs that's not
             'sharp' or 'flat'.
