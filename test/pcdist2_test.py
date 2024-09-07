@@ -7,7 +7,7 @@ from musmart.pt_midi_import import partitura_midi_import
 from musmart.pcdist2 import pcdist2
 
 # "midi/tones.mid"
-my_midi_file = example.fullpath("midi/twochan.mid")
+my_midi_file = example.fullpath("midi/sarabande.mid")
 # "midi/tempo.mid"
 
 print("------- input from partitura")

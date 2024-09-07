@@ -4,7 +4,7 @@ Test the `ivdirdist1` function
 
 import matplotlib.pyplot as plt
 from musmart.pt_midi_import import partitura_midi_import
-from ivdirdist1 import ivdirdist1
+from musmart.ivdirdist1 import ivdirdist1
 from musmart import example
 my_midi_file = example.fullpath("/midi/sarabande.mid")
 

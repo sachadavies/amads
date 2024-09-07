@@ -5,7 +5,8 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 
 from musmart import Score, Note, Staff
-from ismonophonic import ismonophonic
+from musmart.ismonophonic import ismonophonic
+
 import math
 
 
@@ -66,13 +67,9 @@ def durdist2(score: Score) -> list[list[float]]:
     # separately rather than joined to form a single duration. I do
     # not think we need two cases here since score.find_all() will
     # find all notes either way. -RBD
-    if score.is_flattened():
-        notes = score.find_all(Note)
+    for container in score.note_containers():
+        notes = container.find_all(Note)
         update_dd(dd, notes)
-    else:
-        for staff in score.find_all(Staff):
-            notes = staff.find_all(Note)
-            update_dd(dd, notes)
     
     # normalize
     total = sum([sum(row) for row in dd])

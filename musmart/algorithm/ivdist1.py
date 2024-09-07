@@ -5,7 +5,7 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 
 from musmart.core.basics import Note, Score
-from ismonophonic import ismonophonic
+from musmart.ismonophonic import ismonophonic
 
 
 def update_id(id: list[float], notes: list[Note], weighted: bool):

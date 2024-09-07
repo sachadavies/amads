@@ -75,7 +75,7 @@ class Event:
             return self.offset
         
     def qstop(self):
-        return self.qstart() + self.offset
+        return self.qstart() + self.dur
 
 
 

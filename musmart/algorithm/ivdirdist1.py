@@ -5,7 +5,7 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 
 from musmart import Score
-from ivdist1 import ivdist1
+from musmart.ivdist1 import ivdist1
 
 
 def ivdirdist1(score: Score, weighted=True) -> list[float]:

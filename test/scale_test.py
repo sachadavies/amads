@@ -13,7 +13,7 @@ myscore = partitura_midi_import(my_midi_file, ptprint=False)
 print("------- finished input from partitura")
 
 print("------- scaling dur by 2")
-scaled_score = scale(myscore.deep_copy(),2,'dur')
+scaled_score = scale(myscore.deep_copy(), 2, 'dur')
 
 print("------- scaled score")
 scaled_score.show()

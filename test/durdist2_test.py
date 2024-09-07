@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from musmart.pt_midi_import import partitura_midi_import
 from musmart.durdist2 import durdist2
+from musmart import example
 
 my_midi_file = example.fullpath("midi/sarabande.mid")
 
