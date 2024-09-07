@@ -56,8 +56,8 @@ def make_lazy_modules(subdirectory):
     def find_python_files(package, subdirectory):
         python_files = []
         # alternative to resources.path() for python 3.11
-        # with resources.as_file(resources.files(package).joinpath(subdirectory)) as subdir:
-        with resources.path(package, subdirectory) as subdir:
+        with resources.as_file(resources.files(package).joinpath(subdirectory)) as subdir:
+        # with resources.path(package, subdirectory) as subdir:
             for root, dirs, files in os.walk(subdir):
                 for file in files:
                     if file.endswith('.py'):
