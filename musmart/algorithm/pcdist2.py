@@ -4,7 +4,7 @@ This module provides the `pcdist2` function.
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=81.
 """
 
-from basics import Note, Score, Staff
+from musmart import Note, Score
 
 
 def update_pcd(pcd: list[list[float]], notes: list[Note], weighted: bool):

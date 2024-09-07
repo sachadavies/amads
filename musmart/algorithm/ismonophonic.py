@@ -2,7 +2,7 @@
 Provides the function `ismonophonic`
 """
 
-from basics import Score, Note, Staff
+from musmart import Score, Note
 
 
 def _ismonophonic(notes: list[Note]):

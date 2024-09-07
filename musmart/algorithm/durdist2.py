@@ -4,7 +4,7 @@ Provides the `durdist2` function
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=59
 """
 
-from basics import Score, Note, Staff
+from musmart import Score, Note, Staff
 from ismonophonic import ismonophonic
 import math
 

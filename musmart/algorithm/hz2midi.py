@@ -5,6 +5,7 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 import math
 
+
 def hz2midi(hertz):
     """
     Convert a frequency in Hertz to the corresponding MIDI note number.

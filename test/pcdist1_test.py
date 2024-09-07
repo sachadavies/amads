@@ -1,11 +1,4 @@
-"""
-How to run:
-1. navigate to the toolkit directory.
-2. python -m tests.pcdist1_test
-"""
-
 import matplotlib.pyplot as plt
-import os
 from musmart.pt_midi_import import partitura_midi_import
 from musmart.pcdist1 import pcdist1
 

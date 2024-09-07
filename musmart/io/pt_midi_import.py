@@ -1,7 +1,4 @@
 import partitura as pt
-import sys
-
-
 from musmart import Score
 from musmart.pt_xml_import import partitura_convert_part
 

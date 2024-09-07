@@ -3,7 +3,7 @@ Provides the `ivsizedist1` function
 """
 
 
-from basics import Score
+from musmart import Score
 from ivdist1 import ivdist1
 
 

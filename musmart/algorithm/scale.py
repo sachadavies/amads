@@ -21,31 +21,25 @@ scaled_score = scale(score.copy(),'dur',0.5); % shortens durations by a factor o
 
 """
 
-from basics import *
+from musmart import Mgroup
 
 
-def scale(score,factor=2,dim='all'):
-    if dim=='all':
-        scale(score,factor,'dur')
-        scale(score,factor,'offset')
+def scale(score, factor=2, dim='all'):
+    if dim == 'all':
+        scale(score, factor, 'dur')
+        scale(score, factor, 'offset')
         return score
     for elem in score.content:
-       
-        if isinstance(elem,Mgroup):
-            
-            scale(elem,factor,dim)
-            if dim=='offset':
+        if isinstance(elem, Mgroup):
+            scale(elem, factor, dim)
+            if dim == 'offset':
                 elem.offset *= 2
-                
         else:
-            if dim=='dur':
+            if dim == 'dur':
                 elem.dur *= factor
-            elif dim=='offset':
+            elif dim == 'offset':
                 elem.offset *= 2
-        
-        score.dur = max(score.dur,elem.end_offset)
-                
-                
+        score.dur = max(score.dur, elem.end_offset)
     return score
                 
             

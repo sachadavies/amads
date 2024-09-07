@@ -1,6 +1,6 @@
 import partitura as pt
-import sys
-from musmart.core.basics import *
+from musmart import Score, Part, Staff, Measure, Note
+from musmart import Rest, TimeSignature, KeySignature
 
 # Partitura seems to have a rounding error, reporting measure length
 # of 1919 instead of 1920 when divs per quarter is 480. This can lead
@@ -27,6 +27,7 @@ DIV_TO_QUARTER_ROUNDING = 96
 #      3rd pass: re-tie notes that cross measures in case the measure boundary
 #           has moved due to rounding
 #      4th pass: build Note and Rest objects, insert into Measures
+
 
 def div_to_quarter(durs, div, rnd=False):
     """given an array of (div, divs_per_qtr), map from div to quarter.

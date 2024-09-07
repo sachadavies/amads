@@ -1,7 +1,8 @@
 # pitchmean.py - compute mean or duration-weighted mean of pitch
 #
 
-from basics import *
+from musmart import Note
+
 
 def pitch_mean(score, weighted=False):
     """Compute the mean pitch or mean pitch weighted by duration (in beats)
