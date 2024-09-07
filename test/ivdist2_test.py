@@ -4,12 +4,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from musmart.pt_midi_import import partitura_midi_import
 from musmart import example
-from ivdist2 import ivdist2
-
-import os
+from musmart.ivdist2 import ivdist2
 
 # "midi/tones.mid"
-my_midi_file = example.fullpath("midi/twochan.mid")
+my_midi_file = example.fullpath("midi/sarabande.mid")
 # "midi/tempo.mid"
 
 print("------- input from partitura")

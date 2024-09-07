@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from musmart.pt_midi_import import partitura_midi_import
-from ivsizedist1 import ivsizedist1
+from musmart.ivsizedist1 import ivsizedist1
 from musmart import example 
 
 my_midi_file = example.fullpath("midi/sarabande.mid")

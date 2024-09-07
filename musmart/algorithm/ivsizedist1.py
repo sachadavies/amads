@@ -4,7 +4,7 @@ Provides the `ivsizedist1` function
 
 
 from musmart import Score
-from ivdist1 import ivdist1
+from musmart.ivdist1 import ivdist1
 
 
 def ivsizedist1(score: Score, weighted=True) -> list[float]:

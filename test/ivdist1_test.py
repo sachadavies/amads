@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from musmart.pt_midi_import import partitura_midi_import
-from ivdist1 import ivdist1
-import os
+from musmart.ivdist1 import ivdist1
 from musmart import example
 
 my_midi_file = example.fullpath("midi/twochan.mid")
