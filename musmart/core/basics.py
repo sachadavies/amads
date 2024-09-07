@@ -1048,8 +1048,19 @@ class Part (Concurrence):
         equivalent notes in each staff
         """
         part = self.copy()
+        
         for staff in self.content:
-            part.insert(staff.strip_ties())
+            if isinstance(staff, Staff):
+                part.insert(staff.strip_ties())
+            else:
+                # TODO: in collapsed scores, the staff variable could be a note.
+                # In that case, we need to handle them differently.
+                # I was thinking of just copying the method from Staff.strip_ties()
+                # But maybe there's a cleaner way of doing this
+                # The current implementation would just insert the note as it is 
+                # without stripping ties. - Yiming H.
+                part.insert(staff)
+                
         return part
     
 
@@ -1140,7 +1151,7 @@ class Staff (Sequence):
             measure = m.copy()
             for event in m.content:
                 if isinstance(event, Note):
-                    if event.tie == None:
+                    if event.tie is None:
                         measure.insert(event.copy())
                     elif event.tie == 'start':
                         new_event = event.copy()
@@ -1150,7 +1161,7 @@ class Staff (Sequence):
                 elif isinstance(event, Chord):
                     new_chord = event.copy()
                     for note in event.content:
-                        if note.tie == None:
+                        if note.tie is None:
                             new_chord.insert(note.copy())
                         elif note.tie == 'start':
                             new_note = note.copy()

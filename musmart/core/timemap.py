@@ -41,7 +41,7 @@ class Timemap:
         """
         newtm = Timemap(bpm=self.last_tempo * 60)
         for i in self.beats[1 : ]:
-            newtm.beats.append(self.beats[i].copy())
+            newtm.beats.append(i.copy())
         return newtm
 
 
