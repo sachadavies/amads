@@ -983,7 +983,7 @@ class Score (Concurrence):
                 if len(p.content) > 0:  # keep part only if there is content
                     mtn.insert(p)
         # Flatten to get selected notes in order of onset time
-        return mtn.flatten(merge=True)
+        return mtn.flatten(collapse=True)
 
 
 
