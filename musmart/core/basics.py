@@ -844,7 +844,7 @@ class Score (Concurrence):
         Score-Part-Staff-Measure-(Note or Chord-Note)
         """
         for part in self.content:
-            if not is_instance(part, Part):
+            if not isinstance(part, Part):
                 return False
             if not part.is_measured():
                 return False
@@ -901,8 +901,8 @@ class Score (Concurrence):
 
     def flatten(self, collapse=False):
         """Deep copy notes in a score to a flattened score consisting of
-        only Parts containing Notes. If merge is True, multiple parts are
-        merged into a single part, and notes are ordered according to
+        only Parts containing Notes. If collapse is True, multiple parts are
+        collapse into a single part, and notes are ordered according to
         onset times
         """
         score = self.copy()
@@ -1036,7 +1036,7 @@ class Part (Concurrence):
         Part-Staff-Measure-(Note or Chord-Note)
         """
         for staff in self.content:
-            if not is_instance(staff, Staff):
+            if not isinstance(staff, Staff):
                 return False
             if not staff.is_measured():
                 return False
@@ -1050,17 +1050,9 @@ class Part (Concurrence):
         part = self.copy()
         
         for staff in self.content:
-            if isinstance(staff, Staff):
-                part.insert(staff.strip_ties())
-            else:
-                # TODO: in collapsed scores, the staff variable could be a note.
-                # In that case, we need to handle them differently.
-                # I was thinking of just copying the method from Staff.strip_ties()
-                # But maybe there's a cleaner way of doing this
-                # The current implementation would just insert the note as it is 
-                # without stripping ties. - Yiming H.
-                part.insert(staff)
-                
+            if not isinstance(staff, Staff):
+                raise Exception("Expected Part to contain Staff")
+            part.insert(staff.strip_ties())
         return part
     
 
