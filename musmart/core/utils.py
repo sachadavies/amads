@@ -1,7 +1,6 @@
 import math
-from musmart import Pitch, Score, Part, Staff, Measure, Note, Chord
-from musmart.ptscoreread import score_read, score_read_extensions
-
+from .basics import Pitch, Score, Part, Staff, Measure, Note, Chord
+from ..io.ptscoreread import score_read, score_read_extensions
 
 def dir2coll(filenames):
     """
@@ -79,22 +78,22 @@ def keynum2hz(keynum):
 def keyname(n, detail='nameoctave'):
     """
     Converts key numbers to key names (text).
-    
+
     Parameters:
     n (int or list of ints): The key numbers.
-    detail (str, optional): 'nameonly' for just the note name (e.g., 'C#'), 
+    detail (str, optional): 'nameonly' for just the note name (e.g., 'C#'),
                             'nameoctave' for note name with octave 
                             (e.g., 'C#4') (default).
-    
+
     Returns:
     name (str or list of str): The corresponding key names.
     """
     def keyname_single(k):
         pitch = Pitch(k)
         if detail == 'nameonly':
-            return pitch.name  # Assuming name_str was renamed to name
+            return pitch.name_str  # Handles sharps, flats, and natural notes correctly
         elif detail == 'nameoctave':
-            return pitch.name_with_octave
+            return pitch.name_with_octave  # Includes both the note name and octave
         else:
             raise ValueError("Invalid detail option. Use 'nameonly' or "
                              "'nameoctave'.")
@@ -103,3 +102,4 @@ def keyname(n, detail='nameoctave'):
         return [keyname_single(k) for k in n]
     else:
         return keyname_single(n)
+
