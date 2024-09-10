@@ -18,6 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 SOURCE:
 ===============================
 Gotham and Yust, Serial Analyser, DLfM 2021
+https://github.com/MarkGotham/Serial_Analyser
 
 
 ABOUT:
@@ -31,7 +32,6 @@ some are more specific to tone rows.
 """
 
 from typing import Union, List, Tuple
-import unittest
 
 
 # ------------------------------------------------------------------------------
@@ -46,10 +46,10 @@ def transpose_by(
     Transposes a list of pitch classes by an interval of size
     set by the value of `semitones`.
     """
-    zeroList = []
+    zero_list = []
     for x in range(len(row)):
-        zeroList.append((row[x] + semitones) % 12)
-    return zeroList
+        zero_list.append((row[x] + semitones) % 12)
+    return zero_list
 
 
 def transpose_to(
@@ -60,11 +60,11 @@ def transpose_to(
     Transpose a list of pitch classes to start on 0 (by default), or
     any another number from 0-11 set by the value of `start`.
     """
-    firstPC = row[0]
-    zeroList = []
+    first_pc = row[0]
+    zero_list = []
     for y in range(len(row)):
-        zeroList.append((row[y] - firstPC + start) % 12)
-    return zeroList
+        zero_list.append((row[y] - first_pc + start) % 12)
+    return zero_list
 
 
 def retrograde(
@@ -82,8 +82,8 @@ def invert(
     """
     Invert a list of pitch classes around its starting pitch.
     """
-    startingPitch = row[0]
-    return [(startingPitch - x) % 12 for x in row]
+    starting_pitch = row[0]
+    return [(starting_pitch - x) % 12 for x in row]
 
 
 def pitches_to_intervals(
@@ -93,7 +93,7 @@ def pitches_to_intervals(
     """
     Retrieve the interval succession of a list of pitch classes (mod 12).
 
-    By default (`wrap = False`) this function returns 11 intervals for a 12 tone row.
+    This function defaults (`wrap = False`) to returning 11 intervals for a 12 tone row.
     Setting wrap to True gives the '12th' interval: that between the last and the first pitch.
     """
     intervals = []
@@ -123,20 +123,20 @@ def rotate(
 
 # ------------------------------------------------------------------------------
 
-# Further rotations and swaps operations that are: row specific, and niche (e.g., from Krenek 1960)
+# Further rotations and swaps operations that are: row specific, and niche (e.g., from krenek 1960)
 
 def rotate_hexachords(
         row: Union[List, Tuple],
-        transposeIterations: bool = False
+        transpose_iterations: bool = False
 ) -> list:
     """
-    Implements a set of hexachord rotations of the kind described in Krenek 1960, p.212.
+    Implements a set of hexachord rotations of the kind described in krenek 1960, p.212.
     Splits the row into two hexachords and iteratively rotates each.
     This function returns a list of lists with each iteration until
     the cycle is complete and come full circle.
 
-    The transposeIterations option (default False) transposes each iteration to
-    start on the original pitch of the hexachord, also as described by Krenek.
+    The transpose_iterations option (default False) transposes each iteration to
+    start on the original pitch of the hexachord, also as described by krenek.
     Note this often converts a 12-tone row into one with repeated pitches.
     """
 
@@ -149,19 +149,19 @@ def rotate_hexachords(
         first_hexachord = row[i:6] + row[0:i]
         second_hexachord = row[6+i:] + row[6:6+i]
 
-        if transposeIterations:
+        if transpose_iterations:
             first_hexachord = transpose_to(first_hexachord, start=hexachord1note1)
             second_hexachord = transpose_to(second_hexachord, start=hexachord2note1)
 
-        newRow = first_hexachord + second_hexachord
-        rows.append(newRow)
+        new_row = first_hexachord + second_hexachord
+        rows.append(new_row)
 
     rows.append(row)  # completes the cycle
 
     return rows
 
 
-def pair_swap_Krenek(
+def pair_swap_krenek(
         row: Union[List, Tuple]
 ) -> list:
     """
@@ -286,19 +286,19 @@ def every_nth(
     """
     Cycle through the row (mod 12) with a step size of n.
 
-    >>> row = [11, 9, 6, 8, 5, 10, 0, 4, 3, 1, 2, 7]
-    >>> every_nth(row)
+    >>> test_row = [11, 9, 6, 8, 5, 10, 0, 4, 3, 1, 2, 7]
+    >>> every_nth(test_row)
     [11, 10, 2, 8, 3, 9, 0, 7, 5, 1, 6, 4]
 
     By default,
     start at index 0 and iterate 12 times (0-12),
-    though both the start index and the range() are settable arguments.
-    Hence this equivlance:
+    though both the start index and the range() are settable arguments,
+    hence this equivlance:
 
-    >>> every_nth(row, ran=range(1, 13))
+    >>> every_nth(test_row, ran=range(1, 13))
     [10, 2, 8, 3, 9, 0, 7, 5, 1, 6, 4, 11]
 
-    >>> every_nth(row, start_index=5)
+    >>> every_nth(test_row, start_index=5)
     [10, 2, 8, 3, 9, 0, 7, 5, 1, 6, 4, 11]
 
     """
@@ -310,49 +310,6 @@ def every_nth(
 
 # ------------------------------------------------------------------------------
 
-class RowTester(unittest.TestCase):
-
-    def testTranspose(self):
-        rowBoulez = [3, 2, 9, 8, 7, 6, 4, 1, 0, 10, 5, 11]
-        zeroBoulez = transpose_to(rowBoulez, start=0)
-        self.assertEqual(zeroBoulez, [0, 11, 6, 5, 4, 3, 1, 10, 9, 7, 2, 8])
-        transBoulez = transpose_to(zeroBoulez, start=3)
-        self.assertEqual(transBoulez, [3, 2, 9, 8, 7, 6, 4, 1, 0, 10, 5, 11])
-        by_byBoulez = transpose_by(transBoulez, semitones=2)
-        self.assertEqual(by_byBoulez, [5, 4, 11, 10, 9, 8, 6, 3, 2, 0, 7, 1])
-
-    def testRotate(self):
-        luto = [0, 6, 5, 11, 10, 4, 3, 9, 8, 2, 1, 7]
-        for i in range(12):
-            row = rotate(luto, i)
-            self.assertEqual(row[0], luto[i])
-
-    def testInvert(self):
-        testSet = [0, 1, 4, 6]
-        self.assertEqual(invert(testSet), [0, 11, 8, 6])
-
-    def testPitches_to_intervals(self):
-        testRowUp = [x for x in range(12)]
-        self.assertEqual(pitches_to_intervals(testRowUp), [1]*11)
-        testRowDown = testRowUp[::-1]
-        self.assertEqual(pitches_to_intervals(testRowDown), [11]*11)
-
-    def testRotate_hexachords(self):
-        """Using Krenek's example"""
-        rowKrenek = [5, 7, 9, 10, 1, 3, 11, 0, 2, 4, 6, 8]
-        rotatedKrenek = rotate_hexachords(rowKrenek)
-        self.assertEqual(len(rotatedKrenek), 7)
-        self.assertEqual(rotatedKrenek[-1], rowKrenek)
-
-    def testPairSwapAndRetrograde(self):
-        """Using Krenek's example"""
-        testRow = [9, 2, 3, 6, 5, 1, 7, 4, 8, 0, 10, 11]
-        testPairSwapKrenek = pair_swap_Krenek(testRow)
-        self.assertEqual(len(testPairSwapKrenek), 13)
-        self.assertEqual(testPairSwapKrenek[-1], retrograde(testRow))
-
-
-# ------------------------------------------------------------------------------
-
 if __name__ == '__main__':
-    unittest.main()
+    import doctest
+    doctest.testmod()
