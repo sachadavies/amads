@@ -766,8 +766,8 @@ class Measure (Sequence):
             # Measure can contain many object types, so instead of
             # testing for legal content, we look for things that are
             # illegal content:
-            if is_instance(measure, Staff) or is_instance(measure, Part) or \
-               is_instance(measure, Score):
+            if isinstance(measure, Staff) or isinstance(measure, Part) or \
+               isinstance(measure, Score):
                 return False
         return True
 
@@ -850,6 +850,7 @@ class Score (Concurrence):
                 return False
         return True
 
+    
 
     def strip_ties(self):
         """Create a new Score with tied note sequences replaced by
@@ -870,6 +871,9 @@ class Score (Concurrence):
             score.insert(part.strip_chords())
         return score
 
+    def strip_measures(self):
+        # TODO
+        pass
 
     def note_containers(self):
         """Returns a list of note containers. For Measured Scores, these
@@ -887,6 +891,9 @@ class Score (Concurrence):
                 containers.append(part)
         return containers
 
+    def is_flattened(self):
+        # TODO
+        pass
     
     def is_flattened_and_collapsed(self):
         """Determine if score has been flattened into one part"""
@@ -1051,7 +1058,7 @@ class Part (Concurrence):
         
         for staff in self.content:
             if not isinstance(staff, Staff):
-                raise Exception("Expected Part to contain Staff")
+                return self  # no need to strip ties from flattened score
             part.insert(staff.strip_ties())
         return part
     
@@ -1125,9 +1132,9 @@ class Staff (Sequence):
             # Staff can contain many objects such as key signature or
             # time signature, so instead of testing for legal content,
             # we look for things that are illegal content:
-            if is_instance(measure, Note) or is_instance(measure, Chord) or \
-               is_instance(measure, Staff) or is_instance(measure, Part) or \
-               is_instance(measure, Score):
+            if isinstance(measure, Note) or isinstance(measure, Chord) or \
+               isinstance(measure, Staff) or isinstance(measure, Part) or \
+               isinstance(measure, Score):
                 return False
             if not measure.is_measured():
                 return False
