@@ -77,8 +77,9 @@ There are several promising initiatives that draw together algorithms in a parti
 of symbolic music computing.
 These include
 "OMNISIA" (Meredith et al. for pattern finding in Java),
-"synpy" (Song et al., for rhythmic syncopation in python).
-and the "MIDITOOLKIT" (Toiviainen and Eerola, for melodic contour and more in Matlab).
+"synpy" (Song et al., for rhythmic syncopation in Python).
+and the ["midi toolbox"](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/miditoolbox)
+(Toiviainen and Eerola, for melodic contour and more in Matlab).
 These are welcome efforts, but they all come from 
 different research groups,
 are expressed in different code languages,
@@ -122,7 +123,7 @@ Moreover, we aim to:
 
 # Acknowledgements
 
-We strive to site all involved in the research gathered here.
+We strive to cite all involved in the research gathered here.
 If you notice any absence, please let us know.
 The design of this code library is informed by conversations with all relevant presidents (those cited above).
 Many thanks to those developers.
