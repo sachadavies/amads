@@ -913,12 +913,13 @@ class Score (Concurrence):
         onset times
         """
         score = self.copy()
+        score_no_ties = self.strip_ties() # strip ties
         if collapse:  # similar to Part.flatten() but we have to sort and
                       # do some other extra work to put all notes into score
             score_start = score.qstart()
             new_part = Part()
             max_end_offset = 0
-            for part in self.content:
+            for part in score_no_ties.content:
                 for note in part.find_all(Note):
                     note_copy = note.deep_copy()
                     # note offset is now relative to start of part:
@@ -970,10 +971,10 @@ class Score (Concurrence):
         parts = mtn.content
         mtn.content = []  # reconstruct with only selected parts
         for i, p in enumerate(parts):
-            if part == None or (isinstance(part, int) and part == p.number) or \
+            if part is None or (isinstance(part, int) and part == p.number) or \
                (isinstance(part, str) and part == p.instrument) or \
                 isinstance(part, list) and part[0] == i:
-                if staff != None:  # select staves
+                if staff is not None:  # select staves
                     if len(p.content[0]) > 0 and \
                        not isinstance(p.content[0], Staff):
                         raise Exception("Expected Part to contain Staff")
@@ -982,7 +983,7 @@ class Score (Concurrence):
                         staves = p.content
                         p.content = []
                         for i, s in enumerate(staves):
-                            if staff == None or \
+                            if staff is None or \
                                (isinstance(staff, int) and \
                                        staff == s.number) or \
                                 isinstance(staff, list) and staff[0] == i:
