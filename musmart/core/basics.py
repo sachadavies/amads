@@ -25,6 +25,13 @@ Score (one per musical work or movement)
 
 """
 
+# TODO: most copy() methods for Mgroup subclasses ignore content.
+#    To reduce confusion, rename to copy_empty().
+# TODO: deep_copy() calls should use deepcopy() function instead,
+#    and deep_copy() methods should be changed to __deepcopy__()
+#    to take advantage of existing conventions and copy module.
+
+
 from math import floor
 import weakref
 import sys
@@ -815,7 +822,6 @@ class Score (Concurrence):
         """
         s = Score(offset=self.offset, dur=self.dur,
                   timemap=self.timemap)
-        s.timemap = self.timemap
         return s
 
 
