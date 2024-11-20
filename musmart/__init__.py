@@ -24,6 +24,9 @@ import importlib
 from importlib import resources 
 import os
 
+# this line is needed for python 3.10 and above
+from importlib import abc
+
 class LazyLoader(importlib.abc.Loader):
     def __init__(self, module_name):
         self.module_name = module_name
