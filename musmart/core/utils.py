@@ -1,6 +1,7 @@
 import math
 from musmart import Pitch, Score, Part, Staff, Measure, Note, Chord
-from musmart import score_read, score_read_extensions
+from musmart.io.ptscoreread import score_read, score_read_extensions
+
 
 def dir2coll(filenames):
     """
