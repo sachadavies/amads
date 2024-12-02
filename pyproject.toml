@@ -25,5 +25,13 @@ dependencies = [
     "music21"
 ]
 
+[project.optional-dependencies]
+dev = [
+    "sphinx",
+    "sphinx-book-theme",
+    "sphinx-autodoc-typehints",
+    "myst-parser"
+]
+
 [project.urls]
-"Homepage" = "https://github.com/yourusername/musmart"  # Update with your repo URL
+"Homepage" = "https://github.com/music-computing/toolkit"  # Update with your repo URL
