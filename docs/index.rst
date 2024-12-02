@@ -3,8 +3,10 @@ musmart documentation
 
 
 This package collects together a variety of algorithms for symbolic music analysis.
+Here's an overview:
 
-.. Navigation is handled via the sidebar
+.. We add the :hidden: directive to each toctree so that the toctree is not displayed
+.. in the main page itself, but only in the sidebar.
 
 .. toctree::
    :maxdepth: 2
@@ -21,3 +23,45 @@ This package collects together a variety of algorithms for symbolic music analys
    developer_notes/design.rst
    developer_notes/modules.rst
    developer_notes/music21.rst
+
+Algorithms
+----------
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: Algorithms API
+
+   musmart.algorithm.entropy
+   musmart.algorithm.pcdist1
+   musmart.algorithm.pcdist2
+
+
+Core
+----
+
+.. autosummary::
+   :toctree: _autosummary 
+   :caption: Core API
+
+   musmart.core.basics
+
+
+
+IO
+--
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: IO API
+
+   musmart.io.pianoroll
+
+
+Resources
+---------
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: Resources API
+
+   musmart.resources.key_profiles_literature
