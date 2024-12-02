@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -34,9 +34,9 @@ dev = [
     "sphinx-autodoc-typehints",
     "myst-parser"
 ]
+test = [
+    "pytest>=7.0.0",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/music-computing/toolkit"  # Update with your repo URL
-
-[tool.setuptools]
-packages = ["musmart"]
