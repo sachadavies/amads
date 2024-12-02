@@ -36,7 +36,7 @@ from musmart.resources.partimenti import *
     quiescenza,
     romanesca,
     sol_fa_mi
-])
+], ids=lambda x: x["name"])  # Use the partimento name as the test ID
 def test_partimenti_length(partimento):
     """Test that partimento sections have consistent lengths.
     
@@ -45,3 +45,9 @@ def test_partimenti_length(partimento):
     """
     assert len(partimento["melody"]) == len(partimento["bass"])
     assert len(partimento["melody"]) == len(partimento["figures"])
+
+
+# TODO: fix the following errors:
+# FAILED tests_to_fix/test_partimenti.py::test_partimenti_length[Modulating Prinner] - AssertionError: assert 4 == 5
+# FAILED tests_to_fix/test_partimenti.py::test_partimenti_length[Monte] - AssertionError: assert 6 == 4
+# FAILED tests_to_fix/test_partimenti.py::test_partimenti_length[Prinner] - assert 4 == 5
