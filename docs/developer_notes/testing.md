@@ -1,5 +1,5 @@
-Running tests
-============
+Testing
+=======
 
 This project uses pytest for testing. To run the tests, follow these steps:
 
