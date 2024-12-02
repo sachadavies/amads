@@ -31,4 +31,4 @@ print(strength_list)
 # our score plot so that the "soft" boundary strengths could be
 # accentuated. How do we visualize strength?
 
-plt.show()
+plt.show() #hello
