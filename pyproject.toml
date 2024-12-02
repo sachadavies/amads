@@ -40,3 +40,6 @@ test = [
 
 [project.urls]
 "Homepage" = "https://github.com/music-computing/toolkit"  # Update with your repo URL
+
+[tool.setuptools]
+packages = ["musmart"]
