@@ -13,7 +13,7 @@ Here's an overview:
    :caption: User guide:
    :hidden:
 
-   user_guide/installation.md
+   user_guide/installation
 
 .. toctree::
    :maxdepth: 2

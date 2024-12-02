@@ -17,6 +17,9 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx_autodoc_typehints',
+    "sphinx.ext.viewcode",
+    "sphinx.ext.autosummary",
+    "myst_parser",
 ]
 
 # Configure napoleon for numpy style
