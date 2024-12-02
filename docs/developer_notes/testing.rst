@@ -39,6 +39,38 @@ Example test:
         result = my_function()
         assert result == expected_value 
 
+Doctests
+--------
+
+The project also uses doctests for testing code examples in docstrings. Doctests are written in the docstring of a function and show example usage with expected outputs.
+This is a great way to implement simple tests that also serve as useful documentation.
+
+Example doctest:
+
+    def entropy(d):
+        """
+        Calculate the relative entropy of a distribution.
+
+        Parameters
+        ----------
+        d : list
+            The input distribution.
+
+        Returns
+        -------
+        float
+            The relative entropy (0 <= H <= 1).
+
+        Examples
+        --------
+        >>> round(entropy([0.5, 0.5]), 6)
+        1.0
+        """
+
+To run doctests:
+
+    pytest --doctest-modules
+
 Continuous Integration
 --------------------
 

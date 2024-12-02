@@ -21,9 +21,9 @@ Here's an overview:
    :hidden:
 
    developer_notes/building_docs
-   developer_notes/design.rst
-   developer_notes/modules.rst
-   developer_notes/music21.rst
+   developer_notes/design
+   developer_notes/modules
+   developer_notes/music21
    developer_notes/testing
 
 Algorithms
