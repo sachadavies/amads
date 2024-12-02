@@ -24,6 +24,7 @@ dependencies = [
     "partitura",
     "setuptools",  # required for partitura
     "music21",
+    "pytest",
 ]
 
 [project.optional-dependencies]
