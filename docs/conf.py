@@ -19,6 +19,7 @@ extensions = [
     'sphinx_autodoc_typehints',
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
+    "sphinx_gallery.gen_gallery",
     "myst_parser",
 ]
 
@@ -39,6 +40,12 @@ exclude_patterns = ['_build', '_templates']
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# Configure sphinx-gallery
+sphinx_gallery_conf = {
+     'examples_dirs': '../examples',   # input directory
+     'gallery_dirs': 'auto_examples',  # output directory
+}
 
 
 

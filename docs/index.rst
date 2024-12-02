@@ -1,7 +1,6 @@
 musmart documentation
 =====================
 
-
 This package collects together a variety of algorithms for symbolic music analysis.
 Here's an overview:
 
@@ -26,6 +25,13 @@ Here's an overview:
    developer_notes/music21
    developer_notes/testing
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples:
+   :hidden:
+
+   auto_examples/index
+
 Algorithms
 ----------
 
@@ -46,7 +52,6 @@ Core
    :caption: Core API:
 
    musmart.core.basics
-
 
 
 IO

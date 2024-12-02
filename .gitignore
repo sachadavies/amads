@@ -167,3 +167,6 @@ conda_notes.md
 
 # pycharm project files
 .idea
+
+# Sphinx gallery files
+docs/auto_examples

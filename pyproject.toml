@@ -25,6 +25,7 @@ dependencies = [
     "setuptools",  # required for partitura
     "music21",
     "pytest",
+    "sphinx-gallery",
 ]
 
 [project.optional-dependencies]
