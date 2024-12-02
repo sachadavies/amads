@@ -22,7 +22,8 @@ dependencies = [
     "pandas",
     "matplotlib",
     "partitura",
-    "music21"
+    "setuptools",  # required for partitura
+    "music21",
 ]
 
 [project.optional-dependencies]
