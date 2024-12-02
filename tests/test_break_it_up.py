@@ -18,7 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 """
 
 import unittest
-from musmart.algorithm import break_it_up
+from musmart.algorithm.break_it_up import ReGrouper, qstart_list_from_pulse_lengths, qstart_hierarchy_examples, qstart_hierarchy_from_ts, qstarts_from_ts_and_levels
 
 
 class Test(unittest.TestCase):
