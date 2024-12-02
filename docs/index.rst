@@ -24,6 +24,7 @@ Here's an overview:
    developer_notes/design.rst
    developer_notes/modules.rst
    developer_notes/music21.rst
+   developer_notes/testing
 
 Algorithms
 ----------
