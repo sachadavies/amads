@@ -20,6 +20,7 @@ Here's an overview:
    :caption: Developer notes:
    :hidden:
 
+   developer_notes/building_docs
    developer_notes/design.rst
    developer_notes/modules.rst
    developer_notes/music21.rst
