@@ -1,4 +1,4 @@
-Building Documentation
+Building documentation
 ====================
 
 This guide explains how to build and maintain the project's documentation using Sphinx.
@@ -12,12 +12,12 @@ Before building the documentation, ensure you have the dev dependencies installe
 
     pip install -e ".[dev]"
 
-Building Documentation
+Building documentation
 --------------------
 
 The documentation can be built in two ways:
 
-1. One-time Build
+1. One-time build
 ~~~~~~~~~~~~~~~~
 
 To build the documentation once, navigate to the ``docs`` directory and run:
@@ -32,7 +32,7 @@ To build the documentation once, navigate to the ``docs`` directory and run:
 
 The built documentation will be available in ``docs/_build/html/index.html``.
 
-2. Auto-building (Development)
+2. Auto-building (development)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For development, you can use ``sphinx-autobuild`` which automatically rebuilds the
@@ -45,7 +45,7 @@ documentation when changes are detected:
 Now navigate to docs/_build/html and open index.html in your browser.
 To see new changes, refresh the page.
 
-Writing Documentation
+Writing documentation
 -------------------
 
 Documentation files are written in reStructuredText (RST) format. Here are some key points:
@@ -78,7 +78,7 @@ For example:
 
 You can also write markdown files, which will be rendered using the ``myst_parser`` extension.
 
-Adding New Documentation Files
+Adding new documentation files
 ----------------------------
 
 To add a new documentation file:
@@ -93,12 +93,12 @@ To add a new documentation file:
 
    .. code-block:: rst
 
-       New Feature Guide
+       New feature guide
        ================
 
        This is a guide for the new feature.
 
-       Section Title
+       Section title
        ------------
 
        Content goes here.
