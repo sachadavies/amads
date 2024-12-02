@@ -164,3 +164,6 @@ cython_debug/
 # specific conda environment things that uhhhh I used for testing.
 conda_environment.yml
 conda_notes.md
+
+# pycharm project files
+.idea
