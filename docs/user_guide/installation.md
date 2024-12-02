@@ -37,7 +37,13 @@
 3. Install the package in editable mode:
 
    ```bash
+   # Basic installation
    pip install -e .
+
+   # For development (includes documentation building tools)
+   pip install -e ".[dev]"
    ```
 
 Your installation is now complete! The package is installed in editable mode, which means any changes you make to the source code will be reflected immediately without needing to reinstall.
+
+> Note: If you plan to build the documentation or contribute to development, use the second installation command with `[dev]` which includes additional dependencies like Sphinx and other documentation tools.
