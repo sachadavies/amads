@@ -13,8 +13,24 @@ author = 'The AMADS team'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["myst_parser", "sphinx.ext.autodoc", "sphinx.ext.autosummary"]
-autosummary_generate = True
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx_autodoc_typehints',
+]
+
+# Configure napoleon for numpy style
+napoleon_google_docstring = False
+napoleon_numpy_docstring = True
+napoleon_use_param = True
+napoleon_use_rtype = True
+
+# Configure autodoc and typehints
+autodoc_typehints = 'description'
+always_document_param_types = True
+typehints_use_signature_return = True
+typehints_fully_qualified = False
+
 templates_path = [ '_templates' ]
 exclude_patterns = ['_build', '_templates']
 
