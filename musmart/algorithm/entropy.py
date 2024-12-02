@@ -24,10 +24,15 @@ def entropy(d):
     -----
     Implementation based on the original MATLAB code from:
     https://github.com/miditoolbox/1.1/blob/master/miditoolbox/entropy.m
+
+    Examples
+    --------
+    >>> round(entropy([0.5, 0.5]), 6)
+    1.0
     """
     d = np.asarray(d).flatten()  # Convert to a 1D numpy array
     d = d / (np.sum(d) + 1e-12)  # Normalize
     logd = np.log(d + 1e-12)  
     h = -np.sum(d * logd) / np.log(len(d))  # Compute the entropy and normalize
 
-    return h
+    return float(h)
