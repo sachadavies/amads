@@ -10,15 +10,21 @@ def entropy(d):
     """
     Calculate the relative entropy of a distribution.
 
-    Parameters:
-    d (list): The input distribution.
+    Parameters
+    ----------
+    d : list
+        The input distribution.
 
-    Returns:
-    float: The relative entropy (0 <= H <= 1).
+    Returns
+    -------
+    float
+        The relative entropy (0 <= H <= 1).
+
+    Notes
+    -----
+    Implementation based on the original MATLAB code from:
+    https://github.com/miditoolbox/1.1/blob/master/miditoolbox/entropy.m
     """
-    # The following algorithm is from the original MATLAB implementation
-    # https://github.com/miditoolbox/1.1/blob/master/miditoolbox/entropy.m
-    
     d = np.asarray(d).flatten()  # Convert to a 1D numpy array
     d = d / (np.sum(d) + 1e-12)  # Normalize
     logd = np.log(d + 1e-12)  
