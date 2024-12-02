@@ -29,7 +29,7 @@ Algorithms
 
 .. autosummary::
    :toctree: _autosummary
-   :caption: Algorithms API
+   :caption: Algorithms
 
    musmart.algorithm.entropy
    musmart.algorithm.pcdist1
@@ -41,7 +41,7 @@ Core
 
 .. autosummary::
    :toctree: _autosummary 
-   :caption: Core API
+   :caption: Core
 
    musmart.core.basics
 
@@ -52,7 +52,7 @@ IO
 
 .. autosummary::
    :toctree: _autosummary
-   :caption: IO API
+   :caption: IO
 
    musmart.io.pianoroll
 
@@ -62,6 +62,6 @@ Resources
 
 .. autosummary::
    :toctree: _autosummary
-   :caption: Resources API
+   :caption: Resources
 
    musmart.resources.key_profiles_literature
