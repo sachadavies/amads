@@ -1,57 +1,47 @@
-"""
-NAME:
-===============================
-Test Partimenti (test_partimenti.py)
+"""Test partimenti module.
 
+This module tests the partimenti module functionality.
 
-BY:
-===============================
-Mark Gotham, 2019
+Created by Mark Gotham, 2019.
 
-
-LICENCE:
-===============================
-Creative Commons Attribution-ShareAlike 4.0 International License
+License: Creative Commons Attribution-ShareAlike 4.0 International License
 https://creativecommons.org/licenses/by-sa/4.0/
-
-
 """
 
-from musmart import partimenti
-import unittest
+import pytest
+
+from musmart.resources.partimenti import *
 
 
-class PartiTester(unittest.TestCase):
-
-    def test_partimenti_length(self):
-        """
-        For each partimento,
-        there should be a fixed numer of 'stages'
-        meaning that the melody, bass, and figures data should have the same length.
-        """
-        for p in [
-            aprile,
-            cadenza_doppia,
-            cadenza_semplice,
-            comma,
-            converging,
-            deceptive,
-            do_re_mi,
-            evaded,
-            fonte,
-            fenaroli,
-            indugio,
-            jupiter,
-            meyer,
-            modulating_prinner,
-            monte,
-            passo_indietro,
-            pastorella,
-            ponte,
-            prinner,
-            quiescenza,
-            romanesca,
-            sol_fa_mi
-        ]:
-            assert len(p["melody"]) == len(p["bass"])
-            assert len(p["melody"]) == len(p["figures"])
+@pytest.mark.parametrize("partimento", [
+    aprile,
+    cadenza_doppia,
+    cadenza_semplice,
+    comma,
+    converging,
+    deceptive,
+    do_re_mi,
+    evaded,
+    fonte,
+    fenaroli,
+    indugio,
+    jupiter,
+    meyer,
+    modulating_prinner,
+    monte,
+    passo_indietro,
+    pastorella,
+    ponte,
+    prinner,
+    quiescenza,
+    romanesca,
+    sol_fa_mi
+])
+def test_partimenti_length(partimento):
+    """Test that partimento sections have consistent lengths.
+    
+    Each partimento should have melody, bass, and figures sections
+    of equal length.
+    """
+    assert len(partimento["melody"]) == len(partimento["bass"])
+    assert len(partimento["melody"]) == len(partimento["figures"])

@@ -79,6 +79,7 @@ def make_lazy_modules(subdirectory):
 make_lazy_modules("algorithm")
 make_lazy_modules("io")
 make_lazy_modules("music")
+make_lazy_modules("resources")
 
 if not any(isinstance(finder, LazyFinder) for finder in sys.meta_path):
     sys.meta_path.insert(0, LazyFinder(lazy_modules))
