@@ -9,6 +9,12 @@ Table of contents
 
 .. toctree::
    :maxdepth: 2
+   :caption: User guide:
+
+   user_guide/installation.md
+
+.. toctree::
+   :maxdepth: 2
    :caption: Developer notes:
 
    developer_notes/design.rst
