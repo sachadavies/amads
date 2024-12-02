@@ -1,5 +1,5 @@
-Design Notes
-===========
+Design considerations
+====================
 
 I think this is an area where the API and method names need to be
 thought about carefully and possibly changed. Here are the issues that

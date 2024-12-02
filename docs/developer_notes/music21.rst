@@ -1,5 +1,5 @@
-Music21 Notes
-============
+Music21
+=======
 
 https://www.music21.org/music21docs/usersGuide/
 

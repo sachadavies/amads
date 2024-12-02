@@ -14,3 +14,4 @@ Table of contents
    developer_notes/design.rst
    developer_notes/modules.rst
    developer_notes/music21.rst
+ 
