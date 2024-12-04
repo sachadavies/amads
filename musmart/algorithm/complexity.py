@@ -99,11 +99,11 @@ def lz77_size(sequence: Iterable[Hashable], window_size: int = 64, proportional:
     References
     ----------
     [1] Ziv, J., & Lempel, A. (1977). A universal algorithm for sequential data compression. IEEE Transactions on
-        Information Theory, 23/3, 337–343.
+        Information Theory, 23/3, 337–343. https://doi.org/10.1109/TIT.1977.1055714
 
     [2] Cheston, H., Schlichting, J. L., Cross, I., & Harrison, P. M. C. (2024). Rhythmic qualities of jazz
         improvisation predict performer identity and style in source-separated audio recordings. Royal Society
-        Open Science, 11/11.
+        Open Science, 11/11. https://doi.org/10.1098/rsos.240920
 
     """
 
