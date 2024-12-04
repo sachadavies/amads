@@ -39,57 +39,71 @@ def lz77_compress(str_representation: str, window_size) -> list[tuple]:
 
 
 def lz77_size(sequence: Iterable[Hashable], window_size: int = 64, proportional: bool = False) -> Union[int, float]:
-    """Applies the LZ77 compression algorithm to a discrete `sequence` and returns length of the compressed string
+    """
+    Applies the LZ77 compression algorithm to a discrete `sequence` and returns the length of the compressed string.
 
     Here we calculate the complexity of a discrete `sequence` (could be pitch classes, binned inter-onset intervals)
     by converting it into a string representation, compressing using LZ77 [1], then calculating the length of the
-    compressed string as in [2]. Higher values mean that more information is required to represent the sequence and
-    thus greater complexity.
+    compressed string as in [2]. Higher values mean that more information is required to represent the sequence,
+    indicating greater complexity.
 
-    Currently only sequences with fewer than 96 unique elements are supported.
+    Currently, only sequences with fewer than 96 unique elements are supported.
 
-    Arguments:
-        sequence (np.array): a discrete sequence, could be pitch classes, inter-onset intervals, etc...
-        window_size (int, optional): the size of the sliding window to use in LZ77 calculation, defaults to 64
-        proportional (bool, optional): whether complexity should be expressed with relation to the size of the input,
-            such that 1.0 means the input cannot be compressed (i.e., maximum possible complexity)
+    Parameters
+    ----------
+    sequence : np.ndarray
+        A discrete sequence, which could be pitch classes, inter-onset intervals, etc.
 
-    Returns:
-        int: the length of the compressed string
+    window_size : int, optional
+        The size of the sliding window to use in LZ77 calculation. Default is 64.
 
-    Raises:
-        NotImplementedError: for an input with more than 96 unique elements
+    proportional : bool, optional
+        If True, the complexity is expressed with respect to the size of the input such that 1.0 means the input
+        cannot be compressed (i.e., maximum possible complexity). Default is False.
 
-    Examples:
-        NB. some examples are taken from https://timguite.github.io/jekyll/update/2020/03/15/lz77-in-python.html
+    Returns
+    -------
+    int | float
+        The length of the compressed string, either in `raw` form (int) or wrt. input sequence length (float)
 
-        >>> lz77_size(["a"])
-        1
+    Raises
+    ------
+    NotImplementedError
+        If the input contains more than 96 unique elements.
 
-        >>> lz77_size(["a", "b", "a"])
-        3
+    Examples
+    --------
+    NB: Some examples are taken from https://timguite.github.io/jekyll/update/2020/03/15/lz77-in-python.html
 
-        >>> testme = "word word"
-        >>> lz77_size(list(testme))    # i.e., np.array(["w", "o", "r", "d", " ", "w", "o", "r", "d"])
-        6
+    >>> lz77_size(["a"])
+    1
 
-        >>> lz77_size([0.1, 0.2, 0.1])    # works with numeric values as well
-        3
+    >>> lz77_size(["a", "b", "a"])
+    3
 
-        >>> lz77_size([0, 1, 2, 3, 4, 0, 1, 2, 3])
-        6
+    >>> testme = "word word"
+    >>> lz77_size(list(testme))  # i.e., np.array(["w", "o", "r", "d", " ", "w", "o", "r", "d"]))
+    6
 
-        >>> lz77_size(range(1000))
-        Traceback (most recent call last):
-            ...
-        NotImplementedError: Currently only sequences with fewer than 95 unique elements are supported
+    >>> lz77_size([0.1, 0.2, 0.1])  # Works with numeric values as well
+    3
 
-    References:
-          [1]: Ziv, J., & Lempel, A. (1977). A universal algorithm for sequential data compression. IEEE Transactions
-          on Information Theory. 23/3 (pp. 337–343).
-          [2]: Cheston, H., Schlichting, J. L., Cross, I., & Harrison, P. M. C. (2024). Rhythmic qualities of jazz
-          improvisation predict performer identity and style in source-separated audio recordings. Royal Society
-          Open Science. 11/11.
+    >>> lz77_size([0, 1, 2, 3, 4, 0, 1, 2, 3])
+    6
+
+    >>> lz77_size(range(1000))  # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    NotImplementedError: Currently only sequences with fewer than 95 unique elements are supported.
+
+    References
+    ----------
+    [1] Ziv, J., & Lempel, A. (1977). A universal algorithm for sequential data compression. IEEE Transactions on
+        Information Theory, 23/3, 337–343.
+
+    [2] Cheston, H., Schlichting, J. L., Cross, I., & Harrison, P. M. C. (2024). Rhythmic qualities of jazz
+        improvisation predict performer identity and style in source-separated audio recordings. Royal Society
+        Open Science, 11/11.
 
     """
 
@@ -111,7 +125,3 @@ def lz77_size(sequence: Iterable[Hashable], window_size: int = 64, proportional:
     if proportional:
         score /= len(sequence)
     return score
-
-
-if __name__ == "__main__":
-    pass
