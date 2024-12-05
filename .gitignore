@@ -170,3 +170,5 @@ conda_notes.md
 
 # Sphinx gallery files
 docs/auto_examples
+
+/.vscode/

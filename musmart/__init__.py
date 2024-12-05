@@ -17,6 +17,7 @@
 
 from .core.basics import *
 from .core.timemap import *
+from .core.distribution import *
 from .music import example
 import sys
 import importlib

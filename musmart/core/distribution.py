@@ -10,11 +10,13 @@ Description:
     [Add a detailed description of what this module does and its primary responsibilities]
 
 Dependencies:
-    - [List any key dependencies]
+    - matplotlib
 
 Usage:
     [Add basic usage examples or import statements]
 """
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from matplotlib import figure
 from matplotlib import patches
@@ -56,9 +58,11 @@ class Distribution:
     def __init__(self, name: str, data: List[Any], distribution_type: str,
                  dimensions: List[int], 
                  x_categories: List[Union[int, float, str]], 
-                 x_label: str, y_categories: List[Union[int, float, str]], 
+                 x_label: str,
+                 y_categories: Union[List[Union[int, float, str]], None], 
                  y_label: str):
         self.name = name
+        self.data = data
         self.distribution_type = distribution_type
         self.dimensions = dimensions
         self.x_categories = x_categories
@@ -68,9 +72,9 @@ class Distribution:
 
     def plot(self, color=DEFAULT_BAR_COLOR):
         if len(self.dimensions) == 1:
-            return self.plot_1d(color)
+            return (plt, self.plot_1d(color))
         elif len(self.dimensions) == 2:
-            return self.plot_2d(color)
+            return (plt, self.plot_2d(color))
         else:
             raise ValueError("Unsupported number of dimensions")
 
@@ -79,6 +83,7 @@ class Distribution:
         Returns:
             figure.Figure - A matplotlib figure object.
         """
+        
         fig, ax = plt.subplots()
         ax.bar(self.x_categories, self.data, color=color)
         ax.set_xlabel(self.x_label)
