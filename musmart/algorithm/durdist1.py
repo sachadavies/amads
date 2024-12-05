@@ -13,8 +13,6 @@ Dependencies:
 
 Usage:
     [Add basic usage examples or import statements]
-""""""
-Provides the `durdist1` function
 
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=58
 """
@@ -53,6 +51,7 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
     Args:
         score (Score): The musical score to analyze.
         name (str): A name for the distribution and plot title.
+        bin_centers (Union[list[float], None]): bin centers (optional)
 
     Returns:
         Distribution: containing and describing the distribution of note durations.
