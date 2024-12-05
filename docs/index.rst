@@ -24,6 +24,7 @@ Here's an overview:
    developer_notes/modules
    developer_notes/music21
    developer_notes/testing
+   developer_notes/style
 
 .. toctree::
    :maxdepth: 2
