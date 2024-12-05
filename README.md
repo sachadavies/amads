@@ -1,7 +1,7 @@
 # SMART: Symbolic Music Algorithm Resource Toolkit
 
 
-[![codecov](https://codecov.io/gh/{username}/{repo}/branch/main/graph/badge.svg)](https://codecov.io/gh/{username}/{repo})
+[![codecov](https://codecov.io/gh/music-computing/musmart/branch/main/graph/badge.svg)](https://codecov.io/gh/music-computing/musmart)
 
 This is an attempt to see if the large field (or several fields) of music computing can coordinate a directory of the core algorithms for computing symbolic music.
 
