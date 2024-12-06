@@ -98,12 +98,18 @@ class Distribution:
             figure.Figure - A matplotlib figure object.
         """
         fig, ax = plt.subplots()
-        height = [abs(i - 0.5) if i != 0 else 0 for i in self.x_categories]
-        bottom = [min(0.5, i) if i != 0 else 0.5 for i in self.y_categories]
-        ax.bar(self.x_categories, height, bottom=bottom, color=color)
-        ax.set_ylim(0, 1)
+        cax = ax.imshow(self.data, cmap='gray_r', interpolation='nearest')
+        fig.colorbar(cax, ax=ax, label="Proportion")
         ax.set_xlabel(self.x_label)
         ax.set_ylabel(self.y_label)
         fig.suptitle(self.name)
+
+        # Set x and y axis tick labels
+        ax.set_xticks(range(len(self.x_categories)))
+        ax.set_xticklabels(self.x_categories, rotation=45)
+        ax.set_yticks(range(len(self.y_categories)))
+        ax.set_yticklabels(self.y_categories)
+
+        ax.invert_yaxis()
         return fig
 
