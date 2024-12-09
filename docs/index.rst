@@ -5,7 +5,7 @@ This package collects together a variety of algorithms for symbolic music analys
 
 **The package is its very early stages. The API is subject to change, and many algorithms are not yet implemented, tested, or documented!**
 
-For the source code, visit the [GitHub repository](https://github.com/music-computing/amads).
+For the source code, visit the `GitHub repository <https://github.com/music-computing/amads>`_.
 
 .. We add the :hidden: directive to each toctree so that the toctree is not displayed
 .. in the main page itself, but only in the sidebar.
