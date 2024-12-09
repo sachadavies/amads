@@ -26,8 +26,24 @@ Modules should be organized in a logical hierarchy that reflects their purpose. 
 
 Note that functions will be importable in multiple ways::
 
-    from amads.algorithms.complexity.lz77 import lz77_size
-    from amads.all import lz77_size
+    from amads.harmony.root_finding.parncutt_1988 import root
+    from amads.all import root_parncutt_1988
+
+The first style is more verbose, but it makes the logical organization of the package more explicit.
+The second style is more appropriate for interactive use.
+
+In order to support the second style, we add import statements to the ``__init__.py`` file of each module.
+For example, the ``__init__.py`` file for the ``root_finding`` module contains::
+
+    from .parncutt_1988 import root as root_parncutt_1988
+
+Then the ``__init__.py`` file for the ``harmony`` module contains::
+
+    from .root_finding import *
+
+Finally, the ``all.py`` file for the ``amads`` package contains::
+
+    from .harmony import *
 
 Function naming
 ~~~~~~~~~~~~~~
