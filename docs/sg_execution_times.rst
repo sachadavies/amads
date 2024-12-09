@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:06.181** total execution time for 2 files **from all galleries**:
+**00:07.187** total execution time for 4 files **from all galleries**:
 
 .. container::
 
@@ -32,9 +32,15 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_plot_durdist2.py` (``../examples/plot_durdist2.py``)
+     - 00:03.238
+     - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_durdist1.py` (``../examples/plot_durdist1.py``)
-     - 00:05.648
+     - 00:03.056
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_plot_sliding_window.py` (``../examples/plot_sliding_window.py``)
+     - 00:00.517
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_boundary.py` (``../examples/plot_boundary.py``)
-     - 00:00.533
+     - 00:00.376
      - 0.0

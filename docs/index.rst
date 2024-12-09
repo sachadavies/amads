@@ -2,7 +2,8 @@ amads documentation
 =====================
 
 This package collects together a variety of algorithms for symbolic music analysis.
-Here's an overview:
+
+**The package is its very early stages. The API is subject to change, and many algorithms are not yet implemented, tested, or documented!**
 
 .. We add the :hidden: directive to each toctree so that the toctree is not displayed
 .. in the main page itself, but only in the sidebar.
@@ -33,43 +34,75 @@ Here's an overview:
 
    auto_examples/index
 
-Algorithms
-----------
+
+
+General algorithms
+------------------
 
 .. autosummary::
    :toctree: _autosummary
-   :caption: Algorithms API:
+   :caption: General algorithms:
 
+   amads.algorithm.boundary
+   amads.algorithm.break_it_up
+   amads.algorithm.durdist1
+   amads.algorithm.durdist2
    amads.algorithm.entropy
+   amads.algorithm.hz2midi
+   amads.algorithm.ismonophonic
+   amads.algorithm.ivdirdist1
+   amads.algorithm.ivdist1
+   amads.algorithm.ivdist2
+   amads.algorithm.ivsizedist1
+   amads.algorithm.nnotes
    amads.algorithm.pcdist1
    amads.algorithm.pcdist2
+   amads.algorithm.pitch_mean
+   amads.algorithm.scale
+   amads.algorithm.segment_gestalt
+   amads.algorithm.skyline
 
-
-Core
-----
-
-.. autosummary::
-   :toctree: _autosummary
-   :caption: Core API:
-
-   amads.core.basics
-
-
-IO
---
+Harmony
+-------
 
 .. autosummary::
    :toctree: _autosummary
-   :caption: IO API:
+   :caption: Harmony:
 
-   amads.io.pianoroll
+   amads.harmony.root_finding.parncutt_1988
 
+Pitch
+-----
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: Pitch:
+
+   amads.pitch.transformations
 
 Resources
 ---------
 
 .. autosummary::
    :toctree: _autosummary
-   :caption: Resources API:
+   :caption: Resources:
 
    amads.resources.key_profiles_literature
+
+Core
+----
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: Core:
+
+   amads.core.basics
+
+IO
+--
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: IO:
+
+   amads.io.pianoroll
