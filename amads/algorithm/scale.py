@@ -5,11 +5,11 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 Scales note data in given dimension (offset, dur, or both)
 
 Input arguments:
-SCORE = score object/other Mgroup object (Note: This method MODIFIES the score object input)
+SCORE = score object/other EventGroup object (Note: This method MODIFIES the score object input)
 FACTOR = amount of scale (must be > 0)
 DIM = dimension ('offset', 'dur','all')
     - 'offset': scales the offset of ALL EVENTS
-    - 'dur': scales the durations of ALL NON-MGROUP EVENTS (Note, Rest)
+    - 'dur': scales the durations of ALL NON-EVENTGROUP EVENTS (Note, Rest)
     - 'all': scales both the offset and the duration
 
 Output:
@@ -21,7 +21,7 @@ scaled_score = scale(score.copy(),'dur',0.5); % shortens durations by a factor o
 
 """
 
-from amads import Mgroup
+from amads import EventGroup
 
 
 def scale(score, factor=2, dim='all'):
@@ -30,7 +30,7 @@ def scale(score, factor=2, dim='all'):
         scale(score, factor, 'offset')
         return score
     for elem in score.content:
-        if isinstance(elem, Mgroup):
+        if isinstance(elem, EventGroup):
             scale(elem, factor, dim)
             if dim == 'offset':
                 elem.offset *= 2

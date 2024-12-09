@@ -25,7 +25,7 @@ Score (one per musical work or movement)
 
 """
 
-# TODO: most copy() methods for Mgroup subclasses ignore content.
+# TODO: most copy() methods for EventGroup subclasses ignore content.
 #    To reduce confusion, rename to copy_empty().
 # TODO: deep_copy() calls should use deepcopy() function instead,
 #    and deep_copy() methods should be changed to __deepcopy__()
@@ -41,7 +41,7 @@ import sys
 from amads.core.timemap import Timemap, Mapbeat
 
 class Event:
-    """Event is a superclass for Note, Rest, Mgroup, and just about
+    """Event is a superclass for Note, Rest, EventGroup, and just about
     anything that takes place in time.
     """
     # offset -- start time in quarters as an offset from parent's start time
@@ -444,8 +444,8 @@ class Pitch:
 
 
 
-class Mgroup (Event):
-    """An Mgroup is a collection of Event objects. This is an abstract
+class EventGroup (Event):
+    """An EventGroup is a collection of Event objects. This is an abstract
     class. Use one of the subclasses: Sequence or Concurrence.
     """
     # offset -- start time in quarters as an offset from parent's start time
@@ -460,10 +460,10 @@ class Mgroup (Event):
 
     def copy(self):
         raise Exception(
-                "Mgroup is abstract, subclass should override copy()")
+                "EventGroup is abstract, subclass should override copy()")
 
 
-    def show(self, indent=0, label="Mgroup"):
+    def show(self, indent=0, label="EventGroup"):
         print(' ' * indent, label, f" at {self.qstart():0.3f} offset ",
               f"{self.offset:0.3f} dur {self.dur:0.3f}", sep='')
         for elem in self.content:
@@ -478,11 +478,11 @@ class Mgroup (Event):
 
     def deep_copy(self):
         raise Exception(
-                "Mgroup is abstract, subclass should override deep_copy()")
+                "EventGroup is abstract, subclass should override deep_copy()")
 
 
     def has_chords(self):
-        """Test if Mgroup (e.g. Score, Part, Staff, Measure) has any
+        """Test if EventGroup (e.g. Score, Part, Staff, Measure) has any
         Chord objects.
         """
         chords = self.find_all(Chord)
@@ -491,7 +491,7 @@ class Mgroup (Event):
 
 
     def has_ties(self):
-        """Test if Mgroup (e.g. Score, Part, Staff, Measure) has any
+        """Test if EventGroup (e.g. Score, Part, Staff, Measure) has any
         tied notes.
         """
         notes = self.find_all(Note)
@@ -502,7 +502,7 @@ class Mgroup (Event):
 
 
     def has_measures(self):
-        """Test if Mgroup (e.g. Score, Part, Staff) has any measures."""
+        """Test if EventGroup (e.g. Score, Part, Staff) has any measures."""
         measures = self.find_all(Measure)
         # if there are no chords, next will return "empty"
         return next(measures, "empty") != "empty"
@@ -536,12 +536,12 @@ class Mgroup (Event):
         for elem in self.content:
             if isinstance(elem, elemType):
                 yield elem
-            elif isinstance(elem, Mgroup):
+            elif isinstance(elem, EventGroup):
                 yield from elem.find_all(elemType)
 
 
 
-class Sequence (Mgroup):
+class Sequence (EventGroup):
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -624,18 +624,18 @@ class Sequence (Mgroup):
         end_offset of the previous element. The dur(ation) of self is set
         to the end_offset of the last element. This method essentially,
         arranges the content to eliminate gaps. pack() works recursively
-        on elements that are Mgroups.
+        on elements that are EventGroups.
         """
         offset = 0
         for elem in self.content:
             elem.offset = 0
-            if isinstance(elem, Mgroup):
+            if isinstance(elem, EventGroup):
                 elem.pack()
             offset += elem.dur
 
 
 
-class Concurrence (Mgroup):
+class Concurrence (EventGroup):
     """Concurrence represents a temporally simultaneous collection
     of music events (but if elements have a non-zero offset, a Concurrence
     can represent events organized over time).  Thus, the main distinction
@@ -683,12 +683,12 @@ class Concurrence (Mgroup):
         """Adjust the content to offsets of zero. The dur(ation) of self
         is set to the maximum end_offset of the elements. This method
         essentially, arranges the content to eliminate gaps. pack() works
-        recursively on elements that are Mgroups.
+        recursively on elements that are EventGroups.
         """
         self.dur = 0
         for elem in self.content:
             elem.offset = 0
-            if isinstance(elem, Mgroup):
+            if isinstance(elem, EventGroup):
                 elem.pack()
             self.dur = max(self.dur, elem.dur)
 
