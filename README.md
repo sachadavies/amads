@@ -1,6 +1,12 @@
 # Algorithms for Music Analysis and Data Science (AMADS)
 
-AMADS is a directory of core algorithms for music computing.
+This repository represents the very earliest stages of an attempt to collect and organise algorithms for
+music analysis and data science.
+If you are interested in participating, please get in touch with one of
+Peter Harrison (pmch2@cam.ac.uk), Mark Gotham, or Roger Dannenberg.
+
+Much functionality in this package still remains to be tested/implemented/documented.
+Use at your own risk!
 
 For more on the ...
 - ... motivation and background, please see [the paper](./paper.md)
@@ -48,10 +54,6 @@ Among them, those we have had in mind during the development include:
 Please pitch in relevant material, making sure to include any relevant citation.
 Equally, please feel free to add issues for algorithms you'd like to see us implement and include here.
 
-
-## Development
-
-(TODO: here or at the top)
 
 ### Running tests
 
