@@ -7,14 +7,14 @@ Most apply equally to any pitch class sequence
 and can therefore be use in melody and harmony settings.
 """
 
-from typing import Union, List, Tuple
+from typing import Iterable
 
 
 # ------------------------------------------------------------------------------
 
 def transpose_by(
-        pitches: Union[List, Tuple],
-        semitones: int = 0,
+        pitches: Iterable,
+        semitones: int,
         mod_12: bool = True
 ) -> list:
     """
@@ -26,7 +26,7 @@ def transpose_by(
     pitches
         Any list or tuple of integers representing pitches as MIDI numbers or pitch classes.
     semitones
-        How far to transpose, expressed in semitones (1).
+        How far to transpose, expressed in semitones (1 per MIDI note).
     mod_12
         If True, return values modulo 12 (necessary for pitch class sets, not for MIDI numbers)
 
@@ -45,15 +45,17 @@ def transpose_by(
     [16, 17, 18, 19]
 
     """
-    for x in range(len(pitches)):
-        pitches[x] += semitones
+    result = []
+    for pitch in pitches:
+        transposed = pitch + semitones
         if mod_12:
-            pitches[x] %= 12
-    return pitches
+            transposed %= 12
+        result.append(transposed)
+    return result
 
 
 def transpose_to(
-        pitches: Union[List, Tuple],
+        pitches: Iterable,
         start: int = 0,
         mod_12: bool = True
 ) -> list:
@@ -86,15 +88,17 @@ def transpose_to(
 
     """
     difference = start - pitches[0]
-    for y in range(len(pitches)):
-        pitches[y] += difference
+    result = []
+    for pitch in pitches:
+        transposed = pitch + difference
         if mod_12:
-            pitches[y] %= 12
-    return pitches
+            transposed %= 12
+        result.append(transposed)
+    return result
 
 
 def retrograde(
-        pitches: Union[List, Tuple]
+        pitches: Iterable
 ) -> list:
     """
     Retrograde (reverse) a list of pitches.
@@ -116,11 +120,12 @@ def retrograde(
     [9, 6, 2]
 
     """
-    return pitches[::-1]
+    result = pitches[::-1]  # to create a copy
+    return result
 
 
 def invert(
-        pitches: Union[List, Tuple],
+        pitches: Iterable,
         use_first_not_0: bool = True,
         mod_12: bool = True
 ) -> list:
@@ -150,20 +155,19 @@ def invert(
     [7, 6, 5]
 
     """
-    origin = 0
-    if use_first_not_0:
-        origin = pitches[0]
-
-    for x in range(len(pitches)):
-        pitches[x] = 2 * origin - pitches[x]
+    origin = pitches[0] if use_first_not_0 else 0
+    result = []
+    for pitch in pitches:
+        inverted = 2 * origin - pitch
         if mod_12:
-            pitches[x] %= 12
+            inverted %= 12
+        result.append(inverted)
 
-    return pitches
+    return result
 
 
 def pitches_to_intervals(
-        pitches: Union[List, Tuple],
+        pitches: Iterable,
         wrap: bool = False,
         mod_12: bool = True
 ) -> list:
@@ -206,7 +210,7 @@ def pitches_to_intervals(
 
 
 def rotate(
-        pitches: Union[List, Tuple],
+        pitches: Iterable,
         steps: int = 1
 ) -> list:
     """
@@ -238,8 +242,8 @@ def rotate(
     list_len = len(pitches)
     if steps > list_len:
         steps = steps % list_len
-
-    return pitches[steps:] + pitches[:steps]
+    result = pitches[steps:] + pitches[:steps]
+    return result
 
 
 def every_nth(
