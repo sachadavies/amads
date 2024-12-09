@@ -1,27 +1,27 @@
 # time_map.py -- map to convert between quarters and seconds
 #
 
-class Mapbeat:
-    """Mapbeat is a (time, beat) pair in a piece-wise linear mapping.
+class MapBeat:
+    """MapBeat is a (time, beat) pair in a piece-wise linear mapping.
     """
     def __init__(self, time, beat):
         self.time = time
         self.beat = beat
 
     def copy(self):
-        return Mapbeat(self.time, self.beat)
+        return MapBeat(self.time, self.beat)
 
 
 
 class TimeMap:
     """TimeMap is a map to convert between quarters and seconds.
     """
-    # beats -- array of Mapbeat
+    # beats -- array of MapBeat
     # last_tempo -- final beats per second to extrapolate from final
     #         breakpoint
 
     def __init__(self, bpm=100.0):
-        self.beats = [Mapbeat(0.0, 0.0)]  # initial beat
+        self.beats = [MapBeat(0.0, 0.0)]  # initial beat
         self.last_tempo = bpm / 60.0  # 100 bpm default
 
 
@@ -46,8 +46,8 @@ class TimeMap:
 
 
     def append_beat_tempo(self, beat, tempo):
-        """Append a Mapbeat specifying a change to tempo at beat.
-        beat must be >= last Mapbeat's beat. You cannot insert a tempo
+        """Append a MapBeat specifying a change to tempo at beat.
+        beat must be >= last MapBeat's beat. You cannot insert a tempo
         change before the end of the TimeMap. tempo will hold forever
         beginning at beat unless you call append_beat_tempo again to
         change the tempo somewhere beyond beat.
@@ -55,7 +55,7 @@ class TimeMap:
         last_beat = self.beats[-1].beat  # get the last beat
         assert beat >= last_beat
         if beat > last_beat:
-            self.beats.append(Mapbeat(self.beat_to_time(beat), beat))
+            self.beats.append(MapBeat(self.beat_to_time(beat), beat))
         self.last_tempo = tempo
         print("append_beat_tempo", tempo, self.beats[-1])
 
@@ -98,7 +98,7 @@ class TimeMap:
             else:  # extrapolate from last two time map entries
                 mb0 = self.beats[i - 2]
         else:  # interpolate between i - 1 and i
-            # note: i is at least 1 because first Mapbeat is at time 0
+            # note: i is at least 1 because first MapBeat is at time 0
             # and beat > 0
             mbi0 = self.beats[i - 1]
             mbi1 = self.beats[i]

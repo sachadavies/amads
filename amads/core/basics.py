@@ -38,7 +38,7 @@ import weakref
 import sys
 
 
-from amads.core.time_map import TimeMap, Mapbeat
+from amads.core.time_map import TimeMap, MapBeat
 
 class Event:
     """Event is a superclass for Note, Rest, EventGroup, and just about
