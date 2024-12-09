@@ -1,5 +1,5 @@
 import math
-from amads import Pitch, Score, Part, Staff, Measure, Note, Chord
+from amads.core.basics import Pitch
 from amads.io.ptscoreread import score_read, score_read_extensions
 
 

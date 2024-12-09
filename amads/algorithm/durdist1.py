@@ -18,7 +18,8 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 
 from typing import Union
-from amads import Score, Note, Distribution
+from amads.core.basics import Score, Note
+from amads.core.distribution import Distribution
 import math
 
 

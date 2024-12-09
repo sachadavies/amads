@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-from amads import example
+from amads.music import example
 from amads.pt_midi_import import partitura_midi_import
 from amads.pcdist2 import pcdist2
 

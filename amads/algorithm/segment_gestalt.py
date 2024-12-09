@@ -63,11 +63,11 @@ On a completely separate and unrelated note, there are 2 pitchmeans with,
 the *exact* same implementation and 2 filenames...
 """
 
-from amads import Score, Note, Part
-from amads.ismonophonic import ismonophonic
-from amads.pitch_mean import pitch_mean
 from operator import lt
-import math
+
+from amads.core.basics import Score, Note, Part
+from amads.algorithm import ismonophonic, pitch_mean
+
 
 def construct_score_list(notes, intervals):
     """
@@ -96,7 +96,7 @@ def find_peaks(target_list, comp = lt):
             peaks.append(i + 1)
     return peaks
 
-def segmentgestalt(score: Score) -> tuple[list[float], list[float]]:
+def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
     """
     Given a score, returns the following:
     (1) If score is not monophonic, we raise an exception

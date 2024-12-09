@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import figure
 from matplotlib import patches
-from amads import Score, Note
+from amads.core.basics import Score, Note
 
 def plotdist(dist, *, ivdir=False) -> figure.Figure:
     """Creates a graph of note, interval, or duration distributions/transitions.

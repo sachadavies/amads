@@ -2,7 +2,7 @@
 
 from amads.pt_midi_import import partitura_midi_import
 from amads.scale import scale
-from amads import example
+from amads.music import example
 
 # "midi/tones.mid"
 my_midi_file = example.fullpath("midi/twochan.mid")

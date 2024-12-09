@@ -21,7 +21,7 @@ scaled_score = scale(score.copy(),'dur',0.5); % shortens durations by a factor o
 
 """
 
-from amads import EventGroup
+from amads.core.basics import EventGroup
 
 
 def scale(score, factor=2, dim='all'):

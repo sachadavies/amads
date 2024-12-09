@@ -1,5 +1,5 @@
 import unittest
-from amads import example
+from amads.music import example
 from amads.core.utils import dir2coll, hz2keynum, keynum2hz, keyname
 
 

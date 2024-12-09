@@ -18,11 +18,12 @@ Usage:
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=59
 """
 
-from amads import Score, Note, Distribution
-from amads.ismonophonic import ismonophonic
-
 import math
 from typing import Union, List
+
+from amads.core.basics import Score, Note
+from amads.core.distribution import Distribution
+from amads.algorithm import ismonophonic
 
 def update_dd(dd: List[List[float]], bin_boundaries: Union[None, List[float]],
               prev_bin: int, note: Note) -> int:

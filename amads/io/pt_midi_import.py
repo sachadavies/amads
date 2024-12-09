@@ -1,6 +1,6 @@
 import partitura as pt
-from amads import Score
-from amads.pt_xml_import import partitura_convert_part
+from amads.core.basics import Score
+from amads.io.pt_xml_import import partitura_convert_part
 
 
 # plan: multiple passes over iter_all()

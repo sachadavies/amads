@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from amads.pt_midi_import import partitura_midi_import
-from amads import example
+from amads.music import example
 from amads.ivdist2 import ivdist2
 
 # "midi/tones.mid"

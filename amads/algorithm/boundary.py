@@ -46,9 +46,9 @@ leverage the fact that each note offset has a unique note in the score and
 emit offset and strength pairs...
 """
 
-from amads import Score, Note, Part
-from amads.ismonophonic import ismonophonic
-import math
+from amads.core.basics import Score, Note
+from amads.algorithm import ismonophonic
+
 
 def boundary(score: Score):
     """
@@ -58,7 +58,7 @@ def boundary(score: Score):
     note offset and its corresponding strength, respectively
     """
     if not ismonophonic(score):
-        raise Exception("score not monophonic, input is not valid.")
+        raise ValueError("Score must be monophonic")
     # make a flattened and collapsed copy of the original score
     flattened_score = score.flatten(collapse=True)
 

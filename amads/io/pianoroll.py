@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import figure
 from matplotlib import patches
-from amads import Score, Note
+from amads.core.basics import Score, Note
 
 
 def midi_num_to_name(midi_num: int, accidental) -> str:
