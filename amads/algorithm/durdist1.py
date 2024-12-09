@@ -6,7 +6,7 @@ Author: [Yiming Huang, Roger Dannenberg]
 Date: [2024-12-04]
 
 Description:
-    Compute 
+    Compute
 
 Dependencies:
     - [List any key dependencies]
@@ -18,7 +18,7 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 
 from typing import Union
-from musmart import Score, Note, Distribution
+from amads import Score, Note, Distribution
 import math
 
 
@@ -26,8 +26,8 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
              bin_centers: Union[list[float], None]=None) -> Distribution:
     """
     Returns the distribution of note durations in a Score.
-    
-    Each duration is assigned to one of 9 bins. 
+
+    Each duration is assigned to one of 9 bins.
     The default centers of the bins are on a logarithmic scale as follows:
         component    bin center (in units of quarters)
         0            1/4 (sixteenth)
@@ -56,7 +56,7 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
     Returns:
         Distribution: containing and describing the distribution of note durations.
     """
-    
+
     if bin_centers:
         dd = [0] * len(bin_centers)
         bin_boundaries = [math.sqrt(bin_centers[i] * bin_centers[i + 1])
@@ -70,7 +70,7 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
             else:
                 dd[-1] += 1
     else:
-        x_categories = ["sixteenth", "0.35", "eighth", "0.71", "quarter", 
+        x_categories = ["sixteenth", "0.35", "eighth", "0.71", "quarter",
                         "1.41", "half", "2.83", "whole"]
         dd = [0] * 9
         for note in score.find_all(Note):
@@ -80,13 +80,13 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
                 bin = round(2 * math.log2(note.dur)) + 4
                 if 0 <= bin <= 8:
                     dd[bin] += 1
-                
+
     # normalize
     total = sum(dd)
     if total > 0:
         dd = [i/total for i in dd]
-    
-    return Distribution(name, dd, "duration", [9], x_categories, 
+
+    return Distribution(name, dd, "duration", [9], x_categories,
                         "Duration", None, "Proportion")
-            
+
 

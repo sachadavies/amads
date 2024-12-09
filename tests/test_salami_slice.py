@@ -1,5 +1,5 @@
 from pytest import approx
-from musmart.algorithm.slice.salami import Timepoint, salami_slice
+from amads.algorithm.slice.salami import Timepoint, salami_slice
 
 
 def test_timepoints_twochan(twochan_notes):

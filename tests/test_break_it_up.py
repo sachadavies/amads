@@ -5,7 +5,7 @@ Tests functionality for regrouping and quantizing musical durations.
 """
 
 import pytest
-from musmart.algorithm.break_it_up import (
+from amads.algorithm.break_it_up import (
     ReGrouper,
     qstart_list_from_pulse_lengths,
     qstart_hierarchy_examples,

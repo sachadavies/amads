@@ -1,5 +1,5 @@
 import pytest
-from musmart.harmony.root_finding.parncutt_1988 import root
+from amads.harmony.root_finding.parncutt_1988 import root
 
 
 def test_empty_chord():

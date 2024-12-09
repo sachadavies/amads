@@ -2,9 +2,9 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-from musmart.pt_midi_import import partitura_midi_import
-from musmart import example
-from musmart.ivdist2 import ivdist2
+from amads.pt_midi_import import partitura_midi_import
+from amads import example
+from amads.ivdist2 import ivdist2
 
 # "midi/tones.mid"
 my_midi_file = example.fullpath("midi/sarabande.mid")

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
-from musmart.pt_midi_import import partitura_midi_import
-from musmart.ivsizedist1 import ivsizedist1
-from musmart import example 
+from amads.pt_midi_import import partitura_midi_import
+from amads.ivsizedist1 import ivsizedist1
+from amads import example
 
 my_midi_file = example.fullpath("midi/sarabande.mid")
 

@@ -1,4 +1,4 @@
-from musmart.core.basics import Pitch
+from amads.core.basics import Pitch
 
 
 def test_pitch_comparison():

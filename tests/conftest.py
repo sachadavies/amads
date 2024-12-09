@@ -1,7 +1,7 @@
 from pytest import fixture
-from musmart.core.basics import Note
-from musmart.io.pt_midi_import import partitura_midi_import
-from musmart.music import example
+from amads.core.basics import Note
+from amads.io.pt_midi_import import partitura_midi_import
+from amads.music import example
 
 
 @fixture

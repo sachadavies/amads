@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
-from musmart.pt_midi_import import partitura_midi_import
-from musmart.segmentgestalt import segmentgestalt
-from musmart.pianoroll import pianoroll
-from musmart import example
+from amads.pt_midi_import import partitura_midi_import
+from amads.segmentgestalt import segmentgestalt
+from amads.pianoroll import pianoroll
+from amads import example
 
 my_midi_file = example.fullpath("midi/sarabande.mid")
 
@@ -19,10 +19,10 @@ print(clang_offsets)
 print(segment_offsets)
 xmin, xmax, ymin, ymax = plt.axis()
 
-plt.vlines(clang_offsets, ymin, ymax, colors = 'purple', 
+plt.vlines(clang_offsets, ymin, ymax, colors = 'purple',
     label = 'clang boundary offsets')
-plt.vlines(segment_offsets, ymin, ymax, colors = 'green', 
+plt.vlines(segment_offsets, ymin, ymax, colors = 'green',
     label = 'segment boundary offsets')
 plt.legend(loc = 'best')
 
-plt.show() 
+plt.show()

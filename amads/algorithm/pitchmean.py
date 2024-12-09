@@ -1,7 +1,7 @@
 # pitchmean.py - compute mean or duration-weighted mean of pitch
 #
 
-from musmart import Note
+from amads import Note
 
 
 def pitch_mean(score, weighted=False):
@@ -16,4 +16,4 @@ def pitch_mean(score, weighted=False):
         count += w
     return (sum / count) if sum > 0 else 0
 
-                                  
+

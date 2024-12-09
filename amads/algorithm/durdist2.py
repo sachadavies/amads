@@ -9,7 +9,7 @@ Description:
     Compute the second-order duration distribution of notes in a musical score.
 
 Dependencies:
-    - musmart
+    - amads
     - math
 
 Usage:
@@ -18,16 +18,16 @@ Usage:
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=59
 """
 
-from musmart import Score, Note, Distribution
-from musmart.ismonophonic import ismonophonic
+from amads import Score, Note, Distribution
+from amads.ismonophonic import ismonophonic
 
 import math
 from typing import Union, List
 
-def update_dd(dd: List[List[float]], bin_boundaries: Union[None, List[float]], 
+def update_dd(dd: List[List[float]], bin_boundaries: Union[None, List[float]],
               prev_bin: int, note: Note) -> int:
     """Updates the duration distribution matrix based on the given notes.
-    
+
     Serves as a helper function for `duration_distribution_2`.
 
     Args:
@@ -54,20 +54,20 @@ def update_dd(dd: List[List[float]], bin_boundaries: Union[None, List[float]],
         bin = round(2 * math.log2(note.dur)) + 4
         if bin < 0 or bin > 8:
             return None
-    
+
     if  prev_bin != None:
         dd[prev_bin][bin] += 1
     return bin
-                
 
 
-def duration_distribution_2(score: Score, 
+
+def duration_distribution_2(score: Score,
         name: str="Duration Pairs Distribution",
         bin_centers: Union[list[float], None]=None) -> Distribution:
     """
     Returns the 2nd-order duration distribution of a musical score.
-    
-     Each duration is assigned to one of 9 bins. 
+
+     Each duration is assigned to one of 9 bins.
     The default centers of the bins are on a logarithmic scale as follows:
         component    bin center (in units of quarters)
         0            1/4 (sixteenth)
@@ -89,7 +89,7 @@ def duration_distribution_2(score: Score,
     above the upper boundary is assigned to the last bin.
 
     The result is a NxN matrix where N is the number of bins. The matrix is
-    m[row][col] = proportion of notes where duration indicated by row is 
+    m[row][col] = proportion of notes where duration indicated by row is
     followed by duration indicated by col.
 
     Args:
@@ -98,18 +98,18 @@ def duration_distribution_2(score: Score,
         bin_centers (Union[list[float], None]): bin centers (optional)
 
     Returns:
-        Distribution: containing 9x9 matrix of the distribution of note 
+        Distribution: containing 9x9 matrix of the distribution of note
         durations. The matrix (data attribute of the Distribution object)
-        has m[row][col] = proportion of notes where duration indicated by 
+        has m[row][col] = proportion of notes where duration indicated by
         row is followed by duration indicated by col.
 
-        
+
     Raises:
         Exception: If the score is not monophonic (e.g. contains chords)
     """
     if not ismonophonic(score):
         raise Exception("Error: Score must be monophonic")
-    
+
     bin_boundaries = None
     if bin_centers:
         dd = [[0] * len(bin_centers) for _ in range(len(bin_centers))]
@@ -117,7 +117,7 @@ def duration_distribution_2(score: Score,
                              for i in range(len(bin_centers) - 1)]
         x_categories = [f"{bin_centers[i]:.2f}" for i in range(len(bin_centers))]
     else:
-        x_categories = ["sixteenth", "0.35", "eighth", "0.71", "quarter", 
+        x_categories = ["sixteenth", "0.35", "eighth", "0.71", "quarter",
                         "1.41", "half", "2.83", "whole"]
         dd = [[0] * 9 for _ in range(9)]
 
@@ -125,18 +125,18 @@ def duration_distribution_2(score: Score,
         prev_bin = None
         for note in container.find_all(Note):
             prev_bin = update_dd(dd, bin_boundaries, prev_bin, note)
-    
+
      # TODO: I believe if score has tied notes, they will be treated
     # separately rather than joined to form a single duration. I do
     # not think we need two cases here since score.find_all() will
     # find all notes either way. -RBD
-    
+
     # normalize
     total = sum([sum(row) for row in dd])
     if total > 0:
         dd = [[i/total for i in row] for row in dd]
-    
+
     return Distribution(name, dd, "duration_pairs", [len(dd), len(dd)], x_categories,
                         "Duration (to)", x_categories, "Duration (from)")
-    
-    
+
+

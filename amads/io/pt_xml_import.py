@@ -1,6 +1,6 @@
 import partitura as pt
-from musmart import Score, Part, Staff, Measure, Note
-from musmart import Rest, TimeSignature, KeySignature
+from amads import Score, Part, Staff, Measure, Note
+from amads import Rest, TimeSignature, KeySignature
 
 # Partitura seems to have a rounding error, reporting measure length
 # of 1919 instead of 1920 when divs per quarter is 480. This can lead
@@ -15,7 +15,7 @@ from musmart import Rest, TimeSignature, KeySignature
 # round measure boundaries but not note start/duration (because note
 # times can be from a MIDI performance, where time is not quantized,
 # at least not to symbolic durations or beats.)
-# 
+#
 DIV_TO_QUARTER_ROUNDING = 96
 
 # plan: multiple passes over iter_all()
@@ -80,14 +80,14 @@ def retie_notes(event, events, i, measure, staff, mindex, part):
         mindex - the index of measure in staff.content
         part - contains the staff
 
-    Algorithm: 
-    When you find a note where tie='start', find all tied notes. 
+    Algorithm:
+    When you find a note where tie='start', find all tied notes.
     Then for each note in order, if tied to the next note and the
     end time rounds to a bar time, then replace the end time with
-    the bar time and replace the next not start and duration to 
+    the bar time and replace the next not start and duration to
     move the start time to the bar time (offset=0). If the resulting
     duration is < 0.001, assume it was created through rounding error
-    and set it to zero, set the current note from tie='continue' to 
+    and set it to zero, set the current note from tie='continue' to
     tie='stop' or tie='start' to tie=None, and set the tied-to note
     tie='None'. (This could slightly truncate performance notes, but
     imperceptibly.) In the next pass, ignore notes with duration of 0,
@@ -118,7 +118,7 @@ def retie_notes(event, events, i, measure, staff, mindex, part):
               (mindex < len(staff.content) - 1):
             mindex += 1
             measure = staff.content[mindex]
-        # now we know qstop > previous bar end + 1/DIV and 
+        # now we know qstop > previous bar end + 1/DIV and
         #     qstop < this bar end + 1/DIV (unless we ran out of measures), so
         #     this bar end (measure.end_offset) is the time we are looking for
         print("found bar at", measure.end_offset, "absdiff",
@@ -207,7 +207,7 @@ def partitura_convert_part(ppart, score):
             print("Note or Rest start", start, "item.start.t", item.start.t)
             dur = (item.end.t - item.start.t) / item.start.quarter
             if isinstance(item, pt.score.Note):
-                events.append(['Note', start, dur, item.staff, 
+                events.append(['Note', start, dur, item.staff,
                                item.midi_pitch, item.id, tie_status(item)])
             elif isinstance(item, Rest):
                 events.append(['Rest', start, dur, item.staff])

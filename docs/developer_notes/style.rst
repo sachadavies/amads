@@ -26,8 +26,8 @@ Modules should be organized in a logical hierarchy that reflects their purpose. 
 
 Note that functions will be importable in multiple ways::
 
-    from musmart.algorithm.complexity.lz77 import lz77_size
-    from musmart import lz77_size
+    from amads.algorithm.complexity.lz77 import lz77_size
+    from amads import lz77_size
 
 Function naming
 ~~~~~~~~~~~~~~
@@ -38,7 +38,7 @@ Be explicit about what functions return. Don't make users guess::
     lz77_size()
     lz77_compression_ratio()
 
-    # Bad 
+    # Bad
     lz77()  # Unclear what this returns
 
 Code structure
@@ -65,17 +65,17 @@ Docstrings should use numpydoc formatting with type hints in the source code::
 
     def calculate_entropy(pitches: list[int]) -> float:
         """Calculate the entropy of a pitch sequence.
-        
+
         Parameters
         ----------
         pitches
             List of MIDI pitch numbers
-            
+
         Returns
         -------
         float
             Entropy value between 0 and 1
-            
+
         Examples
         --------
         >>> calculate_entropy([60, 62, 64])
@@ -93,7 +93,7 @@ External package imports (except numpy) should be done locally within functions 
 
     # Bad
     import matplotlib.pyplot as plt  # Global import - avoid this
-    
+
     def plot_histogram(data):
         plt.hist(data)
         plt.show()
@@ -118,7 +118,7 @@ For example::
 
     def _calculate_entropy_core(counts: list[int]) -> float:
         """Core entropy calculation from Shannon (1948).
-        
+
         Internal function that implements the entropy formula.
         Assumes input has been validated.
         """
@@ -128,16 +128,16 @@ For example::
 
     def calculate_entropy(pitches: list[int]) -> float:
         """Calculate the entropy of a pitch sequence.
-        
+
         Handles input validation and conversion before calling _calculate_entropy_core().
         """
         if not pitches:
             raise ValueError("Input pitch list cannot be empty")
-            
+
         # Convert pitches to counts
         from collections import Counter
         counts = list(Counter(pitches).values())
-        
+
         return _calculate_entropy_core(counts)
 
 References
@@ -145,11 +145,11 @@ References
 
 Include references with DOIs/URLs where possible. Here are some examples::
 
-    [1]: Ziv, J., & Lempel, A. (1977). A universal algorithm for sequential data compression. 
+    [1]: Ziv, J., & Lempel, A. (1977). A universal algorithm for sequential data compression.
          IEEE Transactions on Information Theory. 23/3 (pp. 337–343).
          https://doi.org/10.1109/TIT.1977.1055714
 
-    [2]: Cheston, H., Schlichting, J. L., Cross, I., & Harrison, P. M. C. (2024). 
-         Rhythmic qualities of jazz improvisation predict performer identity and style 
+    [2]: Cheston, H., Schlichting, J. L., Cross, I., & Harrison, P. M. C. (2024).
+         Rhythmic qualities of jazz improvisation predict performer identity and style
          in source-separated audio recordings. Royal Society Open Science. 11/11.
          https://doi.org/10.1098/rsos.231023

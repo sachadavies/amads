@@ -11,9 +11,9 @@ the result.
 # First, we'll import the required modules.
 
 import matplotlib.pyplot as plt
-from musmart.algorithm.slice.window import sliding_window
-from musmart import example
-from musmart.io.pt_midi_import import partitura_midi_import
+from amads.algorithm.slice.window import sliding_window
+from amads import example
+from amads.io.pt_midi_import import partitura_midi_import
 
 # %%
 # Load an example MIDI file and import it using partitura.

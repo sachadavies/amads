@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from musmart.pt_midi_import import partitura_midi_import
-from musmart.durdist2 import durdist2
-from musmart import example
+from amads.pt_midi_import import partitura_midi_import
+from amads.durdist2 import durdist2
+from amads import example
 
 my_midi_file = example.fullpath("midi/sarabande.mid")
 
@@ -27,7 +27,7 @@ plt.ylabel('Duration (from)')
 plt.title('2nd Order Duration Distribution')
 
 bin_centers = [
-    '1/4', 'sqrt(2)/4', '1/2', 'sqrt(2)/2', '1', 
+    '1/4', 'sqrt(2)/4', '1/2', 'sqrt(2)/2', '1',
     'sqrt(2)', '2', '2*sqrt(2)', '4'
 ]
 plt.xticks(range(len(bin_centers)), bin_centers)

@@ -17,11 +17,11 @@ SCORE = the scaled version of the input object
 
 Examples:
 scaled_score = scale(score.copy(),'offset',2); % scales offset by a factor of 2
-scaled_score = scale(score.copy(),'dur',0.5); % shortens durations by a factor of 2 
+scaled_score = scale(score.copy(),'dur',0.5); % shortens durations by a factor of 2
 
 """
 
-from musmart import Mgroup
+from amads import Mgroup
 
 
 def scale(score, factor=2, dim='all'):
@@ -41,5 +41,4 @@ def scale(score, factor=2, dim='all'):
                 elem.offset *= 2
         score.dur = max(score.dur, elem.end_offset)
     return score
-                
-            
+

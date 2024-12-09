@@ -1,6 +1,6 @@
 import math
-from musmart import Pitch, Score, Part, Staff, Measure, Note, Chord
-from musmart.io.ptscoreread import score_read, score_read_extensions
+from amads import Pitch, Score, Part, Staff, Measure, Note, Chord
+from amads.io.ptscoreread import score_read, score_read_extensions
 
 
 def dir2coll(filenames):
@@ -33,11 +33,11 @@ def dir2coll(filenames):
 def hz2keynum(hertz):
     """
     Converts a frequency in Hertz to the corresponding MIDI key number.
-    
+
     Parameters:
     hertz (float or list of floats): The frequency or list of frequencies
     in Hertz.
-    
+
     Returns:
     keynum (Pitch or list of Pitch): The corresponding MIDI key number(s)
     as Pitch objects.
@@ -53,13 +53,13 @@ def hz2keynum(hertz):
 
 def keynum2hz(keynum):
     """
-    Converts a Pitch object or MIDI key number to the corresponding 
+    Converts a Pitch object or MIDI key number to the corresponding
     frequency in Hertz.
-    
+
     Parameters:
-    keynum (Pitch or int or list of Pitch or ints): The Pitch object(s) or 
+    keynum (Pitch or int or list of Pitch or ints): The Pitch object(s) or
     MIDI key number(s).
-    
+
     Returns:
     hz (float or list of floats): The corresponding frequency in Hertz.
     """
@@ -83,7 +83,7 @@ def keyname(n, detail='nameoctave'):
     Parameters:
     n (int or list of ints): The key numbers.
     detail (str, optional): 'nameonly' for just the note name (e.g., 'C#'),
-                            'nameoctave' for note name with octave 
+                            'nameoctave' for note name with octave
                             (e.g., 'C#4') (default).
 
     Returns:

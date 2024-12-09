@@ -17,7 +17,7 @@ https://github.com/MarkGotham/Serial_Analyser
 """
 
 import pytest
-from musmart.pitch.transformations import (
+from amads.pitch.transformations import (
     invert,
     pitches_to_intervals,
     retrograde,
@@ -26,7 +26,7 @@ from musmart.pitch.transformations import (
     transpose_to,
 )
 
-from musmart.serial import pair_swap_krenek, rotate_hexachords
+from amads.serial import pair_swap_krenek, rotate_hexachords
 
 
 def test_transpose():

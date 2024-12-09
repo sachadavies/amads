@@ -2,19 +2,19 @@
 Provides the function `ismonophonic`
 """
 
-from musmart import Score, Note
+from amads import Score, Note
 
 
 def _ismonophonic(notes: list[Note]):
     """
     Returns if a list of notes is monophonic
-    
+
     A monophonic list of notes has no overlapping notes (e.g. chords)
     Serves as a helper function for `ismonophonic`
-    
+
     Args:
         note (list[Note]): The list of notes to analyze
-    
+
     Returns:
         bool: True if the list of notes is monophonic
     """
@@ -31,12 +31,12 @@ def _ismonophonic(notes: list[Note]):
 def ismonophonic(score: Score):
     """
     Returns if a musical score is monophonic
-    
+
     A monophonic score has no overlapping notes (e.g. chords)
-    
+
     Args:
         score (Score): The musical score to analyze
-    
+
     Returns:
         bool: True if the score is monophonic
     """

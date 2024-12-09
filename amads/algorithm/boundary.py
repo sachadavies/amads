@@ -13,7 +13,7 @@ Function output:
 
 Here's a few questions that we need to answer before deciding
 on what our output should be...
-(1) How do we represent causal relationship within our current score/part 
+(1) How do we represent causal relationship within our current score/part
 structure?
 (2) How do we encode additional information within the confines of the inherent
 structure of the score? how do we do so in an extensible manner (preferably
@@ -23,17 +23,17 @@ row position of each weight corresponds to the row position of the note
 in the score matrix...
 
 What additional structure do we need to port the matlab version faithfully?
-The problems are 2-fold: 
-(1) we have a partial ordering in our version of the score, instead of 
+The problems are 2-fold:
+(1) we have a partial ordering in our version of the score, instead of
 the total ordering done in the matlab version.
-(2) we don't have a way to correspond information to each score element 
+(2) we don't have a way to correspond information to each score element
 (e.g. note, measure, chord, etc.)
 
 Things we need from basics.py:
 (1) each event should have not only a parent, but also the ability to obtain
 immediate successors and predecessors within the current containing object.
 
-How about, we have a column matrix with weak references to the notes in the 
+How about, we have a column matrix with weak references to the notes in the
 argument score?
 Note here that we can't segment the output into individual scores, because
 there are no clear defined boundaries, only "soft" boundaries.
@@ -41,13 +41,13 @@ Another problem is, is it appropriate for each of these segmentation algorithms
 to have wildly different output structures?
 For that matter, what should we do with standardizing output structure?
 Note to strength dictionary? Too complex.
-Since we are only dealing with monophonic scores in these algorithms, we can 
-leverage the fact that each note offset has a unique note in the score and 
+Since we are only dealing with monophonic scores in these algorithms, we can
+leverage the fact that each note offset has a unique note in the score and
 emit offset and strength pairs...
 """
 
-from musmart import Score, Note, Part
-from musmart.ismonophonic import ismonophonic
+from amads import Score, Note, Part
+from amads.ismonophonic import ismonophonic
 import math
 
 def boundary(score: Score):
@@ -69,14 +69,14 @@ def boundary(score: Score):
     notes.sort(key=lambda note: (note.qstart(), -note.pitch.keynum))
 
     # profiles
-    pp = [abs(pair[1].keynum - pair[0].keynum) 
+    pp = [abs(pair[1].keynum - pair[0].keynum)
         for pair in zip(notes, notes[1:])]
     po = [pair[1].qstart() - pair[0].qstart() for pair in zip(notes, notes[1:])]
-    pr = [max(0, pair[1].qstart() - pair[0].qstop()) 
+    pr = [max(0, pair[1].qstart() - pair[0].qstop())
         for pair in zip(notes, notes[1:])]
-    
+
     def list_degrees(profile):
-        ret_list = [abs(pair[1] - pair[0]) / (1e-6 + pair[1] + pair[0]) 
+        ret_list = [abs(pair[1] - pair[0]) / (1e-6 + pair[1] + pair[0])
             for pair in zip(profile, profile[1:])]
         ret_list.append(0)
         return ret_list

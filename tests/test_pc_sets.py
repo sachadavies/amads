@@ -13,7 +13,7 @@ https://github.com/MarkGotham/Serial_Analyser
 """
 
 import pytest
-from musmart.algorithm.pc_set_functions import pitches_to_prime, set_classes_from_cardinality
+from amads.algorithm.pc_set_functions import pitches_to_prime, set_classes_from_cardinality
 
 
 @pytest.mark.skip(reason="Currently failing, issue logged in https://github.com/music-computing/amads/issues/37")

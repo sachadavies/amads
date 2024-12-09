@@ -3,9 +3,9 @@ import pytest
 
 import pretty_midi
 
-from musmart.core.basics import Note, Score
-from musmart.io.pt_midi_import import partitura_midi_import
-from musmart.music import example
+from amads.core.basics import Note, Score
+from amads.io.pt_midi_import import partitura_midi_import
+from amads.music import example
 
 
 @pytest.mark.parametrize("midi_filename", [

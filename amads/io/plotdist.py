@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import figure
 from matplotlib import patches
-from musmart import Score, Note
+from amads import Score, Note
 
 def plotdist(dist, *, ivdir=False) -> figure.Figure:
     """Creates a graph of note, interval, or duration distributions/transitions.
@@ -15,9 +15,9 @@ def plotdist(dist, *, ivdir=False) -> figure.Figure:
     Serves mostly as a parser, with the graphing done in helper functions.
 
     Args:
-        dist (List[int] or List[List[int]]): 
-            Distribution of pitch-classes (12), intervals (25) or durations (9) 
-            OR the transitions of the same features; 
+        dist (List[int] or List[List[int]]):
+            Distribution of pitch-classes (12), intervals (25) or durations (9)
+            OR the transitions of the same features;
             pitch-class transitions (12 x 12), interval transitions (25 x 25),
             durations transitions (9 x 9) or key correlations (24),
             interval sizes (13) or intervals directions (12).
@@ -54,7 +54,7 @@ def plotdist(dist, *, ivdir=False) -> figure.Figure:
             return interval_size(dist_array)
         case _:
             raise ValueError("Invalid input data-structure")
-        
+
 
 def pitch_class(dist_array: np.ndarray) -> figure.Figure:
     """Creates a graph of a pitch-class distribution
@@ -64,7 +64,7 @@ def pitch_class(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[int]):
             Distribution of pitch-classes
-    
+
     Returns:
         A figure of the graph of the pitch-class distribution
     """
@@ -79,9 +79,9 @@ def pitch_class(dist_array: np.ndarray) -> figure.Figure:
     ax.set_xlabel('Pitch Class')
     ax.set_ylabel('Probability')
     ax.set_title('Pitch-Class Distribution')
-    
+
     return fig
-           
+
 
 def interval(dist_array: np.ndarray) -> figure.Figure:
     """Creates a graph of a interval distribution
@@ -91,7 +91,7 @@ def interval(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[int]):
             Distribution of intervals
-    
+
     Returns:
         A figure of the graph of the interval distribution
     """
@@ -114,7 +114,7 @@ def interval(dist_array: np.ndarray) -> figure.Figure:
     ax.set_title('Interval Distribution')
 
     # Apply every three ticks labels
-    ax.set_xticks(ticks=tick_indices, labels=tick_labels)  
+    ax.set_xticks(ticks=tick_indices, labels=tick_labels)
 
     return fig
 
@@ -127,7 +127,7 @@ def duration(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[int]):
             Distribution of durations
-    
+
     Returns:
         A figure of the graph of the duration distribution
     """
@@ -136,7 +136,7 @@ def duration(dist_array: np.ndarray) -> figure.Figure:
 
     # Used code from durdist1_test.py
     bin_centers = [
-        '1/4', 'sqrt(2)/4', '1/2', 'sqrt(2)/2', '1', 
+        '1/4', 'sqrt(2)/4', '1/2', 'sqrt(2)/2', '1',
         'sqrt(2)', '2', '2*sqrt(2)', '4'
     ]
     ax.bar(bin_centers, dd, color='skyblue')
@@ -155,7 +155,7 @@ def interval_direction(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[int]):
             Distribution of interval directions
-    
+
     Returns:
         A figure of the graph of the interval direction distribution
     """
@@ -167,7 +167,7 @@ def interval_direction(dist_array: np.ndarray) -> figure.Figure:
         'm2', 'M2', 'm3',
         'M3', 'P4', 'd5', 'P5', 'm6', 'M6', 'm7', 'M7', 'P8'
     ]
-    ax.bar(interval_names, height=[abs(i-0.5) if i != 0 else 0 for i in id], 
+    ax.bar(interval_names, height=[abs(i-0.5) if i != 0 else 0 for i in id],
             bottom=[min(0.5, i) if i != 0 else 0.5 for i in id],
             color='skyblue')
     ax.set_ylim(0, 1)
@@ -186,7 +186,7 @@ def pitch_class_transition(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[List[int]]):
             transition of pitch-classes
-    
+
     Returns:
         A figure of the graph of the pitch class transition
     """
@@ -218,7 +218,7 @@ def interval_transition(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[List[int]]):
             transition of intervals
-    
+
     Returns:
         A figure of the graph of the interval transition
     """
@@ -253,7 +253,7 @@ def duration_transition(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[List[int]]):
             transition of durations
-    
+
     Returns:
         A figure of the graph of the duration transition
     """
@@ -270,7 +270,7 @@ def duration_transition(dist_array: np.ndarray) -> figure.Figure:
     ax.title('2nd Order Duration Distribution')
 
     bin_centers = [
-        '1/4', 'sqrt(2)/4', '1/2', 'sqrt(2)/2', '1', 
+        '1/4', 'sqrt(2)/4', '1/2', 'sqrt(2)/2', '1',
         'sqrt(2)', '2', '2*sqrt(2)', '4'
     ]
     ax.set_xticks(range(len(bin_centers)), bin_centers)
@@ -289,7 +289,7 @@ def key_correlation(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[int]):
             Distribution of interval sizes
-    
+
     Returns:
         A figure of the graph of the interval size distribution
     """
@@ -317,7 +317,7 @@ def interval_size(dist_array: np.ndarray) -> figure.Figure:
     Args:
         dist (List[int]):
             Distribution of interval sizes
-    
+
     Returns:
         A figure of the graph of the interval size distribution
     """
@@ -335,4 +335,3 @@ def interval_size(dist_array: np.ndarray) -> figure.Figure:
     ax.set_title('Interval Size Distribution')
 
     return fig
-    

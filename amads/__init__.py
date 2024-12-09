@@ -1,14 +1,14 @@
-# __init__.py for package musmart
+# __init__.py for package amads
 
 # The goal here is to allow algorithms to appear as immediate members
-# of the musmart package, e.g. you can write musmart.durdist1 instead
-# of having to write musmart.algorithm.durdist1, which is implied by
+# of the amads package, e.g. you can write amads.durdist1 instead
+# of having to write amads.algorithm.durdist1, which is implied by
 # the hierarchy of the source tree.
 #
 # We could accomplish this by writing something like
 #    from .algorithm import durdist1
 # but this would immediately import durdist1 and *every module in the
-# entire package* when you import musmart. Since we expect musmart to
+# entire package* when you import amads. Since we expect amads to
 # contain many possibly large algorithms and possibly have dependencies
 # on large packages, this is not what we want.
 #
@@ -22,7 +22,7 @@ from .music import example
 import sys
 import importlib
 
-from importlib import resources 
+from importlib import resources
 import os
 
 # this line is needed for python 3.10 and above
@@ -51,7 +51,7 @@ class LazyFinder(importlib.abc.MetaPathFinder):
 
 # List of lazy-loaded modules
 lazy_modules = {
-    # 'musmart.durdist1': 'musmart.algorithm.durdist1',
+    # 'amads.durdist1': 'amads.algorithm.durdist1',
     # Add more lazy-loaded modules here
 }
 

@@ -1,4 +1,4 @@
-musmart documentation
+amads documentation
 =====================
 
 This package collects together a variety of algorithms for symbolic music analysis.
@@ -40,19 +40,19 @@ Algorithms
    :toctree: _autosummary
    :caption: Algorithms API:
 
-   musmart.algorithm.entropy
-   musmart.algorithm.pcdist1
-   musmart.algorithm.pcdist2
+   amads.algorithm.entropy
+   amads.algorithm.pcdist1
+   amads.algorithm.pcdist2
 
 
 Core
 ----
 
 .. autosummary::
-   :toctree: _autosummary 
+   :toctree: _autosummary
    :caption: Core API:
 
-   musmart.core.basics
+   amads.core.basics
 
 
 IO
@@ -62,7 +62,7 @@ IO
    :toctree: _autosummary
    :caption: IO API:
 
-   musmart.io.pianoroll
+   amads.io.pianoroll
 
 
 Resources
@@ -72,4 +72,4 @@ Resources
    :toctree: _autosummary
    :caption: Resources API:
 
-   musmart.resources.key_profiles_literature
+   amads.resources.key_profiles_literature

@@ -1,9 +1,9 @@
-# ptscoreread.py -- file input 
+# ptscoreread.py -- file input
 #
 import pathlib
 
-from musmart.io.pt_midi_import import partitura_midi_import
-from musmart.io.pt_xml_import import partitura_xml_import
+from amads.io.pt_midi_import import partitura_midi_import
+from amads.io.pt_xml_import import partitura_xml_import
 
 
 def score_read(filename, pprint=False, format=None):

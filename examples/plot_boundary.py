@@ -9,10 +9,10 @@ Boundary detection
 # boundary detection algorithm.
 
 import matplotlib.pyplot as plt
-from musmart.pt_midi_import import partitura_midi_import
-from musmart.boundary import boundary
-from musmart.pianoroll import pianoroll
-from musmart import example
+from amads.pt_midi_import import partitura_midi_import
+from amads.boundary import boundary
+from amads.pianoroll import pianoroll
+from amads import example
 
 # Load example MIDI file
 my_midi_file = example.fullpath("midi/tempo.mid")

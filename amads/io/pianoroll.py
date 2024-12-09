@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import figure
 from matplotlib import patches
-from musmart import Score, Note
+from amads import Score, Note
 
 
 def midi_num_to_name(midi_num: int, accidental) -> str:
@@ -16,16 +16,16 @@ def midi_num_to_name(midi_num: int, accidental) -> str:
     Helper function for pianoroll
 
     Args:
-        midi_num (int): 
+        midi_num (int):
             The midi number to be converted
-        accidental (str): 
+        accidental (str):
             If the note has an accidental, determines if
             it is a sharp or a flat. Valid input: 'sharp' or 'flat'.
 
     Returns:
         A string representing the name of the note that matches the
-        input MIDI number. 
-            
+        input MIDI number.
+
     Raises:
         ValueError: If there are invalid input argument.
     """
@@ -48,26 +48,26 @@ def pianoroll(score: Score, y_label='name', x_label='beat',
     """Converts a Score to a piano roll display of a musical score.
 
     Args:
-        score (Score): 
+        score (Score):
             The musical score to display
-        y_label (str, optional): 
-            Determines whether the y-axis is 
+        y_label (str, optional):
+            Determines whether the y-axis is
             labeled with note names or MIDI numbers.
             Valid Input: 'name' or 'num'.
-        x_label (str, optional): 
+        x_label (str, optional):
             Determines whether the x-axis is labeled
             with beats or seconds. Valid input: 'beat' or 'sec'.
-        accidental (str, optional): 
-            Determines whether the y-axis is 
+        accidental (str, optional):
+            Determines whether the y-axis is
             labeled with sharps or flats. O nly useful if argument
             y_label is 'name'. Raises exception on inputs that's not
             'sharp' or 'flat'.
 
     Returns:
-        A matplotlib.figure.Figure of a pianoroll diagram. 
+        A matplotlib.figure.Figure of a pianoroll diagram.
 
     Raises:
-        ValueError: If there are invalid input argument. 
+        ValueError: If there are invalid input argument.
     """
 
     # Check for correct x_label input argument
@@ -84,7 +84,7 @@ def pianoroll(score: Score, y_label='name', x_label='beat',
         start_time = note.qstart()
         pitch = note.keynum - 0.5
         duration = note.dur
-        
+
         # Conditionally converts beat to sec
         if x_label == 'sec':
             start_time = score.timemap.beat_to_time(start_time)
@@ -95,7 +95,7 @@ def pianoroll(score: Score, y_label='name', x_label='beat',
             min_note = pitch
         if (pitch > max_note):
             max_note = pitch
-        
+
         # Stores max note start time + note duration for x_axis limit
         if (start_time + duration > max_time):
             max_time = start_time + duration

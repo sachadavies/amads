@@ -11,10 +11,10 @@ or because it isn't designed for said restrictions.
 With these categories in mind, we have the following limitations.
 The algorithm does not consider these things within its scope
 (given a monophonic input):
-(1) the monophonic music may have stream segregation 
-(i.e. 1 stream of notes can be interpreted as 2 or more separate interspersed 
+(1) the monophonic music may have stream segregation
+(i.e. 1 stream of notes can be interpreted as 2 or more separate interspersed
 entities)
-(2) does not consider harmony or shape 
+(2) does not consider harmony or shape
 (see beginning of section 2 for the OG paper for more details)
 (3) does not give semantic meaning (we're still stuck giving arbitrary ideals
 to arbitrary things)
@@ -22,12 +22,12 @@ to arbitrary things)
 The algorithm has the following restrictions to the score:
 (1) the score must be monophonic (perception differences)
 If we consider polyphonic scores, we will need a definition of what
-a substructure is for said score (in said algorithm) with respect to how we 
+a substructure is for said score (in said algorithm) with respect to how we
 carve the note strutures.
-Since, in this algorithm, we don't consider stream 
+Since, in this algorithm, we don't consider stream
 segregation and other features that require larger context clues,
-we can just simply define a score substructure "temporally" as a contiguous 
-subsequence of notes 
+we can just simply define a score substructure "temporally" as a contiguous
+subsequence of notes
 Hence, it is safe to assume that the current algorithm is undefined when
 it comes to polyphonic music.
 
@@ -43,14 +43,14 @@ Function output:
     (1) sorted list of offsets denoting segments segment boundaries
 
 Some thoughts (and questions):
-(1) Should our output preserve the internal structure of the score 
+(1) Should our output preserve the internal structure of the score
 for segments and clangs?
 Probably not. Keep in mind we're dealing with monophonic score structures.
 we just need to provide sufficient information that allows a caller to
 potentially verify the result and use it elsewhere, hence we simply
 return 2 lists of separate scores.
 
-Legit think having a separate representation that can index into individual 
+Legit think having a separate representation that can index into individual
 notes will be immensely helpful.
 But, I'm certain there has to be something I'm missing to decide otherwise
 (if I had to guess, ambiguity of how musical scores themselves are presented to
@@ -63,15 +63,15 @@ On a completely separate and unrelated note, there are 2 pitchmeans with,
 the *exact* same implementation and 2 filenames...
 """
 
-from musmart import Score, Note, Part
-from musmart.ismonophonic import ismonophonic
-from musmart.pitch_mean import pitch_mean
+from amads import Score, Note, Part
+from amads.ismonophonic import ismonophonic
+from amads.pitch_mean import pitch_mean
 from operator import lt
 import math
 
 def construct_score_list(notes, intervals):
     """
-    given an iterator of intervals and a global list of notes, 
+    given an iterator of intervals and a global list of notes,
     we construct a list of scores containing the notes specified within the intervals
     """
     score_list = []
@@ -90,7 +90,7 @@ def find_peaks(target_list, comp = lt):
     according to a comparison
     """
     peaks = []
-    for i, triplet in enumerate(zip(target_list, target_list[1:], 
+    for i, triplet in enumerate(zip(target_list, target_list[1:],
         target_list[2:])):
         if comp(triplet[0], triplet[1]) and comp(triplet[2], triplet[1]):
             peaks.append(i + 1)
@@ -111,10 +111,10 @@ def segmentgestalt(score: Score) -> tuple[list[float], list[float]]:
 
     # ripped straight from skyline.py...
     # extracting notes here
-    # the bigger question is why do we need to flatten when we are 
+    # the bigger question is why do we need to flatten when we are
     # already extracting notes here? For another time I suppose...
     notes = list(score.find_all(Note))
-    
+
     # keynum is the true midi pitch value (alt is only there for printing)
     # sort the notes by qstart, if qstart is equal, sort by pitch
     # qstart lists the offset start time in beats per quarter note
@@ -155,16 +155,16 @@ def segmentgestalt(score: Score) -> tuple[list[float], list[float]]:
     # we need to basically follow segment_gestalt.m
     # (1) calculate individual clang pitch means
     mean_pitches = [pitch_mean(score, weighted=True) for score in clang_scores]
- 
+
     # (2) calculate segment distances
     seg_dist_values = []
     # calculating segment distance...
     for i in range(len(clang_scores) - 1):
         local_seg_dist = 0.0
         # be careful of the indices when calculating segdist here
-        local_seg_dist += abs(mean_pitches[i + 1] - mean_pitches[i]) 
+        local_seg_dist += abs(mean_pitches[i + 1] - mean_pitches[i])
         # first first distance
-        local_seg_dist += (notes[cl_indices[i + 1]].qstart() 
+        local_seg_dist += (notes[cl_indices[i + 1]].qstart()
             - notes[cl_indices[i]].qstart())
         # first of next clang to last of distance
         local_seg_dist += abs(notes[cl_indices[i + 1]].keynum -

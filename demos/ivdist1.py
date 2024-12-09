@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
-from musmart.pt_midi_import import partitura_midi_import
-from musmart.ivdist1 import ivdist1
-from musmart import example
+from amads.pt_midi_import import partitura_midi_import
+from amads.ivdist1 import ivdist1
+from amads import example
 
 my_midi_file = example.fullpath("midi/twochan.mid")
 
@@ -31,6 +31,6 @@ plt.ylabel('Probability')
 plt.title('Interval Distribution')
 
 # Apply every three ticks labels
-plt.xticks(ticks=tick_indices, labels=tick_labels)  
+plt.xticks(ticks=tick_indices, labels=tick_labels)
 
 plt.show()

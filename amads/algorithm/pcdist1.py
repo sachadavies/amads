@@ -4,7 +4,7 @@ Pitch class distribution analysis.
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=80.
 """
 
-from musmart import Score, Note
+from amads import Score, Note
 
 
 def pcdist1(score: Score, weighted: bool = True) -> list[float]:
@@ -22,12 +22,12 @@ def pcdist1(score: Score, weighted: bool = True) -> list[float]:
     Returns
     -------
     list[float]
-        A 12-element list representing the normalized probabilities of each pitch 
-        class (C, C#, D, D#, E, F, F#, G, G#, A, A#, B). If the score is empty, 
+        A 12-element list representing the normalized probabilities of each pitch
+        class (C, C#, D, D#, E, F, F#, G, G#, A, A#, B). If the score is empty,
         returns a list with all elements set to zero.
     """
     pcd = [0] * 12
-    
+
     for container in score.note_containers():
         container.show()
         for note in container.find_all(Note):
