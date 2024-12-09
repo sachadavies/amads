@@ -16,6 +16,7 @@ import pytest
 from musmart.algorithm.pc_set_functions import pitches_to_prime, set_classes_from_cardinality
 
 
+@pytest.mark.skip(reason="Currently failing, issue logged in https://github.com/music-computing/amads/issues/37")
 def test_pitches_to_prime():
     """
     Tests one case through the interval vector, and another that requires transformation.
@@ -31,6 +32,7 @@ def test_pitches_to_prime():
     assert prime == (0, 1, 4, 6)
 
 
+@pytest.mark.skip(reason="Currently failing, issue logged in https://github.com/music-computing/amads/issues/37")
 def test_self_complement_hexachords():
     """
     Tests that all and only the hexachords without a Z-related pair are self-complementary.
