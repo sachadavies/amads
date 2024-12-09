@@ -1,28 +1,4 @@
 """
-NAME:
-===============================
-PC Sets (pc_sets.py)
-
-BY:
-===============================
-Mark Gotham, 2021
-
-
-LICENCE:
-===============================
-
-Creative Commons Attribution-ShareAlike 4.0 International License
-https://creativecommons.org/licenses/by-sa/4.0/
-
-
-SOURCE:
-===============================
-https://github.com/MarkGotham/Serial_Analyser
-
-
-ABOUT:
-===============================
-
 Functions for retrieving one pitch class set property directly from another.
 
 Most of the retrieval function names are in the form
@@ -31,7 +7,14 @@ e.g.
 `prime_to_combinatoriality`
 Some are simple mappings from one entry to another.
 Anything starting with pitches involves more calculation.
+
+Broadly as implemented by Mark Gotham
+for [Serial_Analyser](https://github.com/MarkGotham/Serial_Analyser)
+after Robert Morris,
+but the functions are general
+and not really named algorithms in sense used elsewhere on this code base.
 """
+
 
 from typing import Union, List, Tuple
 from ..resources import pc_sets

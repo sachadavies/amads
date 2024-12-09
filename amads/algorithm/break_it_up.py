@@ -1,29 +1,16 @@
 """
-NAME
-===============================
-BREAK IT UP (break_it_up.py)
+Make sense of the relationship between
+the notes in
+and
+the hierarchy of
+a metrical cycle.
 
+Uses include identifying notes that traverse metrical levels,
+for anaylsis (e.g., as a measure of syncopation)
+and notation (e.g., re-notating to reflect the
+within-measure notational conventions).
 
-BY
-===============================
-Mark Gotham, 2020-21
-
-
-LICENCE:
-===============================
-Creative Commons Attribution-ShareAlike 4.0 International License
-https://creativecommons.org/licenses/by-sa/4.0/
-
-
-ABOUT:
-===============================
-Split up notes and rests to reflect the
-within-measure notational conventions
-of metrical hierarchies in Western classical music
-and wider in so far as events can be symbolically
-represented by interacting layers of pulse streams.
-
-This delivers functionality I set out in previous discussions on the music21
+This delivers functionality promised in previous discussions on the music21
 list (https://groups.google.com/g/music21list/c/5G-UafJeW94/m/YcEBE0PFAQAJ)
 and repo (issue 992, https://github.com/cuthbertLab/music21/issues/992)
 
@@ -35,8 +22,8 @@ it is split at that position into two note-heads to be connected by a tie.
 
 
 TODO:
-===============================
-Connect up to scores (work with note and time signature by context).
+- Connect up to scores (work with note and time signature by context).
+- Divide the metrical structure logic from the operations
 
 """
 
