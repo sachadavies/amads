@@ -1,6 +1,8 @@
 # Algorithms for Music Analysis and Data Science (AMADS)
 
 [![codecov](https://codecov.io/gh/music-computing/amads/graph/badge.svg?token=TONE1IFOR3)](https://codecov.io/gh/music-computing/amads)
+[![Tests](https://github.com/music-computing/amads/actions/workflows/tests.yml/badge.svg)](https://github.com/music-computing/amads/actions/workflows/tests.yml)
+[![Docs](https://github.com/music-computing/amads/actions/workflows/documentation.yml/badge.svg)](https://github.com/music-computing/amads/actions/workflows/documentation.yml)
 
 This repository represents the very earliest stages of an attempt to collect and organise algorithms for
 music analysis and data science.
