@@ -5,6 +5,8 @@ Parncutt's 1988 model for finding the root of a chord.
 
 from typing import List
 
+from ...core.export import export
+
 
 weights = [0.0 for _ in range(12)]
 weights[0] = 1.0
@@ -32,6 +34,7 @@ def root_strengths(chord: List[int]) -> List[float]:
     return strengths
 
 
+@export
 def root(chord: List[int]) -> int:
     """
     Estimates the root of a chord using Parncutt's 1988 model.
