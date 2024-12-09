@@ -9,10 +9,8 @@ Much functionality in this package still remains to be tested/implemented/docume
 Use at your own risk!
 
 For more on the ...
-- ... motivation and background, please see [the paper](./paper.md)
-- ... details for developers, see
-  - [design principles here](./docs/developer_notes/design.rst)
-  - [instructions on running tests here](./docs/developer_notes/testing.rst)
+- ... package in general, see the [documentation website](https://music-computing.github.io/amads)
+- ... motivation and background, please see [the draft paper](./paper.md)
 
 A brief, high-level introduction to the project follows below.
 
