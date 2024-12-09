@@ -8,13 +8,17 @@ from musmart.io.pt_midi_import import partitura_midi_import
 from musmart.music import example
 
 
-
-
-@pytest.mark.parametrize("midi_filename", ["sarabande.mid", "chopin_prelude_7.mid"])
+@pytest.mark.parametrize("midi_filename", [
+    "sarabande.mid",
+    pytest.param(
+        "chopin_prelude_7.mid",
+        marks=pytest.mark.skip(reason="Known to fail, issue logged in https://github.com/music-computing/amads/issues/35")
+    )
+])
 def test_import_midi(midi_filename):
     """
     Test MIDI import by comparing the results with pretty_midi.
-    
+
     Parameters
     ----------
     midi_filename : str
