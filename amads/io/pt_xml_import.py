@@ -1,6 +1,5 @@
 import partitura as pt
-from amads.core.basics import Score, Part, Staff, Measure, Note
-from amads.core.basics import Rest, TimeSignature, KeySignature
+from ..core.basics import Score, Part, Staff, Measure, Note, Rest, TimeSignature, KeySignature
 
 # Partitura seems to have a rounding error, reporting measure length
 # of 1919 instead of 1920 when divs per quarter is 480. This can lead

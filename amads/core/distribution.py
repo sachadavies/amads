@@ -15,11 +15,9 @@ Dependencies:
 Usage:
     [Add basic usage examples or import statements]
 """
-import matplotlib
 # matplotlib.use('TkAgg') # We should not force this on users as it is not compatible with all backends
 import matplotlib.pyplot as plt
 from matplotlib import figure
-from matplotlib import patches
 from typing import Any, List, Union
 
 DEFAULT_BAR_COLOR = "skyblue"

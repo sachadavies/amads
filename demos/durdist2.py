@@ -1,22 +1,33 @@
+"""
+Plot the duration distribution of notes in a MIDI file.
+
+This example demonstrates how to calculate and visualize the duration distribution
+of notes in a MIDI file.
+"""
+
+# %%
 import matplotlib.pyplot as plt
 import numpy as np
-from amads.pt_midi_import import partitura_midi_import
-from amads.durdist2 import durdist2
 from amads.music import example
+from amads.io import partitura_midi_import
+from amads.algorithm import duration_distribution_2
 
+# %%
+# Load example MIDI file
 my_midi_file = example.fullpath("midi/sarabande.mid")
 
-print("------- input from partitura")
+# %%
+# Import MIDI using partitura
 myscore = partitura_midi_import(my_midi_file, ptprint=False)
-print("------- finished input from partitura")
 myscore.show()
 
+# %%
+# Calculate duration distribution
+dd = duration_distribution_2(myscore)
 
-print("------- Calculate 2nd order duration distribution")
-dd = durdist2(myscore)
+print("Duration pair distribution:", dd)
 
-print(dd)
-
+# %%
 # Plot the 2nd order duration distribution as a heatmap
 dd_array = np.array(dd)
 plt.figure(figsize=(8, 6))
@@ -36,3 +47,5 @@ plt.yticks(range(len(bin_centers)), bin_centers)
 plt.gca().invert_yaxis()
 
 plt.show()
+
+# %%

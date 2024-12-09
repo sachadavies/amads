@@ -2,7 +2,7 @@
 Provides the `skyline` function
 """
 
-from amads.core.basics import Score, Note, Part
+from ..core.basics import Score, Note, Part
 
 
 def skyline(score: Score, threshold: float = 0.1):

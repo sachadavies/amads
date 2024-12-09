@@ -46,8 +46,8 @@ leverage the fact that each note offset has a unique note in the score and
 emit offset and strength pairs...
 """
 
-from amads.core.basics import Score, Note
-from amads.algorithm import ismonophonic
+from ..core.basics import Score, Note
+from .ismonophonic import ismonophonic
 
 
 def boundary(score: Score):

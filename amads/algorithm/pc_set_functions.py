@@ -34,6 +34,7 @@ Anything starting with pitches involves more calculation.
 """
 
 from typing import Union, List, Tuple
+
 from ..resources import pc_sets
 from ..pitch import transformations as pitch_list_transformations
 

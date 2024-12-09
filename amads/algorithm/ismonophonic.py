@@ -2,7 +2,8 @@
 Provides the function `ismonophonic`
 """
 
-from amads.core.basics import Score, Note
+from ..core.basics import Score, Note
+
 
 
 def _ismonophonic(notes: list[Note]):

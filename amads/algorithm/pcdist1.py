@@ -4,7 +4,7 @@ Pitch class distribution analysis.
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=80.
 """
 
-from amads.core.basics import Score, Note
+from ..core.basics import Score, Note
 
 
 def pcdist1(score: Score, weighted: bool = True) -> list[float]:

@@ -4,8 +4,8 @@ Provides the `ivdist2` function
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=64
 """
 
-from amads.core.basics import Note, Score
-from amads.algorithm import ismonophonic
+from ..core.basics import Note, Score
+from .ismonophonic import ismonophonic
 
 
 def update_id(id: list[list[float]], notes: list[Note], weighted: bool):

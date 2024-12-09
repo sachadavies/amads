@@ -1,3 +1,24 @@
+__all__ = [
+    "boundary",
+    "ReGrouper",
+    "duration_distribution_1",
+    "duration_distribution_2",
+    "entropy",
+    "hz2midi",
+    "ismonophonic",
+    "ivdirdist1",
+    "ivdist1",
+    "ivdist2",
+    "ivsizedist1",
+    "nnotes",
+    "pcdist1",
+    "pcdist2",
+    "pitch_mean",
+    "scale",
+    "segment_gestalt",
+    "skyline",
+]
+
 from .boundary import boundary
 from .break_it_up import ReGrouper
 from .durdist1 import duration_distribution_1
@@ -10,10 +31,11 @@ from .ivdist1 import ivdist1
 from .ivdist2 import ivdist2
 from .ivsizedist1 import ivsizedist1
 from .nnotes import nnotes
-from .pc_set_functions import *
+# from .pc_set_functions import *
 from .pcdist1 import pcdist1
 from .pcdist2 import pcdist2
 from .pitch_mean import pitch_mean
 from .scale import scale
 from .segment_gestalt import segment_gestalt
 from .skyline import skyline
+

@@ -3,6 +3,7 @@ Implements the `entropy` function.
 
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=60
 """
+
 from typing import List
 import numpy as np
 
@@ -36,7 +37,7 @@ def entropy(d: List[float]) -> float:
     """
     d = np.asarray(d).flatten()  # Convert to a 1D numpy array
     d = d / (np.sum(d) + 1e-12)  # Normalize
-    logd = np.log(d + 1e-12)  
+    logd = np.log(d + 1e-12)
     h = -np.sum(d * logd) / np.log(len(d))  # Compute the entropy and normalize
 
     return float(h)

@@ -35,10 +35,8 @@ Score (one per musical work or movement)
 import functools
 from math import floor
 import weakref
-import sys
 
-
-from amads.core.time_map import TimeMap, MapBeat
+from .time_map import TimeMap
 
 class Event:
     """Event is a superclass for Note, Rest, EventGroup, and just about

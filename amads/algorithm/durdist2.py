@@ -21,9 +21,10 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 import math
 from typing import Union, List
 
-from amads.core.basics import Score, Note
-from amads.core.distribution import Distribution
-from amads.algorithm import ismonophonic
+from ..core.basics import Score, Note
+from ..core.distribution import Distribution
+from .ismonophonic import ismonophonic
+
 
 def update_dd(dd: List[List[float]], bin_boundaries: Union[None, List[float]],
               prev_bin: int, note: Note) -> int:
@@ -109,7 +110,7 @@ def duration_distribution_2(score: Score,
         Exception: If the score is not monophonic (e.g. contains chords)
     """
     if not ismonophonic(score):
-        raise Exception("Error: Score must be monophonic")
+        raise ValueError("Score must be monophonic")
 
     bin_boundaries = None
     if bin_centers:

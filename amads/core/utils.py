@@ -1,6 +1,6 @@
 import math
-from amads.core.basics import Pitch
-from amads.io.ptscoreread import score_read, score_read_extensions
+from .basics import Pitch
+from ..io.ptscoreread import score_read, score_read_extensions
 
 
 def dir2coll(filenames):

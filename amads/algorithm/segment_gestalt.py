@@ -65,8 +65,9 @@ the *exact* same implementation and 2 filenames...
 
 from operator import lt
 
-from amads.core.basics import Score, Note, Part
-from amads.algorithm import ismonophonic, pitch_mean
+from ..core.basics import Score, Note, Part
+from .ismonophonic import ismonophonic
+from .pitch_mean import pitch_mean
 
 
 def construct_score_list(notes, intervals):
@@ -103,6 +104,7 @@ def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
     (2) If score is monophonic, we return a 2-tuple of lists for clang boundary
     offsets and segment boundary offsets, respectively
     """
+    breakpoint()
     if not ismonophonic(score):
         raise Exception("score not monophonic, input is not valid.")
 

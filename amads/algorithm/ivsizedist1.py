@@ -3,8 +3,8 @@ Provides the `ivsizedist1` function
 """
 
 
-from amads.core.basics import Score
-from amads.algorithm import ivdist1
+from ..core.basics import Score
+from .ivdist1 import ivdist1
 
 
 def ivsizedist1(score: Score, weighted=True) -> list[float]:
