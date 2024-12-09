@@ -11,7 +11,7 @@ the result.
 # First, we'll import the required modules.
 
 import matplotlib.pyplot as plt
-from amads.algorithm.slice.window import sliding_window
+from amads.algorithms.slice.window import sliding_window
 from amads.music import example
 from amads.io.pt_midi_import import partitura_midi_import
 

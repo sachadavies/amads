@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from amads.music import example
 from amads.io import partitura_midi_import
-from amads.algorithm import duration_distribution_2
+from amads.algorithms import duration_distribution_2
 
 # %%
 # Load example MIDI file

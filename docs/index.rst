@@ -43,24 +43,24 @@ General algorithms
    :toctree: _autosummary
    :caption: General algorithms:
 
-   amads.algorithm.boundary
-   amads.algorithm.break_it_up
-   amads.algorithm.durdist1
-   amads.algorithm.durdist2
-   amads.algorithm.entropy
-   amads.algorithm.hz2midi
-   amads.algorithm.ismonophonic
-   amads.algorithm.ivdirdist1
-   amads.algorithm.ivdist1
-   amads.algorithm.ivdist2
-   amads.algorithm.ivsizedist1
-   amads.algorithm.nnotes
-   amads.algorithm.pcdist1
-   amads.algorithm.pcdist2
-   amads.algorithm.pitch_mean
-   amads.algorithm.scale
-   amads.algorithm.segment_gestalt
-   amads.algorithm.skyline
+   amads.algorithms.boundary
+   amads.algorithms.break_it_up
+   amads.algorithms.durdist1
+   amads.algorithms.durdist2
+   amads.algorithms.entropy
+   amads.algorithms.hz2midi
+   amads.algorithms.ismonophonic
+   amads.algorithms.ivdirdist1
+   amads.algorithms.ivdist1
+   amads.algorithms.ivdist2
+   amads.algorithms.ivsizedist1
+   amads.algorithms.nnotes
+   amads.algorithms.pcdist1
+   amads.algorithms.pcdist2
+   amads.algorithms.pitch_mean
+   amads.algorithms.scale
+   amads.algorithms.segment_gestalt
+   amads.algorithms.skyline
 
 Harmony
 -------

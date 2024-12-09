@@ -7,7 +7,7 @@ of notes in a MIDI file.
 
 from amads.music import example
 from amads.io import partitura_midi_import
-from amads.algorithm import duration_distribution_1
+from amads.algorithms import duration_distribution_1
 
 # Load example MIDI file
 my_midi_file = example.fullpath("midi/sarabande.mid")

@@ -26,7 +26,7 @@ Modules should be organized in a logical hierarchy that reflects their purpose. 
 
 Note that functions will be importable in multiple ways::
 
-    from amads.algorithm.complexity.lz77 import lz77_size
+    from amads.algorithms.complexity.lz77 import lz77_size
     from amads.all import lz77_size
 
 Function naming

@@ -11,7 +11,7 @@ Boundary detection
 import matplotlib.pyplot as plt
 
 from amads.io import partitura_midi_import, pianoroll
-from amads.algorithm import boundary
+from amads.algorithms import boundary
 from amads.music import example
 
 # Load example MIDI file

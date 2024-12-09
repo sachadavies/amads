@@ -1,4 +1,4 @@
-from .algorithm import *
+from .algorithms import *
 from .core import *
 from .harmony import *
 from .io import *
