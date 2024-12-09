@@ -16,7 +16,7 @@
 # providing the basic solution.
 
 from .core.basics import *
-from .core.timemap import *
+from .core.time_map import *
 from .core.distribution import *
 from .music import example
 import sys

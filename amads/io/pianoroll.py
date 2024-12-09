@@ -87,8 +87,8 @@ def pianoroll(score: Score, y_label='name', x_label='beat',
 
         # Conditionally converts beat to sec
         if x_label == 'sec':
-            start_time = score.timemap.beat_to_time(start_time)
-            duration = score.timemap.beat_to_time(duration)
+            start_time = score.time_map.beat_to_time(start_time)
+            duration = score.time_map.beat_to_time(duration)
 
         # Stores min and max note for y_axis labeling
         if (pitch < min_note):

@@ -38,7 +38,7 @@ import weakref
 import sys
 
 
-from amads.core.timemap import Timemap, Mapbeat
+from amads.core.time_map import TimeMap, Mapbeat
 
 class Event:
     """Event is a superclass for Note, Rest, EventGroup, and just about
@@ -823,28 +823,28 @@ class Score (Concurrence):
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # content -- elements contained within this collection
-    # timemap -- a map from quarters to seconds (or seconds to quarters)
+    # time_map -- a map from quarters to seconds (or seconds to quarters)
     #
     # Additional attributes may be assigned, e.g. 'title', 'source_file',
     # 'composer', etc. (TBD)
 
-    def __init__(self, offset=0, dur=0, content=None, timemap=None):
+    def __init__(self, offset=0, dur=0, content=None, time_map=None):
         super().__init__(offset, dur, content)
-        self.timemap = timemap if timemap else Timemap()
+        self.time_map = time_map if time_map else TimeMap()
 
 
     def copy(self):
         """Make a copy, omitting weak link to parent.
         """
         s = Score(offset=self.offset, dur=self.dur,
-                  timemap=self.timemap)
+                  time_map=self.time_map)
         return s
 
 
     def show(self, indent=0):
         print(' ' * indent, f"Score at {self.qstart():0.3f} offset ",
               f"{self.offset:0.3f} dur {self.dur:0.3f}", sep='')
-        self.timemap.show(indent + 4)
+        self.time_map.show(indent + 4)
         for elem in self.content:
             elem.show(indent + 4)
         return self
@@ -854,7 +854,7 @@ class Score (Concurrence):
         """Make a deep copy, omitting weak link to parent.
         """
         s = self.copy()
-        s.timemap = self.timemap.deep_copy()
+        s.time_map = self.time_map.deep_copy()
         for event in self.content:
             # deep copy each component into s
             s.insert(event.deep_copy())

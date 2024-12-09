@@ -1,4 +1,4 @@
-# timemap.py -- map to convert between quarters and seconds
+# time_map.py -- map to convert between quarters and seconds
 #
 
 class Mapbeat:
@@ -13,8 +13,8 @@ class Mapbeat:
 
 
 
-class Timemap:
-    """Timemap is a map to convert between quarters and seconds.
+class TimeMap:
+    """TimeMap is a map to convert between quarters and seconds.
     """
     # beats -- array of Mapbeat
     # last_tempo -- final beats per second to extrapolate from final
@@ -28,7 +28,7 @@ class Timemap:
     def show(self, indent):
         """print a summary of this time map
         """
-        print(' ' * indent, "Timemap: [ ", sep='', end='')
+        print(' ' * indent, "TimeMap: [ ", sep='', end='')
         for i, mb in enumerate(self.beats):
             tempo = self.index_to_tempo(i + 1)
             print(f"({mb.beat:.2g}, {mb.time:.3g}s, {tempo:.3g}bpm) ",
@@ -37,9 +37,9 @@ class Timemap:
 
 
     def deep_copy(self):
-        """make a full copy of this timemap
+        """make a full copy of this time_map
         """
-        newtm = Timemap(bpm=self.last_tempo * 60)
+        newtm = TimeMap(bpm=self.last_tempo * 60)
         for i in self.beats[1 : ]:
             newtm.beats.append(i.copy())
         return newtm
@@ -48,7 +48,7 @@ class Timemap:
     def append_beat_tempo(self, beat, tempo):
         """Append a Mapbeat specifying a change to tempo at beat.
         beat must be >= last Mapbeat's beat. You cannot insert a tempo
-        change before the end of the Timemap. tempo will hold forever
+        change before the end of the TimeMap. tempo will hold forever
         beginning at beat unless you call append_beat_tempo again to
         change the tempo somewhere beyond beat.
         """
@@ -172,7 +172,7 @@ class Timemap:
 
     """
     if we support any extraction of data from scores and want to retain
-    the Timemap, we'll need some of these editing methods, which were
+    the TimeMap, we'll need some of these editing methods, which were
     originally written in Serpent. They are not converted to Python yet.
 
     def trim(start, end, units_are_seconds=True):
@@ -194,7 +194,7 @@ class Timemap:
             i = i + 1
         // now i is index into beats of the first breakpoint after start
         #if i >= len(beats):
-        #    return // only one 
+        #    return // only one
         // beats[0] is (0,0) and remains that way
         // copy beats[start_index] to beats[1], etc.
         // skip any beats at or near (start,initial_beat), using count
@@ -227,9 +227,9 @@ class Timemap:
         beats.set_len(count)
 
     def cut(start, len, units_are_seconds):
-        # remove portion of time map from start to start + len, 
+        # remove portion of time map from start to start + len,
         # shifting the tail left by len. start and len are in whatever
-        # units the score is in. If you cut the time_map as well as cut 
+        # units the score is in. If you cut the time_map as well as cut
         # the tracks of the sequence, then sequences will preserve the
         # association between tempo changes and events
         // display "before cut", start, len, units_are_seconds
@@ -250,7 +250,7 @@ class Timemap:
 
         while i < len(beats) and beats[i].time < start - alg_eps:
             i = i + 1
-        // now i is index into beats of the first breakpoint on or 
+        // now i is index into beats of the first breakpoint on or
         // after start, insert (start, initial_beat) in map
         // note: i may be beyond the last breakpoint, so beat[i] may
         // be out of bounds
@@ -292,8 +292,8 @@ class Timemap:
             new_map.beats[i] = Alg_beat(beats[i].time, beats[i].beat)
         new_map.last_tempo = last_tempo
         return new_map
-        
-        
+
+
     def insert_time(start, len):
         // find time,beat pair that determines tempo at start
         // compute beat offset = (delta beat / delta time) * len

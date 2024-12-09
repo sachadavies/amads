@@ -214,7 +214,7 @@ def partitura_convert_part(ppart, score):
         elif isinstance(item, pt.score.Tempo):
             start = div_to_quarter(durs, item.start.t)
             print("Tempo start", start, "tempo", item.bpm / 60.0)
-            score.timemap.append_beat_tempo(start, item.bpm / 60.0)
+            score.time_map.append_beat_tempo(start, item.bpm / 60.0)
         else:
             print("ignoring", item)
     print("events", events)
