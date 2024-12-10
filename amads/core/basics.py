@@ -161,13 +161,13 @@ class Note(Event):
 
     def show(self, indent=0):
         tieinfo = ""
-        if self.tie != None:
+        if self.tie is not None:
             tieinfo = " tie " + self.tie
         dynamicinfo = ""
-        if self.dynamic != None:
+        if self.dynamic is not None:
             dynamicinfo = " dyn " + str(self.dynamic)
         lyricinfo = ""
-        if self.lyric != None:
+        if self.lyric is not None:
             lyricinfo = " lyric " + self.lyric
         print(
             " " * indent,
@@ -466,7 +466,7 @@ class EventGroup(Event):
 
     def __init__(self, offset, dur, content):
         super().__init__(dur, offset)
-        self.content = [] if content == None else content
+        self.content = [] if content is None else content
 
     def copy(self):
         raise Exception("EventGroup is abstract, subclass should override copy()")
@@ -556,9 +556,9 @@ class Sequence(EventGroup):
         dur(ation) defaults to the duration of provided content or 0
         if content is empty or None.
         """
-        if content == None:
+        if content is None:
             content = []
-        if dur == None:
+        if dur is None:
             if len(content) == 0:
                 dur = 0
             else:
@@ -605,7 +605,7 @@ class Sequence(EventGroup):
         offset is changed to the dur(ation) of self, which is then
         incremented by the duration of element.
         """
-        if offset == None:
+        if offset is None:
             element.offset = self.dur
             if update_dur:
                 self.dur += element.dur
@@ -645,9 +645,9 @@ class Concurrence(EventGroup):
         """dur(ation) defaults to the maximum end_offset of provided content
         or 0 if content is empty.
         """
-        if content == None:
+        if content is None:
             content = []
-        if dur == None:
+        if dur is None:
             dur = 0
             for elem in content:
                 dur = max(dur, elem.end_offset)
@@ -959,7 +959,6 @@ class Score(Concurrence):
             keynum_list(part=[0]) to indicate an index. This is
             prettier and less prone to error.
         """
-        keynums = []
         mtn = self.strip_ties()  # makes a copy we can manipulate
         parts = mtn.content
         mtn.content = []  # reconstruct with only selected parts
@@ -1169,7 +1168,7 @@ class Staff(Sequence):
         # if note was in chord we need the note's grandparent:
         if isinstance(measure, Chord):
             measure = measure.parent()
-        if m_index == None:  # get measure index
+        if m_index is None:  # get measure index
             m_index = self.content.index(measure)
         n_index = measure.content.index(note) + 1  # get note index
         qstart = note.qstart()

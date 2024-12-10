@@ -11,7 +11,7 @@ def score_read(filename, pprint=False, format=None):
     If format is None (default), the format is based on the filename
     extension, which can be 'xml', 'mid', 'midi', 'smf', 'kern', or 'mei'
     """
-    if format == None:
+    if format is None:
         ext = pathlib.Path(filename).suffix
         if ext == ".xml":
             format = "xml"

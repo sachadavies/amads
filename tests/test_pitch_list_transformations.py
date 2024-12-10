@@ -16,8 +16,6 @@ Source: Gotham and Yust, Serial Analyser, DLfM 2021
 https://github.com/MarkGotham/Serial_Analyser
 """
 
-import pytest
-
 from amads.pitch.transformations import (
     invert,
     pitches_to_intervals,

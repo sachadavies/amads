@@ -166,7 +166,7 @@ def duration(dist_array: np.ndarray) -> figure.Figure:
         "2*sqrt(2)",
         "4",
     ]
-    ax.bar(bin_centers, dd, color="skyblue")
+    ax.bar(bin_centers, dist_array, color="skyblue")
     ax.set_xlabel("Duration (in beats)")
     ax.set_ylabel("Probability")
     ax.set_title("Duration Distribution")
@@ -430,7 +430,7 @@ def interval_size(dist_array: np.ndarray) -> figure.Figure:
         "M7",
         "P8",
     ]
-    ax.bar(interval_names, isd, color="skyblue")
+    ax.bar(interval_names, dist_array, color="skyblue")
     ax.set_xlabel("Interval Size")
     ax.set_ylabel("Proportion (%)")
     ax.set_title("Interval Size Distribution")

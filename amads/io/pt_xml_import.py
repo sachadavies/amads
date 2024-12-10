@@ -55,7 +55,7 @@ def div_to_quarter(durs, div, rnd=False):
         i += 1
     # add quarters from last time point to "now" (div):
     qtrs += (div - durs[i][0]) / durs[i][1]
-    if rnd and (DIV_TO_QUARTER_ROUNDING != None):
+    if rnd and (DIV_TO_QUARTER_ROUNDING is not None):
         qtrs = round(qtrs * DIV_TO_QUARTER_ROUNDING) / DIV_TO_QUARTER_ROUNDING
     print("div_to_quarter: div", div, "qtrs", qtrs)
     return qtrs
@@ -159,7 +159,7 @@ def staff_for_note(part, event):
             below).
     returns a Staff object
     """
-    if event[3] == None:
+    if event[3] is None:
         return part.content[0]
     else:
         return part.content[event[3] - 1]  # find the staff
@@ -286,7 +286,7 @@ def partitura_convert_part(ppart, score):
 
 def partitura_xml_import(filename, ptprint=False):
     """Use Partitura to import a MusicXML file."""
-    if filename == None:
+    if filename is None:
         filename = pt.EXAMPLE_MUSICXML
     ptscore = pt.load_score(filename)
     if ptprint:

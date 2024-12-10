@@ -89,8 +89,8 @@ class TimeMap:
         else:  # interpolate between i - 1 and i
             # note: i is at least 1 because first MapBeat is at time 0
             # and beat > 0
-            mbi0 = self.beats[i - 1]
-            mbi1 = self.beats[i]
+            mb0 = self.beats[i - 1]
+            mb1 = self.beats[i]
         # whether we extrapolate or interpolate, the math is the same:
         time_dif = mb1.time - mb0.time
         beat_dif = mb1.beat - mb0.beat

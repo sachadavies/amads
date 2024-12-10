@@ -53,7 +53,7 @@ def update_dd(
             if note.dur <= boundary:
                 break
         else:
-            bin = len(bin_centers) - 1
+            bin = len(bin_boundaries) - 1
     else:
         if note.dur <= 0:
             return None
@@ -61,7 +61,7 @@ def update_dd(
         if bin < 0 or bin > 8:
             return None
 
-    if prev_bin != None:
+    if prev_bin is not None:
         dd[prev_bin][bin] += 1
     return bin
 

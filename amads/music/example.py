@@ -31,7 +31,7 @@ def fullpath(example):
 
     spec = util.find_spec("amads")
     if spec is None:
-        print(f"Error: Package {package_name} not found")
+        print("Error: Package amads not found")
         return None
 
     package_path = spec.submodule_search_locations[0]
