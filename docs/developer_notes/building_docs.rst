@@ -36,14 +36,19 @@ The built documentation will be available in ``docs/_build/html/index.html``.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For development, you can use ``sphinx-autobuild`` which automatically rebuilds the
-documentation when changes are detected:
+documentation when changes are detected.
+
+The first time you run this, you will need to install the ``sphinx-autobuild`` package:
 
 .. code-block:: bash
 
-    sphinx-autobuild docs docs/_build/html
+    pip install sphinx-autobuild
 
-Now navigate to docs/_build/html and open index.html in your browser.
-To see new changes, refresh the page.
+Then run the following command to start the auto-building server:
+
+.. code-block:: bash
+
+    sphinx-autobuild docs docs/_build/html --open-browser
 
 Writing documentation
 ---------------------
