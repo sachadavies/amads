@@ -23,7 +23,7 @@ For the source code, visit the `GitHub repository <https://github.com/music-comp
    :hidden:
 
    developer_notes/contributing
-   developer_notes/building_docs
+   developer_notes/documentation
    developer_notes/design
    developer_notes/modules
    developer_notes/music21

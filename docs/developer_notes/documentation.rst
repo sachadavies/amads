@@ -1,5 +1,5 @@
-Building documentation
-======================
+Documentation
+=============
 
 This guide explains how to build and maintain the project's documentation using Sphinx.
 
@@ -15,40 +15,38 @@ Before building the documentation, ensure you have the dev dependencies installe
 Building documentation
 ----------------------
 
-The documentation can be built in two ways:
-
-1. One-time build
-~~~~~~~~~~~~~~~~~
-
-To build the documentation once, navigate to the ``docs`` directory and run:
+macOS or Linux
+~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    # On Unix/macOS
-    make html
+    cd docs
+    make preview
 
-    # On Windows
+This will start a live server that automatically rebuilds the documentation when changes are detected.
+
+By default only changed files are rebuilt. To clean the build directory, so that subsequent builds are made from scratch, run:
+
+.. code-block:: bash
+
+    make clean
+
+Windows
+~~~~~~~
+
+.. code-block:: bash
+
+    cd docs
     make.bat html
 
-The built documentation will be available in ``docs/_build/html/index.html``.
+This will build the documentation once, you will then have to open it from the file path ``docs/_build/html/index.html``.
 
-2. Auto-building (development)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-For development, you can use ``sphinx-autobuild`` which automatically rebuilds the
-documentation when changes are detected.
-
-The first time you run this, you will need to install the ``sphinx-autobuild`` package:
+As above, you can clean the build directory so that subsequent builds are made from scratch:
 
 .. code-block:: bash
 
-    pip install sphinx-autobuild
+    make.bat clean
 
-Then run the following command to start the auto-building server:
-
-.. code-block:: bash
-
-    sphinx-autobuild docs docs/_build/html --open-browser
 
 Writing documentation
 ---------------------
