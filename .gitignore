@@ -172,3 +172,4 @@ conda_notes.md
 docs/auto_examples
 
 /.vscode/
+docs/sg_execution_times.rst
