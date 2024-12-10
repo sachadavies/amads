@@ -33,15 +33,17 @@ Score (one per musical work or movement)
 
 
 import functools
-from math import floor
 import weakref
+from math import floor
 
 from .time_map import TimeMap
+
 
 class Event:
     """Event is a superclass for Note, Rest, EventGroup, and just about
     anything that takes place in time.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -52,12 +54,10 @@ class Event:
         self._parent = None
 
     def copy(self):
-        raise Exception(
-                "Event is abstract, subclass should override copy()")
+        raise Exception("Event is abstract, subclass should override copy()")
 
     def deep_copy(self):
-        raise Exception(
-                "Event is abstract, subclass should override deep_copy()")
+        raise Exception("Event is abstract, subclass should override deep_copy()")
 
     @property
     def end_offset(self):
@@ -72,8 +72,7 @@ class Event:
         self._parent = weakref.ref(p)
 
     def qstart(self):
-        """Retrieve the start time in quarters.
-        """
+        """Retrieve the start time in quarters."""
         p = self.parent  # save it to prevent race condition
         if p:
             return p().qstart() + self.offset
@@ -84,11 +83,11 @@ class Event:
         return self.qstart() + self.dur
 
 
-
-class Rest (Event):
+class Rest(Event):
     """Rest represents a musical rest. It is normally an element of
     a Measure.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -96,31 +95,30 @@ class Rest (Event):
     def __init__(self, dur=1, offset=0):
         super().__init__(dur, offset)
 
-
     def copy(self):
-        """Make a copy of just this object with no parent.
-        """
+        """Make a copy of just this object with no parent."""
         return Rest(dur=self.dur, offset=self.offset)
 
-
     def show(self, indent=0):
-        print(' ' * indent, f"Rest at {self.qstart():.3f} ",
-              f"offset {self.offset:.3f} dur {self.dur:.3f}", sep='')
+        print(
+            " " * indent,
+            f"Rest at {self.qstart():.3f} ",
+            f"offset {self.offset:.3f} dur {self.dur:.3f}",
+            sep="",
+        )
         return self
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         r = Rest(self.dur, self.offset)
         return r
 
 
-
-class Note (Event):
+class Note(Event):
     """Note represents a musical note. It is normally an element of
     a Measure.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -149,31 +147,39 @@ class Note (Event):
         self.lyric = lyric
         self.tie = None
 
-
     def copy(self):
-        """Make a copy of just this object with no parent.
-        """
-        n = Note(dur=self.dur, pitch=self.pitch, dynamic=self.dynamic,
-                 lyric=self.lyric, offset=self.offset)
+        """Make a copy of just this object with no parent."""
+        n = Note(
+            dur=self.dur,
+            pitch=self.pitch,
+            dynamic=self.dynamic,
+            lyric=self.lyric,
+            offset=self.offset,
+        )
         n.tie = self.tie
         return n
 
-
     def show(self, indent=0):
-        tieinfo = ''
+        tieinfo = ""
         if self.tie != None:
             tieinfo = " tie " + self.tie
-        dynamicinfo = ''
+        dynamicinfo = ""
         if self.dynamic != None:
             dynamicinfo = " dyn " + str(self.dynamic)
-        lyricinfo = ''
+        lyricinfo = ""
         if self.lyric != None:
             lyricinfo = " lyric " + self.lyric
-        print(' ' * indent, f"Note at {self.qstart():0.3f} ",
-              f"offset {self.offset:0.3f} dur {self.dur:0.3f} pitch ",
-              self.name_with_octave, tieinfo, dynamicinfo, lyricinfo, sep='')
+        print(
+            " " * indent,
+            f"Note at {self.qstart():0.3f} ",
+            f"offset {self.offset:0.3f} dur {self.dur:0.3f} pitch ",
+            self.name_with_octave,
+            tieinfo,
+            dynamicinfo,
+            lyricinfo,
+            sep="",
+        )
         return self
-
 
     def deep_copy(self):
         """Make a "deep" copy; pitch is immutable,
@@ -183,41 +189,50 @@ class Note (Event):
         return n
 
     @property
-    def name(self): return self.pitch.name
+    def name(self):
+        return self.pitch.name
 
     @property
-    def name_str(self): return self.pitch.name_str
+    def name_str(self):
+        return self.pitch.name_str
 
     @property
-    def name_with_octave(self): return self.pitch.name_with_octave
+    def name_with_octave(self):
+        return self.pitch.name_with_octave
 
     @property
-    def pitch_class(self): return self.pitch.pitch_class
+    def pitch_class(self):
+        return self.pitch.pitch_class
 
     @pitch_class.setter
-    def pitch_class(self, pc): self.pitch.pitch_class = pc
+    def pitch_class(self, pc):
+        self.pitch.pitch_class = pc
 
     @property
-    def octave(self): return self.octave
+    def octave(self):
+        return self.octave
 
     @octave.setter
-    def octave(self, oct): self.pitch.octave = oct
+    def octave(self, oct):
+        self.pitch.octave = oct
 
     @property
     def keynum(self):
         return self.pitch.keynum
 
-    def enharmonic(self): return self.pitch.enharmonic()
+    def enharmonic(self):
+        return self.pitch.enharmonic()
 
-    def upper_enharmonic(self): return self.pitch.upper_enharmonic()
+    def upper_enharmonic(self):
+        return self.pitch.upper_enharmonic()
 
-    def lower_enharmonic(self): return self.pitch.lower_enharmonic()
+    def lower_enharmonic(self):
+        return self.pitch.lower_enharmonic()
 
 
+class TimeSignature(Event):
+    """TimeSignature is a zero-duration Event with timesig info."""
 
-class TimeSignature (Event):
-    """TimeSignature is a zero-duration Event with timesig info.
-    """
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -231,30 +246,28 @@ class TimeSignature (Event):
         self.beat = beat
         self.beat_type = beat_type
 
-
     def copy(self):
-        """Make a copy of just this object with no parent.
-        """
+        """Make a copy of just this object with no parent."""
         return TimeSignature(self.beat, self.beat_type, offset=self.offset)
 
-
     def show(self, indent=0):
-        print(' ' * indent, f"TimeSignature at {self.qstart():0.3f} offset ",
-              f"{self.offset:0.3f}: {self.beat}/{self.beat_type}", sep='')
+        print(
+            " " * indent,
+            f"TimeSignature at {self.qstart():0.3f} offset ",
+            f"{self.offset:0.3f}: {self.beat}/{self.beat_type}",
+            sep="",
+        )
         return self
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         ts = self.copy()
         return ts
 
 
+class KeySignature(Event):
+    """KeySignature is a zero-duration Event with keysig info."""
 
-class KeySignature (Event):
-    """KeySignature is a zero-duration Event with keysig info.
-    """
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -265,24 +278,24 @@ class KeySignature (Event):
         super().__init__(0, offset)
         self.keysig = keysig
 
-
     def copy(self):
-        """Make a copy, omitting weak link to parent.
-        """
+        """Make a copy, omitting weak link to parent."""
         ks = KeySignature(keysig=self.keysig, offset=self.offset)
         return ks
 
-
     def show(self, indent=0):
-        print(' ' * indent, f"KeySignature at {self.qstart():0.3f} offset ",
-              f"{self.offset:0.3f}", abs(self.keysig),
-              " sharps" if self.keysig > 0 else " flats", sep='')
+        print(
+            " " * indent,
+            f"KeySignature at {self.qstart():0.3f} offset ",
+            f"{self.offset:0.3f}",
+            abs(self.keysig),
+            " sharps" if self.keysig > 0 else " flats",
+            sep="",
+        )
         return self
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         return self.copy()
 
 
@@ -304,6 +317,7 @@ class Pitch:
     implied accidentals are encoded in the alt field and keynum is the
     intended pitch with the accidental applied.
     """
+
     # keynum - MIDI key number, e.g. C4 = 60
     # alt - alteration, e.g. flat = -1
 
@@ -337,21 +351,20 @@ class Pitch:
         # We sort first by keynum, then by alt.
         # We consider pitches with sharps (i.e. positive alt) to be lower
         # because their letter names are lower in the musical alphabet.
-        return (self.keynum, - self.alt) < (other.keynum, - other.alt)
+        return (self.keynum, -self.alt) < (other.keynum, -other.alt)
 
     @property
     def name(self):
-        """return one of {0, 2, 4, 5, 7, 9, 11} corresponding to letter names
-        """
+        """return one of {0, 2, 4, 5, 7, 9, 11} corresponding to letter names"""
         return (self.keynum - self.alt) % 12
 
     @property
     def name_str(self):
-        """return string name including accidentals (# or -) if alt is integral
-        """
+        """return string name including accidentals (# or -) if alt is integral"""
         unaltered = round(self.keynum - self.alt)
         base = ["C", "?", "D", "?", "E", "F", "?", "G", "?", "A", "?", "B"][
-                unaltered % 12]
+            unaltered % 12
+        ]
         accidentals = "?"
         if round(self.alt) == self.alt:  # an integer value
             if self.alt > 0:
@@ -390,7 +403,7 @@ class Pitch:
         self.keynum = (oct + 1) * 12 + self.pitch_class
 
     def enharmonic(self):
-        """"If alt is non-zero, return a Pitch where alt is zero
+        """ "If alt is non-zero, return a Pitch where alt is zero
         or has the opposite sign and where alt is minimized. E.g.
         enharmonic(C-double-flat) is A-sharp (not B-flat). If alt
         is zero, return a Pitch with alt of +1 or -1 if possible.
@@ -417,7 +430,7 @@ class Pitch:
         return Pitch(self.keynum, alt=alt)
 
     def upper_enharmonic(self):
-        """"return a valid Pitch with alt decreased by 1 or 2, e.g. C#->Db,
+        """ "return a valid Pitch with alt decreased by 1 or 2, e.g. C#->Db,
         C##->D, C###->D#.
         """
         alt = self.alt
@@ -429,7 +442,7 @@ class Pitch:
         return Pitch(self.keynum, alt=alt)
 
     def lower_enharmonic(self):
-        """"return a valid Pitch with alt increased by 1 or 2, e.g. Db->C#,
+        """ "return a valid Pitch with alt increased by 1 or 2, e.g. Db->C#,
         D->C##, D#->C###
         """
         alt = self.alt
@@ -441,11 +454,11 @@ class Pitch:
         return Pitch(self.keynum, alt=alt)
 
 
-
-class EventGroup (Event):
+class EventGroup(Event):
     """An EventGroup is a collection of Event objects. This is an abstract
     class. Use one of the subclasses: Sequence or Concurrence.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -455,29 +468,27 @@ class EventGroup (Event):
         super().__init__(dur, offset)
         self.content = [] if content == None else content
 
-
     def copy(self):
-        raise Exception(
-                "EventGroup is abstract, subclass should override copy()")
-
+        raise Exception("EventGroup is abstract, subclass should override copy()")
 
     def show(self, indent=0, label="EventGroup"):
-        print(' ' * indent, label, f" at {self.qstart():0.3f} offset ",
-              f"{self.offset:0.3f} dur {self.dur:0.3f}", sep='')
+        print(
+            " " * indent,
+            label,
+            f" at {self.qstart():0.3f} offset ",
+            f"{self.offset:0.3f} dur {self.dur:0.3f}",
+            sep="",
+        )
         for elem in self.content:
             elem.show(indent + 4)
         return self
-
 
     @property
     def last(self):
         return self.content[-1] if len(self.content) > 0 else None
 
-
     def deep_copy(self):
-        raise Exception(
-                "EventGroup is abstract, subclass should override deep_copy()")
-
+        raise Exception("EventGroup is abstract, subclass should override deep_copy()")
 
     def has_chords(self):
         """Test if EventGroup (e.g. Score, Part, Staff, Measure) has any
@@ -486,7 +497,6 @@ class EventGroup (Event):
         chords = self.find_all(Chord)
         # if there are no chords, next will return "empty"
         return next(chords, "empty") != "empty"
-
 
     def has_ties(self):
         """Test if EventGroup (e.g. Score, Part, Staff, Measure) has any
@@ -498,13 +508,11 @@ class EventGroup (Event):
                 return True
         return False
 
-
     def has_measures(self):
         """Test if EventGroup (e.g. Score, Part, Staff) has any measures."""
         measures = self.find_all(Measure)
         # if there are no chords, next will return "empty"
         return next(measures, "empty") != "empty"
-
 
     def insert(self, event):
         """insert an event without any changes to event.offset or
@@ -526,7 +534,6 @@ class EventGroup (Event):
         event.parent = self
         return self
 
-
     def find_all(self, elemType):
         """This is a generator that returns all contained instances of
         type using depth-first search.
@@ -538,8 +545,7 @@ class EventGroup (Event):
                 yield from elem.find_all(elemType)
 
 
-
-class Sequence (EventGroup):
+class Sequence(EventGroup):
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
@@ -559,26 +565,20 @@ class Sequence (EventGroup):
                 dur = content[-1].end_offset
         super().__init__(offset, dur, content)
 
-
     def copy(self):
-        """Make a copy, omitting weak link to parent.
-        """
+        """Make a copy, omitting weak link to parent."""
         s = Sequence(offset=self.offset, dur=self.dur)
         return s
-
 
     def show(self, indent=0, label="Sequence"):
         return super().show(indent, label)
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         s = self.copy()
         for event in self.content:
             s.insert(event.deep_copy())
         return s
-
 
     def last_qstop(self):
         """return the end time (in quarters) of the last element,
@@ -589,7 +589,6 @@ class Sequence (EventGroup):
         else:
             return self.last.last_qstop()
 
-
     def last_end_offset(self):
         """return the end_offset (in quarters) of the last element,
         or 0 if the Sequence is empty
@@ -599,8 +598,7 @@ class Sequence (EventGroup):
         else:
             return self.last.last_end_offset()
 
-
-    def append(self, element, offset=None, update_dur = True):
+    def append(self, element, offset=None, update_dur=True):
         """Append an element. If offset is specified, the element is
         modified to start at this offset, and the duration of self
         is unchanged. If offset is not specified or None, the element
@@ -614,7 +612,6 @@ class Sequence (EventGroup):
         else:
             element.offset = offset
         self.insert(element)  # places element in order and sets element parent
-
 
     def pack(self):
         """Adjust the content to be sequential, with zero offset for the
@@ -632,14 +629,14 @@ class Sequence (EventGroup):
             offset += elem.dur
 
 
-
-class Concurrence (EventGroup):
+class Concurrence(EventGroup):
     """Concurrence represents a temporally simultaneous collection
     of music events (but if elements have a non-zero offset, a Concurrence
     can represent events organized over time).  Thus, the main distinction
     between Concurrence and Sequence is the behavior of methods, since both
     classes can represent simultaneous or sequential events.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # content -- elements contained within this collection
@@ -656,26 +653,20 @@ class Concurrence (EventGroup):
                 dur = max(dur, elem.end_offset)
         super().__init__(offset, dur, content)
 
-
     def copy(self):
-        """Make a copy, omitting weak link to parent.
-        """
+        """Make a copy, omitting weak link to parent."""
         c = Concurrence(offset=self.offset, dur=self.dur)
         return c
 
-
-    def show(self, indent=0, label='Concurrence'):
+    def show(self, indent=0, label="Concurrence"):
         return super().show(indent, label)
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         c = self.copy()
         for event in self.content:
             c.insert(event.deep_copy())
         return c
-
 
     def pack(self):
         """Adjust the content to offsets of zero. The dur(ation) of self
@@ -689,7 +680,6 @@ class Concurrence (EventGroup):
             if isinstance(elem, EventGroup):
                 elem.pack()
             self.dur = max(self.dur, elem.dur)
-
 
     def append(self, element, offset=0, update_dur=True):
         """Append an element to the content with the given offset.
@@ -705,8 +695,7 @@ class Concurrence (EventGroup):
             self.dur = max(self.dur, element.end_offset)
 
 
-
-class Chord (Concurrence):
+class Chord(Concurrence):
     """A Chord is a collection of Notes, normally with offsets of zero
     and the same durations and distinct keynums, but this is not enforced.
     The order of notes is arbitrary. Normally, a Chord is a member of a
@@ -719,34 +708,32 @@ class Chord (Concurrence):
     differently to each note within the Chord, thus we use a Concurrence
     with Note objects as elements. Each Note.tie can be different.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # _parent -- weak reference to containing object if any
     # content -- elements contained within this collection
 
     def show(self, indent=0):
-         return super().show(indent, "Chord")
-
+        return super().show(indent, "Chord")
 
     def copy(self):
         return Chord(offset=self.offset, dur=self.dur)
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         m = self.Copy()
         for event in self.content:
             m.insert(event.deep_copy())
         return m
 
 
-
-class Measure (Sequence):
+class Measure(Sequence):
     """A Measure models a musical measure (bar) and can contain many object
     types including Note, Rest, Chord, KeySignature, Timesignature. Measures
     are elements of a Staff.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # content -- elements contained within this collection
@@ -757,27 +744,21 @@ class Measure (Sequence):
         super().__init__(offset, dur, content)
         self.number = number
 
-
     def copy(self):
-        """Make a copy, omitting weak link to parent.
-        """
+        """Make a copy, omitting weak link to parent."""
         m = Measure(number=self.number, offset=self.offset, dur=self.dur)
         return m
 
-
     def show(self, indent=0):
-        nstr = ' ' + str(self.number) if self.number else ''
+        nstr = " " + str(self.number) if self.number else ""
         return super().show(indent, "Measure" + nstr)
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         m = self.copy()
         for event in self.content:
             m.insert(event.deep_copy())
         return m
-
 
     def is_measured(self):
         """Test if Measure is well-formed. Conforms to strict hierarchy of:
@@ -787,15 +768,16 @@ class Measure (Sequence):
             # Measure can contain many object types, so instead of
             # testing for legal content, we look for things that are
             # illegal content:
-            if isinstance(measure, Staff) or isinstance(measure, Part) or \
-               isinstance(measure, Score):
+            if (
+                isinstance(measure, Staff)
+                or isinstance(measure, Part)
+                or isinstance(measure, Score)
+            ):
                 return False
         return True
 
-
     def strip_chords(self):
-        """return a deep copy with Chord elements replaced by individual notes.
-        """
+        """return a deep copy with Chord elements replaced by individual notes."""
         measure = self.copy()
         for elem in self.content:
             if isinstance(elem, Chord):
@@ -806,18 +788,16 @@ class Measure (Sequence):
         return measure
 
 
-
 def note_qstart(note):
-    """helper function to sort notes
-    """
+    """helper function to sort notes"""
     return note.qstart()
 
 
-
-class Score (Concurrence):
+class Score(Concurrence):
     """A score is a top-level object representing a musical work.
     Normally, a Score contains Part objects, all with offset zero.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # content -- elements contained within this collection
@@ -830,34 +810,31 @@ class Score (Concurrence):
         super().__init__(offset, dur, content)
         self.time_map = time_map if time_map else TimeMap()
 
-
     def copy(self):
-        """Make a copy, omitting weak link to parent.
-        """
-        s = Score(offset=self.offset, dur=self.dur,
-                  time_map=self.time_map)
+        """Make a copy, omitting weak link to parent."""
+        s = Score(offset=self.offset, dur=self.dur, time_map=self.time_map)
         return s
 
-
     def show(self, indent=0):
-        print(' ' * indent, f"Score at {self.qstart():0.3f} offset ",
-              f"{self.offset:0.3f} dur {self.dur:0.3f}", sep='')
+        print(
+            " " * indent,
+            f"Score at {self.qstart():0.3f} offset ",
+            f"{self.offset:0.3f} dur {self.dur:0.3f}",
+            sep="",
+        )
         self.time_map.show(indent + 4)
         for elem in self.content:
             elem.show(indent + 4)
         return self
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         s = self.copy()
         s.time_map = self.time_map.deep_copy()
         for event in self.content:
             # deep copy each component into s
             s.insert(event.deep_copy())
         return s
-
 
     def is_measured(self):
         """Test if Score is measured. Conforms to strict hierarchy of:
@@ -870,8 +847,6 @@ class Score (Concurrence):
                 return False
         return True
 
-
-
     def strip_ties(self):
         """Create a new Score with tied note sequences replaced by
         equivalent notes in each staff
@@ -880,7 +855,6 @@ class Score (Concurrence):
         for part in self.content:
             score.insert(part.strip_ties())
         return score
-
 
     def strip_chords(self):
         """Create a new Score with chords replaced by
@@ -917,14 +891,14 @@ class Score (Concurrence):
 
     def is_flattened_and_collapsed(self):
         """Determine if score has been flattened into one part"""
-        return self.part_count() == 1 and \
-               (len(self.content[0].content) == 0 or  # no notes
-                isinstance(self.content[0].content[0], Note))  # Part has notes
+        return self.part_count() == 1 and (
+            len(self.content[0].content) == 0  # no notes
+            or isinstance(self.content[0].content[0], Note)
+        )  # Part has notes
 
     def part_count(self):
         """How many parts are in this score?"""
         return len(self.content)
-
 
     def flatten(self, collapse=False):
         """Deep copy notes in a score to a flattened score consisting of
@@ -933,9 +907,9 @@ class Score (Concurrence):
         onset times
         """
         score = self.copy()
-        score_no_ties = self.strip_ties() # strip ties
+        score_no_ties = self.strip_ties()  # strip ties
         if collapse:  # similar to Part.flatten() but we have to sort and
-                      # do some other extra work to put all notes into score
+            # do some other extra work to put all notes into score
             score_start = score.qstart()
             new_part = Part()
             max_end_offset = 0
@@ -953,7 +927,6 @@ class Score (Concurrence):
             for part in self.content:
                 score.insert(part.flatten())
         return score
-
 
     def collapse_parts(self, part=None, staff=None):
         """return a flattened score with all parts merged into one and
@@ -991,22 +964,27 @@ class Score (Concurrence):
         parts = mtn.content
         mtn.content = []  # reconstruct with only selected parts
         for i, p in enumerate(parts):
-            if part is None or (isinstance(part, int) and part == p.number) or \
-               (isinstance(part, str) and part == p.instrument) or \
-                isinstance(part, list) and part[0] == i:
+            if (
+                part is None
+                or (isinstance(part, int) and part == p.number)
+                or (isinstance(part, str) and part == p.instrument)
+                or isinstance(part, list)
+                and part[0] == i
+            ):
                 if staff is not None:  # select staves
-                    if len(p.content[0]) > 0 and \
-                       not isinstance(p.content[0], Staff):
+                    if len(p.content[0]) > 0 and not isinstance(p.content[0], Staff):
                         raise Exception("Expected Part to contain Staff")
                     else:
                         # select staves
                         staves = p.content
                         p.content = []
                         for i, s in enumerate(staves):
-                            if staff is None or \
-                               (isinstance(staff, int) and \
-                                       staff == s.number) or \
-                                isinstance(staff, list) and staff[0] == i:
+                            if (
+                                staff is None
+                                or (isinstance(staff, int) and staff == s.number)
+                                or isinstance(staff, list)
+                                and staff[0] == i
+                            ):
                                 p.insert(s)
                 if len(p.content) > 0:  # keep part only if there is content
                     mtn.insert(p)
@@ -1014,13 +992,12 @@ class Score (Concurrence):
         return mtn.flatten(collapse=True)
 
 
-
-
-class Part (Concurrence):
+class Part(Concurrence):
     """A Part models a staff or staff group such as a grand staff. For that
     reason, a Part contains one or more Staff objects. It should not contain
     any other object types. Parts are normally elements of a Score.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # content -- elements contained within this collection
@@ -1028,36 +1005,33 @@ class Part (Concurrence):
     #         to their top-to-bottom ordering in the Score, starting with 1.
     # instrument -- None or a string naming the instrument to play this Part.
 
-    def __init__(self, number=None, instrument=None, offset=0, dur=0,
-                 content=None):
+    def __init__(self, number=None, instrument=None, offset=0, dur=0, content=None):
         super().__init__(offset, dur, content)
         self.number = number
         self.instrument = instrument
 
-
     def copy(self):
-        """Make a copy, omitting weak link to parent.
-        """
-        p = Part(number=self.number, instrument=self.instrument,
-                 offset=self.offset, dur=self.dur)
+        """Make a copy, omitting weak link to parent."""
+        p = Part(
+            number=self.number,
+            instrument=self.instrument,
+            offset=self.offset,
+            dur=self.dur,
+        )
         return p
 
-
     def show(self, indent=0):
-        nstr = (' ' + str(self.number)) if self.number else ''
-        name = (' (' + self.instrument + ')') if self.instrument else ''
+        nstr = (" " + str(self.number)) if self.number else ""
+        name = (" (" + self.instrument + ")") if self.instrument else ""
         return super().show(indent, "Part" + nstr + name)
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         p = self.copy()
         for event in self.content:
             # deep copy each component into p
             p.insert(event.deep_copy())
         return p
-
 
     def is_measured(self):
         """Test if Part is measured. Conforms to strict hierarchy of:
@@ -1069,7 +1043,6 @@ class Part (Concurrence):
             if not staff.is_measured():
                 return False
         return True
-
 
     def strip_ties(self):
         """Create a new Part with tied note sequences replaced by
@@ -1083,15 +1056,12 @@ class Part (Concurrence):
             part.insert(staff.strip_ties())
         return part
 
-
     def strip_chords(self):
-        """return a deep copy with Chord elements replaced by individual notes.
-        """
+        """return a deep copy with Chord elements replaced by individual notes."""
         part = self.copy()
         for staff in self.content:
             part.insert(staff.strip_chords())
         return part
-
 
     def flatten(self):
         """Deep copy notes in a part to a flattened part consisting of
@@ -1108,12 +1078,12 @@ class Part (Concurrence):
         return flat
 
 
-
-class Staff (Sequence):
+class Staff(Sequence):
     """A Staff models a musical staff line extending through all systems.
     It can also model one channel of a standard MIDI file track. A Staff
     normally contains Measure objects and is an element of a Part.
     """
+
     # offset -- start time in quarters as an offset from parent's start time
     # dur -- duration in quarters
     # content -- elements contained within this collection
@@ -1124,26 +1094,20 @@ class Staff (Sequence):
         super().__init__(offset, dur, content)
         self.number = number
 
-
     def copy(self):
-        """Make a shallow copy of just this object with no parent.
-        """
+        """Make a shallow copy of just this object with no parent."""
         return Staff(number=self.number, offset=self.offset, dur=self.dur)
 
-
     def show(self, indent=0):
-        nstr = (' ' + str(self.number)) if self.number else ''
+        nstr = (" " + str(self.number)) if self.number else ""
         return super().show(indent, "Staff" + nstr)
 
-
     def deep_copy(self):
-        """Make a deep copy, omitting weak link to parent.
-        """
+        """Make a deep copy, omitting weak link to parent."""
         s = self.copy()
         for event in self.content:
             s.insert(event.deep_copy())
         return s
-
 
     def is_measured(self):
         """Test if Staff is measured. Conforms to strict hierarchy of:
@@ -1153,14 +1117,17 @@ class Staff (Sequence):
             # Staff can contain many objects such as key signature or
             # time signature, so instead of testing for legal content,
             # we look for things that are illegal content:
-            if isinstance(measure, Note) or isinstance(measure, Chord) or \
-               isinstance(measure, Staff) or isinstance(measure, Part) or \
-               isinstance(measure, Score):
+            if (
+                isinstance(measure, Note)
+                or isinstance(measure, Chord)
+                or isinstance(measure, Staff)
+                or isinstance(measure, Part)
+                or isinstance(measure, Score)
+            ):
                 return False
             if not measure.is_measured():
                 return False
         return True
-
 
     def strip_ties(self):
         """Create a new staff with tied note sequences replaced by
@@ -1173,7 +1140,7 @@ class Staff (Sequence):
                 if isinstance(event, Note):
                     if event.tie is None:
                         measure.insert(event.copy())
-                    elif event.tie == 'start':
+                    elif event.tie == "start":
                         new_event = event.copy()
                         new_event.dur = self.tied_dur(event, m_index=m_num)
                         new_event.tie = None
@@ -1183,17 +1150,16 @@ class Staff (Sequence):
                     for note in event.content:
                         if note.tie is None:
                             new_chord.insert(note.copy())
-                        elif note.tie == 'start':
+                        elif note.tie == "start":
                             new_note = note.copy()
                             new_note.dur = self.tied_dur(note, m_index=m_num)
                             new_note.tie = None
                             new_chord.insert(new_note)
                     measure.insert(new_chord)
-                else:    # non-note objects are simply copied:
+                else:  # non-note objects are simply copied:
                     measure.insert(event.deep_copy())
             staff.insert(measure)
         return staff
-
 
     def tied_dur(self, note, m_index=None):
         """Compute the full duration of note as the sum of notes that note
@@ -1205,38 +1171,35 @@ class Staff (Sequence):
             measure = measure.parent()
         if m_index == None:  # get measure index
             m_index = self.content.index(measure)
-        n_index = measure.content.index(note) + 1 # get note index
+        n_index = measure.content.index(note) + 1  # get note index
         qstart = note.qstart()
         # search across all measures for tied-to note:
         while m_index < len(self.content):  # search all measures
             measure = self.content[m_index]
             # search within measure for tied-to note:
             while n_index < len(measure.content):
-                event = measure.content[n_index];
-                if isinstance(event, Note) and \
-                   event.keynum == note.keynum:
-                    if event.tie == 'stop':
-                            return event.qstop() - qstart
-                    elif event.tie != 'continue':
+                event = measure.content[n_index]
+                if isinstance(event, Note) and event.keynum == note.keynum:
+                    if event.tie == "stop":
+                        return event.qstop() - qstart
+                    elif event.tie != "continue":
                         raise Exception("inconsistent tie attributes or notes")
                 elif isinstance(event, Chord):
                     # search within chord for tied-to note:
                     for n in event.content:
                         if n.keynum == note.keynum:
                             # add durations until 'stop'
-                            if n.tie == 'continue' or n.tie == 'stop':
+                            if n.tie == "continue" or n.tie == "stop":
                                 dur = n.end_event - note.offset
-                                if n.tie == 'stop':
+                                if n.tie == "stop":
                                     return dur
                 n_index += 1
             n_index = 0
             m_index += 1
         raise Exception("incomplete tie")
 
-
     def strip_chords(self):
-        """return a deep copy with Chord elements replaced by individual notes.
-        """
+        """return a deep copy with Chord elements replaced by individual notes."""
         staff = self.copy()
         for measure in self.content:
             staff.insert(measure.strip_chords())

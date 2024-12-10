@@ -1,4 +1,5 @@
 import pytest
+
 from amads.harmony.root_finding.parncutt_1988 import root
 
 

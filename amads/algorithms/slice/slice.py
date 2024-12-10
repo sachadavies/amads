@@ -25,12 +25,12 @@ class Slice:
     """
 
     def __init__(
-            self,
-            notes: List[Note],
-            original_notes: List[Note],
-            start: float,
-            end: float,
-        ):
+        self,
+        notes: List[Note],
+        original_notes: List[Note],
+        start: float,
+        end: float,
+    ):
         self.notes = notes
         self.original_notes = original_notes
         self.start = start

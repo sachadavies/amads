@@ -1,4 +1,4 @@
-from typing import Optional, Iterator
+from typing import Iterator, Optional
 
 
 def float_range(start: float, end: Optional[float], step: float) -> Iterator[float]:

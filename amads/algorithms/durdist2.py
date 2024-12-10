@@ -19,15 +19,19 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 """
 
 import math
-from typing import Union, List
+from typing import List, Union
 
-from ..core.basics import Score, Note
+from ..core.basics import Note, Score
 from ..core.distribution import Distribution
 from .ismonophonic import ismonophonic
 
 
-def update_dd(dd: List[List[float]], bin_boundaries: Union[None, List[float]],
-              prev_bin: int, note: Note) -> int:
+def update_dd(
+    dd: List[List[float]],
+    bin_boundaries: Union[None, List[float]],
+    prev_bin: int,
+    note: Note,
+) -> int:
     """Updates the duration distribution matrix based on the given notes.
 
     Serves as a helper function for `duration_distribution_2`.
@@ -57,15 +61,16 @@ def update_dd(dd: List[List[float]], bin_boundaries: Union[None, List[float]],
         if bin < 0 or bin > 8:
             return None
 
-    if  prev_bin != None:
+    if prev_bin != None:
         dd[prev_bin][bin] += 1
     return bin
 
 
-
-def duration_distribution_2(score: Score,
-        name: str="Duration Pairs Distribution",
-        bin_centers: Union[list[float], None]=None) -> Distribution:
+def duration_distribution_2(
+    score: Score,
+    name: str = "Duration Pairs Distribution",
+    bin_centers: Union[list[float], None] = None,
+) -> Distribution:
     """
     Returns the 2nd-order duration distribution of a musical score.
 
@@ -115,12 +120,23 @@ def duration_distribution_2(score: Score,
     bin_boundaries = None
     if bin_centers:
         dd = [[0] * len(bin_centers) for _ in range(len(bin_centers))]
-        bin_boundaries = [math.sqrt(bin_centers[i] * bin_centers[i + 1])
-                             for i in range(len(bin_centers) - 1)]
+        bin_boundaries = [
+            math.sqrt(bin_centers[i] * bin_centers[i + 1])
+            for i in range(len(bin_centers) - 1)
+        ]
         x_categories = [f"{bin_centers[i]:.2f}" for i in range(len(bin_centers))]
     else:
-        x_categories = ["sixteenth", "0.35", "eighth", "0.71", "quarter",
-                        "1.41", "half", "2.83", "whole"]
+        x_categories = [
+            "sixteenth",
+            "0.35",
+            "eighth",
+            "0.71",
+            "quarter",
+            "1.41",
+            "half",
+            "2.83",
+            "whole",
+        ]
         dd = [[0] * 9 for _ in range(9)]
 
     for container in score.note_containers():
@@ -128,7 +144,7 @@ def duration_distribution_2(score: Score,
         for note in container.find_all(Note):
             prev_bin = update_dd(dd, bin_boundaries, prev_bin, note)
 
-     # TODO: I believe if score has tied notes, they will be treated
+    # TODO: I believe if score has tied notes, they will be treated
     # separately rather than joined to form a single duration. I do
     # not think we need two cases here since score.find_all() will
     # find all notes either way. -RBD
@@ -136,9 +152,15 @@ def duration_distribution_2(score: Score,
     # normalize
     total = sum([sum(row) for row in dd])
     if total > 0:
-        dd = [[i/total for i in row] for row in dd]
+        dd = [[i / total for i in row] for row in dd]
 
-    return Distribution(name, dd, "duration_pairs", [len(dd), len(dd)], x_categories,
-                        "Duration (to)", x_categories, "Duration (from)")
-
-
+    return Distribution(
+        name,
+        dd,
+        "duration_pairs",
+        [len(dd), len(dd)],
+        x_categories,
+        "Duration (to)",
+        x_categories,
+        "Duration (from)",
+    )

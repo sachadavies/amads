@@ -5,9 +5,9 @@ This example demonstrates how to calculate and visualize the duration distributi
 of notes in a MIDI file.
 """
 
-from amads.music import example
-from amads.io import partitura_midi_import
 from amads.algorithms import duration_distribution_1
+from amads.io import partitura_midi_import
+from amads.music import example
 
 # Load example MIDI file
 my_midi_file = example.fullpath("midi/sarabande.mid")

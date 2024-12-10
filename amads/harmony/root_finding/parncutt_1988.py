@@ -2,9 +2,7 @@
 Parncutt's 1988 model for finding the root of a chord.
 """
 
-
 from typing import List
-
 
 weights = [0.0 for _ in range(12)]
 weights[0] = 1.0

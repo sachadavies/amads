@@ -1,7 +1,7 @@
 import partitura as pt
+
 from ..core.basics import Score
 from .pt_xml_import import partitura_convert_part
-
 
 # plan: multiple passes over iter_all()
 # for each part: add the part to a Concurrence
@@ -12,9 +12,9 @@ from .pt_xml_import import partitura_convert_part
 #      2nd pass (B): build Note and Rest objects, insert into Measures
 #      2nd pass (C): set ties attribute of Notes ?
 
+
 def partitura_midi_import(filename, ptprint=False):
-    """User Partitura to import a MIDI file.
-    """
+    """User Partitura to import a MIDI file."""
     ptscore = pt.load_score_midi(filename)
     if ptprint:
         for ptpart in ptscore:

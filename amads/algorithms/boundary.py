@@ -46,7 +46,7 @@ leverage the fact that each note offset has a unique note in the score and
 emit offset and strength pairs...
 """
 
-from ..core.basics import Score, Note
+from ..core.basics import Note, Score
 from .ismonophonic import ismonophonic
 
 
@@ -69,15 +69,15 @@ def boundary(score: Score):
     notes.sort(key=lambda note: (note.qstart(), -note.pitch.keynum))
 
     # profiles
-    pp = [abs(pair[1].keynum - pair[0].keynum)
-        for pair in zip(notes, notes[1:])]
+    pp = [abs(pair[1].keynum - pair[0].keynum) for pair in zip(notes, notes[1:])]
     po = [pair[1].qstart() - pair[0].qstart() for pair in zip(notes, notes[1:])]
-    pr = [max(0, pair[1].qstart() - pair[0].qstop())
-        for pair in zip(notes, notes[1:])]
+    pr = [max(0, pair[1].qstart() - pair[0].qstop()) for pair in zip(notes, notes[1:])]
 
     def list_degrees(profile):
-        ret_list = [abs(pair[1] - pair[0]) / (1e-6 + pair[1] + pair[0])
-            for pair in zip(profile, profile[1:])]
+        ret_list = [
+            abs(pair[1] - pair[0]) / (1e-6 + pair[1] + pair[0])
+            for pair in zip(profile, profile[1:])
+        ]
         ret_list.append(0)
         return ret_list
 
@@ -103,6 +103,6 @@ def boundary(score: Score):
     b = [1]
     for sp_elem, so_elem, sr_elem in zip(sp, so, sr):
         b.append(0.25 * sp_elem + 0.5 * so_elem + 0.25 * sr_elem)
-    assert(len(b) == len(notes))
+    assert len(b) == len(notes)
 
     return [(note.qstart(), boundary) for (note, boundary) in zip(notes, b)]

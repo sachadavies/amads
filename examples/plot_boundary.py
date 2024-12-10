@@ -10,8 +10,8 @@ Boundary detection
 
 import matplotlib.pyplot as plt
 
-from amads.io import partitura_midi_import, pianoroll
 from amads.algorithms import boundary
+from amads.io import partitura_midi_import, pianoroll
 from amads.music import example
 
 # Load example MIDI file
@@ -31,4 +31,4 @@ print(strength_list)
 # our score plot so that the "soft" boundary strengths could be
 # accentuated. How do we visualize strength?
 
-plt.show() #hello
+plt.show()  # hello

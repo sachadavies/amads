@@ -28,7 +28,6 @@ in simple dicts with keys for
     "note": optional.
 """
 
-
 # Opening
 
 romanesca = {
@@ -37,7 +36,7 @@ romanesca = {
     "strong_first": True,
     "melody": [1, 5, 1, 1],
     "bass": [1, 7, 6, 3],
-    "figures": [5, 6, 5, 6]
+    "figures": [5, 6, 5, 6],
 }
 do_re_mi = {
     "name": "Do-Re-Mi",
@@ -46,7 +45,7 @@ do_re_mi = {
     "melody": [1, 2, 3],
     "bass": [1, 7, 1],
     "figures": [5, 6, 5],
-    "note": "invertible"
+    "note": "invertible",
 }
 sol_fa_mi = {
     "name": "Sol-Fa-Mi",
@@ -62,7 +61,7 @@ meyer = {
     "strong_first": False,
     "melody": [1, 7, 4, 3],
     "bass": [1, 2, 7, 1],
-    "figures": [5, "6,4,3", "6,5", 5]
+    "figures": [5, "6,4,3", "6,5", 5],
 }
 aprile = {
     "name": "Aprile",
@@ -71,7 +70,7 @@ aprile = {
     "melody": [1, 7, 2, 1],
     "bass": [1, 2, 7, 1],
     "figures": [5, "6,4,3", "6,5", 5],
-    "note": "Happy birthday!"
+    "note": "Happy birthday!",
 }
 jupiter = {
     "name": "Jupiter",
@@ -88,7 +87,7 @@ pastorella = {
     "melody": [3, 2, 4, 3],
     "bass": [1, 5, 5, 1],
     "figures": [5, 6, 5, 5],
-    "note": "Thirds"
+    "note": "Thirds",
 }
 
 
@@ -100,7 +99,7 @@ prinner = {
     "strong_first": True,
     "melody": [6, 5, 4, 3],
     "bass": [4, 3, 2, 1],
-    "figures": [5, 6, 7, 6, 5]
+    "figures": [5, 6, 7, 6, 5],
 }
 modulating_prinner = {
     "name": "Modulating Prinner",
@@ -108,7 +107,7 @@ modulating_prinner = {
     "strong_first": True,
     "melody": [3, 2, 1, 7],
     "bass": [8, 7, 6, 5],
-    "figures": [5, 6, 7, "#6", 5]
+    "figures": [5, 6, 7, "#6", 5],
 }
 fonte = {
     "name": "Fonte",
@@ -125,7 +124,7 @@ monte = {
     "strong_first": False,
     "melody": ["1", "b7", "6", "2", "1", "7"],
     "bass": [3, 4, "#4", 5],
-    "figures": [6, 5, 6, 5]
+    "figures": [6, 5, 6, 5],
 }
 ponte = {
     "name": "Ponte",
@@ -133,7 +132,7 @@ ponte = {
     "strong_first": True,
     "melody": [5, 7, 2],
     "bass": [5, 5, 5],
-    "figures": [5, 7, 7]
+    "figures": [5, 7, 7],
 }
 
 
@@ -145,7 +144,7 @@ fenaroli = {
     "strong_first": True,
     "melody": [4, 3, 7, 1],
     "bass": [7, 1, 2, 3],
-    "figures": [6, 5, 6, 6]
+    "figures": [6, 5, 6, 6],
 }
 indugio = {
     "name": "Indugio",
@@ -153,7 +152,7 @@ indugio = {
     "strong_first": True,
     "melody": [2, 4, 6, 1, 7],
     "bass": [4, 4, 4, "4#", 5],
-    "figures": ["6,5", "6,5", "6,5", "6,5", 5]
+    "figures": ["6,5", "6,5", "6,5", "6,5", 5],
 }
 passo_indietro = {
     "name": "Passo Indietro",
@@ -170,7 +169,7 @@ deceptive = {
     "strong_first": False,
     "melody": [1, 2, 2, 1],
     "bass": [3, 4, 5, 6],
-    "figures": [6, "6,5", 5, 5]
+    "figures": [6, "6,5", 5, 5],
 }
 evaded = {
     "name": "Evaded Cadence",
@@ -207,7 +206,7 @@ cadenza_doppia = {
     "melody": [4, 3, 2, 2, 1],
     "bass": [5, 5, 5, 5, 1],
     "figures": [5, "6,4", 4, 3, 5],
-    "relatedTo": ["Comma", "Complete"]
+    "relatedTo": ["Comma", "Complete"],
 }
 complete = {
     "name": "Complete Cadence",
@@ -215,7 +214,7 @@ complete = {
     "strong_first": False,
     "melody": [3, 2, 2, 1],
     "bass": [1, 4, 5, 1],
-    "figures": [5, "6,5", 5, 5]
+    "figures": [5, "6,5", 5, 5],
 }
 
 
@@ -227,7 +226,7 @@ comma = {
     "strong_first": False,
     "melody": [4, 3],
     "bass": [7, 1],
-    "figures": ["6,5", 5]
+    "figures": ["6,5", 5],
 }
 converging = {
     "name": "Converging Cadence",
@@ -235,7 +234,7 @@ converging = {
     "strong_first": False,
     "melody": [3, 2, 1, 7],
     "bass": ["3", "4", "#4", "5"],
-    "figures": [6, "6,5", "6,5", 5]
+    "figures": [6, "6,5", "6,5", 5],
 }
 
 
@@ -247,6 +246,5 @@ quiescenza = {
     "strong_first": False,
     "melody": ["b7", "6", "7", "1"],
     "bass": [1, 1, 1, 1],
-    "figures": ["b7", "6,4", "7,4,2", 5]
+    "figures": ["b7", "6,4", "7,4,2", 5],
 }
-

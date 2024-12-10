@@ -39,9 +39,9 @@ def update_id(id: list[list[float]], notes: list[Note], weighted: bool):
                         # Since diff ranges from -12 to 12,
                         # diff + 12 prevents negative indicies
                         # May need a better algorithm to calculate weight
-                        id[prev_diff + 12][diff + 12] += (prev_prev_note.dur
-                                                          * prev_note.dur
-                                                          * note.dur)
+                        id[prev_diff + 12][diff + 12] += (
+                            prev_prev_note.dur * prev_note.dur * note.dur
+                        )
                     else:
                         id[prev_diff + 12][diff + 12] += 1
             prev_prev_note = prev_note
@@ -112,6 +112,6 @@ def ivdist2(score: Score, weighted=True) -> list[list[float]]:
 
     total = sum(sum(row) for row in id)
     if total > 0:
-        id = [[value/total for value in row] for row in id]
+        id = [[value / total for value in row] for row in id]
 
     return id

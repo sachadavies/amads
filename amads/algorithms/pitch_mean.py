@@ -15,4 +15,3 @@ def pitch_mean(score, weighted=False):
         sum += note.keynum * w
         count += w
     return (sum / count) if sum > 0 else 0
-

@@ -2,8 +2,8 @@ from typing import Iterable
 
 from pytest import approx
 
-from amads.core.basics import Score, Note
 from amads.algorithms.slice.window import sliding_window
+from amads.core.basics import Note, Score
 
 
 def test_sliding_window(twochan_score: Score, twochan_notes: Iterable[Note]):

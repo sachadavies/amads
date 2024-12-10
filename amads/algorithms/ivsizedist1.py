@@ -2,7 +2,6 @@
 Provides the `ivsizedist1` function
 """
 
-
 from ..core.basics import Score
 from .ivdist1 import ivdist1
 

@@ -1,9 +1,10 @@
 # time_map.py -- map to convert between quarters and seconds
 #
 
+
 class MapBeat:
-    """MapBeat is a (time, beat) pair in a piece-wise linear mapping.
-    """
+    """MapBeat is a (time, beat) pair in a piece-wise linear mapping."""
+
     def __init__(self, time, beat):
         self.time = time
         self.beat = beat
@@ -12,10 +13,9 @@ class MapBeat:
         return MapBeat(self.time, self.beat)
 
 
-
 class TimeMap:
-    """TimeMap is a map to convert between quarters and seconds.
-    """
+    """TimeMap is a map to convert between quarters and seconds."""
+
     # beats -- array of MapBeat
     # last_tempo -- final beats per second to extrapolate from final
     #         breakpoint
@@ -24,26 +24,20 @@ class TimeMap:
         self.beats = [MapBeat(0.0, 0.0)]  # initial beat
         self.last_tempo = bpm / 60.0  # 100 bpm default
 
-
     def show(self, indent):
-        """print a summary of this time map
-        """
-        print(' ' * indent, "TimeMap: [ ", sep='', end='')
+        """print a summary of this time map"""
+        print(" " * indent, "TimeMap: [ ", sep="", end="")
         for i, mb in enumerate(self.beats):
             tempo = self.index_to_tempo(i + 1)
-            print(f"({mb.beat:.2g}, {mb.time:.3g}s, {tempo:.3g}bpm) ",
-                  sep='', end='')
+            print(f"({mb.beat:.2g}, {mb.time:.3g}s, {tempo:.3g}bpm) ", sep="", end="")
         print("]")
 
-
     def deep_copy(self):
-        """make a full copy of this time_map
-        """
+        """make a full copy of this time_map"""
         newtm = TimeMap(bpm=self.last_tempo * 60)
-        for i in self.beats[1 : ]:
+        for i in self.beats[1:]:
             newtm.beats.append(i.copy())
         return newtm
-
 
     def append_beat_tempo(self, beat, tempo):
         """Append a MapBeat specifying a change to tempo at beat.
@@ -59,15 +53,12 @@ class TimeMap:
         self.last_tempo = tempo
         print("append_beat_tempo", tempo, self.beats[-1])
 
-
     def locate_time(self, time):
-        """find the insertion index for a 0-based beat at time in seconds
-        """
+        """find the insertion index for a 0-based beat at time in seconds"""
         i = 0
         while i < len(self.beats) and time > self.beats[i].time:
             i = i + 1
         return i
-
 
     def locate_beat(self, beat):
         """find the insertion index for a beat; equivalent to find the first
@@ -79,10 +70,8 @@ class TimeMap:
             i = i + 1
         return i
 
-
     def beat_to_time(self, beat):
-        """convert beat time to seconds
-        """
+        """convert beat time to seconds"""
         if beat <= 0:  # there is no negative time or tempo before 0
             return beat  # so just pretend like tempo is 60 bpm
         i = self.locate_beat(beat)
@@ -107,13 +96,11 @@ class TimeMap:
         beat_dif = mb1.beat - mb0.beat
         return mb0.time + (beat - mb0.beat) * time_dif / beat_dif
 
-
     def beat_to_tempo(self, beat):
         """what is the tempo in bpm at beat? If there is a tempo change
         here, use the tempo on the left (before the change)
         """
         return self.index_to_tempo(self.locate_beat(beat))
-
 
     def index_to_tempo(self, i):
         """return the tempo at entry i in tempo map in bpm -- the tempo
@@ -146,15 +133,13 @@ class TimeMap:
         beat_dif = mb1.beat - mb0.beat
         return beat_dif * 60.0 / time_dif
 
-
     def time_to_beat(self, time):
-        """return the beat associated with time seconds.
-        """
+        """return the beat associated with time seconds."""
         if time <= 0:
             return time
         i = self.locate_time(time)
         if i == len(self.beats):  # beat is beyond last time map entry
-            if self.last_tempo:   # extrapolate beyond last time map entry
+            if self.last_tempo:  # extrapolate beyond last time map entry
                 mb0 = self.beats[i - 1].beat
                 return mb0.beat + (time - mb0.time) * self.last_tempo
             elif i == 1:  # only one time point and no last tempo!
@@ -168,7 +153,6 @@ class TimeMap:
         time_dif = mb1.time - mb0.time
         beat_dif = mb1.beat - mb0.beat
         return mb0.beat + (time - mb0.time) * beat_dif / time_dif
-
 
     """
     if we support any extraction of data from scores and want to retain

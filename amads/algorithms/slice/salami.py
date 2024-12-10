@@ -18,8 +18,8 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Iterable, List, Optional, Union
 
-from .slice import Slice
 from ...core.basics import Note, Score
+from .slice import Slice
 
 
 @dataclass
@@ -37,6 +37,7 @@ class Timepoint:
     sounding_notes : set[Note]
         All notes that are sounding at this timepoint
     """
+
     time: float
     note_ons: list[Note] = field(default_factory=list)
     note_offs: list[Note] = field(default_factory=list)
@@ -54,7 +55,9 @@ class Timepoint:
         return max(n.offset + n.dur for n in self.sounding_notes)
 
     @classmethod
-    def from_notes(cls, notes: List[Note], time_n_digits: Optional[int] = None) -> List["Timepoint"]:
+    def from_notes(
+        cls, notes: List[Note], time_n_digits: Optional[int] = None
+    ) -> List["Timepoint"]:
         """Create a sequence of timepoints from a list of notes.
 
         Parameters
@@ -95,22 +98,24 @@ class Timepoint:
             for note in note_ons[time]:
                 sounding_notes.add(note)
 
-            timepoints.append(Timepoint(
-                time=time,
-                note_ons=note_ons[time],
-                note_offs=note_offs[time],
-                sounding_notes=sorted(list(sounding_notes), key=lambda n: n.keynum),
-            ))
+            timepoints.append(
+                Timepoint(
+                    time=time,
+                    note_ons=note_ons[time],
+                    note_offs=note_offs[time],
+                    sounding_notes=sorted(list(sounding_notes), key=lambda n: n.keynum),
+                )
+            )
 
         return timepoints
 
 
 def salami_slice(
-        passage: Union[Score, Iterable[Note]],
-        remove_duplicated_pitches: bool = True,
-        include_empty_slices: bool = False,
-        include_note_end_slices: bool = True,
-        min_slice_duration: float = 0.01,
+    passage: Union[Score, Iterable[Note]],
+    remove_duplicated_pitches: bool = True,
+    include_empty_slices: bool = False,
+    include_note_end_slices: bool = True,
+    min_slice_duration: float = 0.01,
 ) -> List[Slice]:
     """Segment a musical passage into vertical slices at note onsets and offsets ('salami slices').
 
@@ -141,9 +146,8 @@ def salami_slice(
     slices = []
 
     for i, timepoint in enumerate(timepoints):
-        if (
-            len(timepoint.note_ons) > 0
-            or (include_note_end_slices and len(timepoint.note_offs) > 0)
+        if len(timepoint.note_ons) > 0 or (
+            include_note_end_slices and len(timepoint.note_offs) > 0
         ):
             try:
                 next_timepoint = timepoints[i + 1]
@@ -188,11 +192,13 @@ def salami_slice(
                 for pitch in pitches
             ]
 
-            slices.append(Slice(
-                notes=notes,
-                original_notes=timepoint.sounding_notes,
-                start=slice_start,
-                end=slice_end,
-            ))
+            slices.append(
+                Slice(
+                    notes=notes,
+                    original_notes=timepoint.sounding_notes,
+                    start=slice_start,
+                    end=slice_end,
+                )
+            )
 
     return slices

@@ -65,7 +65,7 @@ the *exact* same implementation and 2 filenames...
 
 from operator import lt
 
-from ..core.basics import Score, Note, Part
+from ..core.basics import Note, Part, Score
 from .ismonophonic import ismonophonic
 from .pitch_mean import pitch_mean
 
@@ -79,23 +79,24 @@ def construct_score_list(notes, intervals):
     for interval in intervals:
         new_score = Score()
         new_part = Part()
-        for note in notes[interval[0]: interval[1]]:
+        for note in notes[interval[0] : interval[1]]:
             new_part.insert(note.deep_copy())
         new_score.insert(new_part)
         score_list.append(new_score)
     return score_list
 
-def find_peaks(target_list, comp = lt):
+
+def find_peaks(target_list, comp=lt):
     """
     returns a list of indices identifying peaks in the list
     according to a comparison
     """
     peaks = []
-    for i, triplet in enumerate(zip(target_list, target_list[1:],
-        target_list[2:])):
+    for i, triplet in enumerate(zip(target_list, target_list[1:], target_list[2:])):
         if comp(triplet[0], triplet[1]) and comp(triplet[2], triplet[1]):
             peaks.append(i + 1)
     return peaks
+
 
 def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
     """
@@ -123,7 +124,7 @@ def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
     # ripped from skyline.py
     notes.sort(key=lambda note: (note.qstart(), -note.pitch.keynum))
 
-    if (len(notes) <= 0):
+    if len(notes) <= 0:
         return ([], [])
 
     cl_values = []
@@ -134,7 +135,7 @@ def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
         cl_values.append(2 * onset_diff + abs(pitch_diff))
 
     # combines the boolean map and the scan function that was done in matlab
-    if (len(cl_values) < 3):
+    if len(cl_values) < 3:
         return ([], [])
 
     clang_soft_peaks = find_peaks(cl_values)
@@ -142,17 +143,16 @@ def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
     # worry about indices here
     # starting index here
     # 1 past the end so we can construct score list easier
-    cl_indices.extend([idx+1 for idx in clang_soft_peaks])
+    cl_indices.extend([idx + 1 for idx in clang_soft_peaks])
     cl_indices.append(len(notes))
 
     clang_offsets = list(map(lambda i: (notes[i].qstart()), cl_indices[:-1]))
 
-    if (len(clang_offsets) <= 2):
+    if len(clang_offsets) <= 2:
         return (clang_offsets, [])
 
     # we can probably split the clangs here and organize them into scores
-    clang_scores = construct_score_list(notes, \
-        zip(cl_indices[:-1], cl_indices[1:]))
+    clang_scores = construct_score_list(notes, zip(cl_indices[:-1], cl_indices[1:]))
     # calculate segment boundaries
     # we need to basically follow segment_gestalt.m
     # (1) calculate individual clang pitch means
@@ -166,19 +166,22 @@ def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
         # be careful of the indices when calculating segdist here
         local_seg_dist += abs(mean_pitches[i + 1] - mean_pitches[i])
         # first first distance
-        local_seg_dist += (notes[cl_indices[i + 1]].qstart()
-            - notes[cl_indices[i]].qstart())
+        local_seg_dist += (
+            notes[cl_indices[i + 1]].qstart() - notes[cl_indices[i]].qstart()
+        )
         # first of next clang to last of distance
-        local_seg_dist += abs(notes[cl_indices[i + 1]].keynum -
-            notes[cl_indices[i + 1] - 1].keynum)
-        local_seg_dist += 2 * (notes[cl_indices[i + 1]].qstart() -
-            notes[cl_indices[i + 1] - 1].qstart())
+        local_seg_dist += abs(
+            notes[cl_indices[i + 1]].keynum - notes[cl_indices[i + 1] - 1].keynum
+        )
+        local_seg_dist += 2 * (
+            notes[cl_indices[i + 1]].qstart() - notes[cl_indices[i + 1] - 1].qstart()
+        )
         seg_dist_values.append(local_seg_dist)
-    if (len(seg_dist_values) < 3):
+    if len(seg_dist_values) < 3:
         return (clang_offsets, [])
 
     seg_soft_peaks = find_peaks(seg_dist_values)
-    assert(seg_soft_peaks[-1] < len(cl_indices) - 1)
+    assert seg_soft_peaks[-1] < len(cl_indices) - 1
     seg_indices = [0]
     # do we need to add 1 here? where do we add 1
     # worry about indices here

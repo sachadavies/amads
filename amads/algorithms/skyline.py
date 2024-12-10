@@ -2,7 +2,7 @@
 Provides the `skyline` function
 """
 
-from ..core.basics import Score, Note, Part
+from ..core.basics import Note, Part, Score
 
 
 def skyline(score: Score, threshold: float = 0.1):
@@ -56,9 +56,10 @@ def skyline(score: Score, threshold: float = 0.1):
     for i in range(len(notes)):
         note = notes[i]
         # ignore notes that are below another existing note in filtered_notes
-        if any(note.pitch.keynum < prev.pitch.keynum
-               and note.qstart() < prev.qstop()
-               for prev in filtered_notes):
+        if any(
+            note.pitch.keynum < prev.pitch.keynum and note.qstart() < prev.qstop()
+            for prev in filtered_notes
+        ):
             continue
 
         # append the note to filtered_notes
@@ -67,8 +68,10 @@ def skyline(score: Score, threshold: float = 0.1):
         # remove notes in filtered_notes that are below the current note
 
         for j in reversed(range(len(filtered_notes))):
-            if (filtered_notes[j].pitch.keynum < note.pitch.keynum
-                    and filtered_notes[j].qstop() > note.qstart()):
+            if (
+                filtered_notes[j].pitch.keynum < note.pitch.keynum
+                and filtered_notes[j].qstop() > note.qstart()
+            ):
                 # remove low notes quickly followed by a higher note
                 if filtered_notes[j].qstart() > note.qstart() - threshold:
                     filtered_notes.pop(j)
@@ -76,8 +79,7 @@ def skyline(score: Score, threshold: float = 0.1):
                 # shorten the duration of the low note
                 else:
                     note_end = min(note.qstart(), filtered_notes[j].qstop())
-                    filtered_notes[j].dur = (note_end
-                                             - filtered_notes[j].qstart())
+                    filtered_notes[j].dur = note_end - filtered_notes[j].qstart()
 
     # create a new score and part to store the filtered notes
     new_score = Score()

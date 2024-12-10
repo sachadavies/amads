@@ -11,9 +11,10 @@ the result.
 # First, we'll import the required modules.
 
 import matplotlib.pyplot as plt
+
 from amads.algorithms.slice.window import sliding_window
-from amads.music import example
 from amads.io.pt_midi_import import partitura_midi_import
+from amads.music import example
 
 # %%
 # Load an example MIDI file and import it using partitura.
@@ -63,8 +64,8 @@ for window in windows:
 
 plt.figure(figsize=(10, 6))
 plt.plot(times, mean_pitch_heights)
-plt.xlabel('Time')
-plt.ylabel('Mean pitch height')
+plt.xlabel("Time")
+plt.ylabel("Mean pitch height")
 plt.show()
 
 # %%

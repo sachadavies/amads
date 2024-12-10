@@ -1,20 +1,23 @@
-
-import pytest
-
 import pretty_midi
+import pytest
 
 from amads.core.basics import Note, Score
 from amads.io.pt_midi_import import partitura_midi_import
 from amads.music import example
 
 
-@pytest.mark.parametrize("midi_filename", [
-    "sarabande.mid",
-    pytest.param(
-        "chopin_prelude_7.mid",
-        marks=pytest.mark.skip(reason="Known to fail, issue logged in https://github.com/music-computing/amads/issues/35")
-    )
-])
+@pytest.mark.parametrize(
+    "midi_filename",
+    [
+        "sarabande.mid",
+        pytest.param(
+            "chopin_prelude_7.mid",
+            marks=pytest.mark.skip(
+                reason="Known to fail, issue logged in https://github.com/music-computing/amads/issues/35"
+            ),
+        ),
+    ],
+)
 def test_import_midi(midi_filename):
     """
     Test MIDI import by comparing the results with pretty_midi.
@@ -48,4 +51,6 @@ def test_import_midi(midi_filename):
     for score_note, pm_note in zip(flattened_notes, pm_notes):
         assert score_note.pitch.keynum == pm_note.pitch
         assert score_note.offset == pytest.approx(pm_note.start / quarter_note_duration)
-        assert score_note.dur == pytest.approx(pm_note.end / quarter_note_duration - pm_note.start / quarter_note_duration)
+        assert score_note.dur == pytest.approx(
+            pm_note.end / quarter_note_duration - pm_note.start / quarter_note_duration
+        )

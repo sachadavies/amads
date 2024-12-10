@@ -4,7 +4,7 @@ Pitch class distribution analysis.
 Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e06906ca1ba0bf0ac8f2cb1a929f3be95eeadfa#page=80.
 """
 
-from ..core.basics import Score, Note
+from ..core.basics import Note, Score
 
 
 def pcdist1(score: Score, weighted: bool = True) -> list[float]:
@@ -38,5 +38,5 @@ def pcdist1(score: Score, weighted: bool = True) -> list[float]:
                 pcd[pc] += 1
     total = sum(pcd)
     if total > 0:
-        pcd = [i/total for i in pcd]
+        pcd = [i / total for i in pcd]
     return pcd

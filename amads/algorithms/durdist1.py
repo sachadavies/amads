@@ -1,4 +1,3 @@
-
 """
 Distribution of durations of notes in a Score.
 
@@ -20,12 +19,15 @@ Original doc: https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6e0
 import math
 from typing import Union
 
-from ..core.basics import Score, Note
+from ..core.basics import Note, Score
 from ..core.distribution import Distribution
 
 
-def duration_distribution_1(score: Score, name: str="Duration Distribution",
-             bin_centers: Union[list[float], None]=None) -> Distribution:
+def duration_distribution_1(
+    score: Score,
+    name: str = "Duration Distribution",
+    bin_centers: Union[list[float], None] = None,
+) -> Distribution:
     """
     Returns the distribution of note durations in a Score.
 
@@ -61,8 +63,10 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
 
     if bin_centers:
         dd = [0] * len(bin_centers)
-        bin_boundaries = [math.sqrt(bin_centers[i] * bin_centers[i + 1])
-                             for i in range(len(bin_centers) - 1)]
+        bin_boundaries = [
+            math.sqrt(bin_centers[i] * bin_centers[i + 1])
+            for i in range(len(bin_centers) - 1)
+        ]
         x_categories = [f"{bin_centers[i]:.2f}" for i in range(len(bin_centers))]
         for note in score.find_all(Note):
             for i, boundary in enumerate(bin_boundaries):
@@ -72,8 +76,17 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
             else:
                 dd[-1] += 1
     else:
-        x_categories = ["sixteenth", "0.35", "eighth", "0.71", "quarter",
-                        "1.41", "half", "2.83", "whole"]
+        x_categories = [
+            "sixteenth",
+            "0.35",
+            "eighth",
+            "0.71",
+            "quarter",
+            "1.41",
+            "half",
+            "2.83",
+            "whole",
+        ]
         dd = [0] * 9
         for note in score.find_all(Note):
             # The following algorithm comes from the original MATLAB implementation
@@ -86,9 +99,8 @@ def duration_distribution_1(score: Score, name: str="Duration Distribution",
     # normalize
     total = sum(dd)
     if total > 0:
-        dd = [i/total for i in dd]
+        dd = [i / total for i in dd]
 
-    return Distribution(name, dd, "duration", [9], x_categories,
-                        "Duration", None, "Proportion")
-
-
+    return Distribution(
+        name, dd, "duration", [9], x_categories, "Duration", None, "Proportion"
+    )

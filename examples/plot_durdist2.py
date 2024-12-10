@@ -5,9 +5,9 @@ This example demonstrates how to calculate and visualize the duration distributi
 of notes in a MIDI file.
 """
 
-from amads.music import example
-from amads.io import partitura_midi_import
 from amads.algorithms import duration_distribution_2
+from amads.io import partitura_midi_import
+from amads.music import example
 
 # Load example MIDI file
 my_midi_file = example.fullpath("midi/sarabande.mid")
@@ -20,6 +20,12 @@ myscore = partitura_midi_import(my_midi_file, ptprint=False)
 dd = duration_distribution_2(myscore)
 plt, fig = dd.plot()
 
-print("Duration pair distribution:", dd.data, dd.x_categories,
-      dd.y_categories, dd.x_label, dd.y_label)
+print(
+    "Duration pair distribution:",
+    dd.data,
+    dd.x_categories,
+    dd.y_categories,
+    dd.x_label,
+    dd.y_label,
+)
 plt.show()

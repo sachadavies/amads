@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
+
+from amads.music import example
+from amads.pianoroll import pianoroll
 from amads.pt_midi_import import partitura_midi_import
 from amads.skyline import skyline
-from amads.pianoroll import pianoroll
-from amads.music import example
 
 my_midi_file = example.fullpath("midi/chopin_prelude_7.mid")
 
@@ -22,6 +23,3 @@ sl.show()
 
 pianoroll(sl)
 plt.show()
-
-
-

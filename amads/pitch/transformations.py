@@ -9,14 +9,10 @@ and can therefore be use in melody and harmony settings.
 
 from typing import Iterable
 
-
 # ------------------------------------------------------------------------------
 
-def transpose_by(
-        pitches: Iterable,
-        semitones: int,
-        mod_12: bool = True
-) -> list:
+
+def transpose_by(pitches: Iterable, semitones: int, mod_12: bool = True) -> list:
     """
     Transposes a list of pitches by an interval of size
     set by the value of `semitones`.
@@ -54,15 +50,11 @@ def transpose_by(
     return result
 
 
-def transpose_to(
-        pitches: Iterable,
-        start: int = 0,
-        mod_12: bool = True
-) -> list:
+def transpose_to(pitches: Iterable, start: int = 0, mod_12: bool = True) -> list:
     """
     Transpose a list of pitch classes to start on 0 (by default), or
     any another number set by the value of `start`.
-    
+
     Parameters
     ----------
     pitches
@@ -97,9 +89,7 @@ def transpose_to(
     return result
 
 
-def retrograde(
-        pitches: Iterable
-) -> list:
+def retrograde(pitches: Iterable) -> list:
     """
     Retrograde (reverse) a list of pitches.
 
@@ -125,9 +115,7 @@ def retrograde(
 
 
 def invert(
-        pitches: Iterable,
-        use_first_not_0: bool = True,
-        mod_12: bool = True
+    pitches: Iterable, use_first_not_0: bool = True, mod_12: bool = True
 ) -> list:
     """
     Invert a list of pitch classes around a specified pitch: the starting pitch or 0.
@@ -167,9 +155,7 @@ def invert(
 
 
 def pitches_to_intervals(
-        pitches: Iterable,
-        wrap: bool = False,
-        mod_12: bool = True
+    pitches: Iterable, wrap: bool = False, mod_12: bool = True
 ) -> list:
     """
     Get the interval succession of a list of pitches.
@@ -209,10 +195,7 @@ def pitches_to_intervals(
     return intervals
 
 
-def rotate(
-        pitches: Iterable,
-        steps: int = 1
-) -> list:
+def rotate(pitches: Iterable, steps: int = 1) -> list:
     """
     Rotates a list of pitch classes through N steps (i.e. starts on the Nth element).
 
@@ -246,11 +229,7 @@ def rotate(
     return result
 
 
-def every_nth(
-    pitches: list,
-    start_index: int = 0,
-    step_size: int = 5
-) -> list:
+def every_nth(pitches: list, start_index: int = 0, step_size: int = 5) -> list:
     """
     Cycle through a list of pitches
     with a step size of n mod the length of the list
@@ -294,6 +273,7 @@ def every_nth(
 
 # ------------------------------------------------------------------------------
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import doctest
+
     doctest.testmod()

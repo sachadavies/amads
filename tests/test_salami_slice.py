@@ -1,4 +1,5 @@
 from pytest import approx
+
 from amads.algorithms.slice.salami import Timepoint, salami_slice
 
 
@@ -28,7 +29,7 @@ def test_salami_slice_twochan(twochan_score):
         [43, 69],
         [43, 67],
         [47, 64],
-        [47, 67]
+        [47, 67],
     ]
 
     for chord in chords:

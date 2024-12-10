@@ -17,6 +17,7 @@ https://github.com/MarkGotham/Serial_Analyser
 """
 
 import pytest
+
 from amads.pitch.transformations import (
     invert,
     pitches_to_intervals,
@@ -25,7 +26,6 @@ from amads.pitch.transformations import (
     transpose_by,
     transpose_to,
 )
-
 from amads.serial import pair_swap_krenek, rotate_hexachords
 
 
@@ -53,9 +53,9 @@ def test_invert():
 
 def test_pitches_to_intervals():
     test_row_up = [x for x in range(12)]
-    assert pitches_to_intervals(test_row_up) == [1]*11
+    assert pitches_to_intervals(test_row_up) == [1] * 11
     test_row_down = test_row_up[::-1]
-    assert pitches_to_intervals(test_row_down) == [11]*11
+    assert pitches_to_intervals(test_row_down) == [11] * 11
 
 
 def test_rotate_hexachords():

@@ -15,11 +15,10 @@ but the functions are general
 and not really named algorithms in sense used elsewhere on this code base.
 """
 
+from typing import List, Tuple, Union
 
-from typing import Union, List, Tuple
-
-from ..resources import pc_sets
 from ..pitch import transformations as pitch_list_transformations
+from ..resources import pc_sets
 
 
 def set_classes_from_cardinality(cardinality: int):
@@ -28,7 +27,7 @@ def set_classes_from_cardinality(cardinality: int):
     Out: the pitch class set data for that cardinality.
     """
     if not (1 < cardinality < 11):
-        raise ValueError('Invalid cardinality: must be 2-10 (inclusive).')
+        raise ValueError("Invalid cardinality: must be 2-10 (inclusive).")
     else:
         return pc_sets.set_classes[cardinality]
 
@@ -42,7 +41,7 @@ def prime_to_combinatoriality(prime: Tuple[int]):
     for x in data:
         if x[1] == prime:
             return x[3]
-    raise ValueError(f'{prime} is not a valid prime form')
+    raise ValueError(f"{prime} is not a valid prime form")
 
 
 def interval_vector_to_combinatoriality(vector: Tuple[int]):
@@ -53,19 +52,14 @@ def interval_vector_to_combinatoriality(vector: Tuple[int]):
     string (one of T, I, RI, A, or an empty string for non-combinatorial cases).
     """
     if len(vector) != 6:
-        raise ValueError(f'{vector} is not a valid interval vector')
+        raise ValueError(f"{vector} is not a valid interval vector")
     total = sum(vector)
-    total_to_cardinality = {
-        1: 2,
-        3: 3,
-        6: 4,
-        15: 6
-    }
+    total_to_cardinality = {1: 2, 3: 3, 6: 4, 15: 6}
     data = set_classes_from_cardinality(total_to_cardinality[total])
     for x in data:
         if x[2] == vector:
             return x[-1]
-    raise ValueError(f'{vector} is not a valid interval vector')
+    raise ValueError(f"{vector} is not a valid interval vector")
 
 
 def pitches_to_combinatoriality(pitches: Union[List[int], Tuple[int]]):
@@ -95,6 +89,7 @@ def pitches_to_interval_vector(pitches: Union[List[int], Tuple[int]]):
 
     vector = [0, 0, 0, 0, 0, 0]
     from itertools import combinations
+
     for p in combinations(pitches, 2):
         ic = p[1] - p[0]
         if ic < 0:
@@ -115,7 +110,7 @@ def pitches_to_forte_class(pitches: Union[List[int], Tuple[int]]):
     for x in data:
         if x[1] == prime:
             return x[0]
-    raise ValueError(f'{pitches} is not a valid entry.')
+    raise ValueError(f"{pitches} is not a valid entry.")
 
 
 def pitches_to_prime(pitches: Union[List[int], Tuple[int]]):
@@ -165,6 +160,7 @@ def transposition_equivalent(set1, set2):
 
 # ------------------------------------------------------------------------------
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import doctest
+
     doctest.testmod()

@@ -1,4 +1,5 @@
 from pytest import fixture
+
 from amads.core.basics import Note
 from amads.io.pt_midi_import import partitura_midi_import
 from amads.music import example

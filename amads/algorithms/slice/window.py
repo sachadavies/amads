@@ -8,12 +8,11 @@ Author
 Peter Harrison
 """
 
-
 from typing import Iterable, Iterator, Optional, Union
 
-from .slice import Slice
 from ...core.basics import Note, Score
 from ...utils import float_range
+from .slice import Slice
 
 
 class Window(Slice):
@@ -38,13 +37,14 @@ class Window(Slice):
         the next window which notes it can safely skip because they end before the
         window starts.
     """
+
     def __init__(
-            self,
-            time: float,
-            size: float,
-            align: str,
-            candidate_notes: Iterable[Note],
-            skip: int = 0,
+        self,
+        time: float,
+        size: float,
+        align: str,
+        candidate_notes: Iterable[Note],
+        skip: int = 0,
     ):
         match align:
             case "left":
@@ -97,17 +97,19 @@ class Window(Slice):
         # The next window can look at this attribute to know which candidates can be skipped.
         self.skip = skip
 
-        super().__init__(notes=notes, original_notes=original_notes, start=start, end=end)
+        super().__init__(
+            notes=notes, original_notes=original_notes, start=start, end=end
+        )
 
 
 def sliding_window(
-        passage: Union[Score, Iterable[Note]],
-        size: float,
-        step: float = 1.0,
-        align: str = "right",
-        start: float = 0.0,
-        end: Optional[float] = None,
-        times: Optional[Iterable[float]] = None,
+    passage: Union[Score, Iterable[Note]],
+    size: float,
+    step: float = 1.0,
+    align: str = "right",
+    start: float = 0.0,
+    end: Optional[float] = None,
+    times: Optional[Iterable[float]] = None,
 ) -> Iterator[Window]:
     """Slice a score into (possibly overlapping) windows of a given size.
 
@@ -164,7 +166,9 @@ def sliding_window(
         for par, default in [("start", 0.0), ("end", None), ("step", 1.0)]:
             provided = globals()[par]
             if provided != default:
-                raise ValueError(f"`{par}` was set to {provided} but `times` was also provided")
+                raise ValueError(
+                    f"`{par}` was set to {provided} but `times` was also provided"
+                )
 
         window_times = times
 

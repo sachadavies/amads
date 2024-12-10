@@ -3,8 +3,8 @@
 # Roger B. Dannenberg
 # Sep 2024
 
-from importlib import resources, util
 import os
+from importlib import resources, util
 
 music_extensions = [".mid", ".xml"]  # used to find all music examples
 
@@ -40,7 +40,7 @@ def fullpath(example):
     for root, dirs, files in os.walk(package_path):
         for file in files:
             for ext in music_extensions:
-                if file.endswith(ext) :
+                if file.endswith(ext):
                     parameter_option = trim_path(os.path.join(root, file))
                     print(f'   "{parameter_option}"')
     return None

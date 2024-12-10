@@ -72,6 +72,6 @@ def ivdist1(score: Score, weighted=True) -> list[float]:
 
     total = sum(id)
     if total > 0:
-        id = [value/total for value in id]
+        id = [value / total for value in id]
 
     return id

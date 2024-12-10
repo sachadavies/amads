@@ -15,12 +15,15 @@ Dependencies:
 Usage:
     [Add basic usage examples or import statements]
 """
+
+from typing import Any, List, Union
+
 # matplotlib.use('TkAgg') # We should not force this on users as it is not compatible with all backends
 import matplotlib.pyplot as plt
 from matplotlib import figure
-from typing import Any, List, Union
 
 DEFAULT_BAR_COLOR = "skyblue"
+
 
 class Distribution:
     """
@@ -53,12 +56,17 @@ class Distribution:
         y_label: str - The label for the y-axis.
     """
 
-    def __init__(self, name: str, data: List[Any], distribution_type: str,
-                 dimensions: List[int],
-                 x_categories: List[Union[int, float, str]],
-                 x_label: str,
-                 y_categories: Union[List[Union[int, float, str]], None],
-                 y_label: str):
+    def __init__(
+        self,
+        name: str,
+        data: List[Any],
+        distribution_type: str,
+        dimensions: List[int],
+        x_categories: List[Union[int, float, str]],
+        x_label: str,
+        y_categories: Union[List[Union[int, float, str]], None],
+        y_label: str,
+    ):
         self.name = name
         self.data = data
         self.distribution_type = distribution_type
@@ -89,14 +97,13 @@ class Distribution:
         fig.suptitle(self.name)
         return fig
 
-
     def plot_2d(self, color=DEFAULT_BAR_COLOR) -> figure.Figure:
         """Create a 2D plot of the distribution.
         Returns:
             figure.Figure - A matplotlib figure object.
         """
         fig, ax = plt.subplots()
-        cax = ax.imshow(self.data, cmap='gray_r', interpolation='nearest')
+        cax = ax.imshow(self.data, cmap="gray_r", interpolation="nearest")
         fig.colorbar(cax, ax=ax, label="Proportion")
         ax.set_xlabel(self.x_label)
         ax.set_ylabel(self.y_label)
@@ -110,4 +117,3 @@ class Distribution:
 
         ax.invert_yaxis()
         return fig
-

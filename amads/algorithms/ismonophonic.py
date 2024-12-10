@@ -2,8 +2,7 @@
 Provides the function `ismonophonic`
 """
 
-from ..core.basics import Score, Note
-
+from ..core.basics import Note, Score
 
 
 def _ismonophonic(notes: list[Note]):

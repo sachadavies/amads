@@ -1,6 +1,7 @@
 import math
-from .basics import Pitch
+
 from ..io.ptscoreread import score_read, score_read_extensions
+from .basics import Pitch
 
 
 def dir2coll(filenames):
@@ -42,6 +43,7 @@ def hz2keynum(hertz):
     keynum (Pitch or list of Pitch): The corresponding MIDI key number(s)
     as Pitch objects.
     """
+
     def hz_to_keynum_single(hz):
         keynum = 69 + 12 * math.log2(hz / 440.0)
         return Pitch(round(keynum))
@@ -50,6 +52,7 @@ def hz2keynum(hertz):
         return [hz_to_keynum_single(hz) for hz in hertz]
     else:
         return hz_to_keynum_single(hertz)
+
 
 def keynum2hz(keynum):
     """
@@ -63,6 +66,7 @@ def keynum2hz(keynum):
     Returns:
     hz (float or list of floats): The corresponding frequency in Hertz.
     """
+
     def keynum_to_hz_single(k):
         if isinstance(k, Pitch):
             keynum = k.keynum
@@ -76,7 +80,7 @@ def keynum2hz(keynum):
         return keynum_to_hz_single(keynum)
 
 
-def keyname(n, detail='nameoctave'):
+def keyname(n, detail="nameoctave"):
     """
     Converts key numbers to key names (text).
 
@@ -89,18 +93,19 @@ def keyname(n, detail='nameoctave'):
     Returns:
     name (str or list of str): The corresponding key names.
     """
+
     def keyname_single(k):
         pitch = Pitch(k)
-        if detail == 'nameonly':
+        if detail == "nameonly":
             return pitch.name_str  # Handles sharps, flats, and natural notes correctly
-        elif detail == 'nameoctave':
+        elif detail == "nameoctave":
             return pitch.name_with_octave  # Includes both the note name and octave
         else:
-            raise ValueError("Invalid detail option. Use 'nameonly' or "
-                             "'nameoctave'.")
+            raise ValueError(
+                "Invalid detail option. Use 'nameonly' or " "'nameoctave'."
+            )
 
     if isinstance(n, list):
         return [keyname_single(k) for k in n]
     else:
         return keyname_single(n)
-

@@ -8,13 +8,13 @@ that are specific to tone rows in serial music.
 
 """
 
-from typing import Union, List, Tuple
-from ..pitch.transformations import transpose_to, every_nth
+from typing import List, Tuple, Union
+
+from ..pitch.transformations import every_nth, transpose_to
 
 
 def rotate_hexachords(
-        row: Union[List, Tuple],
-        transpose_iterations: bool = False
+    row: Union[List, Tuple], transpose_iterations: bool = False
 ) -> list:
     """
     Implements a set of hexachord rotations of the kind described in krenek 1960, p.212.
@@ -60,7 +60,7 @@ def rotate_hexachords(
 
     for i in range(1, 6):
         first_hexachord = row[i:6] + row[0:i]
-        second_hexachord = row[6+i:] + row[6:6+i]
+        second_hexachord = row[6 + i :] + row[6 : 6 + i]
 
         if transpose_iterations:
             first_hexachord = transpose_to(first_hexachord, start=hexachord1note1)
@@ -74,9 +74,7 @@ def rotate_hexachords(
     return rows
 
 
-def pair_swap_krenek(
-        row: Union[List, Tuple]
-) -> list:
+def pair_swap_krenek(row: Union[List, Tuple]) -> list:
     """
     Iteratively swaps pairs of adjacent notes in a row
     with a two-step process as described in Krenek 1960, p.213.
@@ -135,7 +133,7 @@ def pair_swap_krenek(
 
 
 def lumsdaine_cycle(
-        row: Union[list, None] = None,
+    row: Union[list, None] = None,
 ) -> list[list]:
     """
     A multipart
@@ -189,7 +187,7 @@ def lumsdaine_cycle(
 
 
 def lumsdaine_4(
-        row: Union[List, None] = None,
+    row: Union[List, None] = None,
 ) -> list[list]:
     """
     One phase of `lumsdaine_cycle()`
@@ -258,6 +256,7 @@ def lumsdaine_hexachord_pairs(row: list):
 
 # ------------------------------------------------------------------------------
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import doctest
+
     doctest.testmod()
