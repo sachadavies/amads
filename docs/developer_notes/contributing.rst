@@ -6,12 +6,50 @@ We welcome contributions to the project! Whether you want to fix bugs, improve d
 1. Submit a pull request
 -----------------------
 
-Fork the repository and create a pull request with your changes. Your contribution can be:
+For team members:
+1. Create a new branch from main: ``git checkout -b feature-name``
+2. Make your changes and commit them
+3. Push the branch: ``git push origin feature-name``
+4. Open a pull request from your branch to main
 
+For external contributors:
+1. Fork the repository to your GitHub account
+2. Clone your fork: ``git clone https://github.com/your-username/amads.git``
+3. Create a branch: ``git checkout -b feature-name``
+4. Make your changes and commit them
+5. Push to your fork: ``git push origin feature-name``
+6. Open a pull request from your fork to our main branch
+
+Your contribution might be:
 - Bug fixes
 - Documentation improvements
 - New features and functionality
 - Test cases
+
+Keep pull requests focused
+-------------------------
+
+When submitting pull requests, follow these guidelines:
+
+1. Keep changes small and focused
+   - Each PR should address a single concern
+   - Break large changes into smaller, logical PRs
+   - This makes review easier and reduces merge conflicts
+
+2. Write clear PR descriptions
+   - Explain what the changes do and why they're needed
+   - Reference any related issues
+   - Include before/after examples if relevant
+   - List any breaking changes or dependencies
+
+For example, instead of one large PR that adds multiple features, refactors code, and fixes bugs, break it into:
+
+- PR 1: Add new feature X
+- PR 2: Refactor module Y
+- PR 3: Fix bug Z
+
+This approach helps reviewers understand your changes and speeds up the review process.
+
 
 2. Continuous Integration
 ------------------------
