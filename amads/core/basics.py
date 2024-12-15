@@ -86,7 +86,7 @@ class Event:
 
     @start.setter
     def start(self, value):
-        if self.parent is None:
+        if self.parent:
             self.delta = value
         else:
             self.delta = value - self.parent.start
