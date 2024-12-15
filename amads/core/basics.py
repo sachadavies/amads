@@ -81,7 +81,7 @@ class Event:
             return self.delta
 
     @property
-    def qstop(self):
+    def end(self):
         return self.start + self.duration
 
 
@@ -583,14 +583,14 @@ class Sequence(EventGroup):
         return s
 
     @property
-    def last_qstop(self):
+    def last_end(self):
         """return the end time (in quarters) of the last element,
         or the Sequence start time if the Sequence is empty
         """
         if len(self.content) == 0:
             return self.start
         else:
-            return self.last.last_qstop
+            return self.last.last_end
 
     @property
     def last_delta_end(self):
@@ -1184,7 +1184,7 @@ class Staff(Sequence):
                 event = measure.content[n_index]
                 if isinstance(event, Note) and event.keynum == note.keynum:
                     if event.tie == "stop":
-                        return event.qstop - start
+                        return event.end - start
                     elif event.tie != "continue":
                         raise Exception("inconsistent tie attributes or notes")
                 elif isinstance(event, Chord):

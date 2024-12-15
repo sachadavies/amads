@@ -118,24 +118,24 @@ def retie_notes(event, events, i, measure, staff, mindex, part):
     for i, ev in enumerate(group[:-1]):  # check all but 'stop' event
         # does ev end near a measure boundary? If so assume it's a tie across
         # the bar:
-        qstop = ev[1] + ev[2]
-        while qstop > (measure.delta_end + 1 / DIV_TO_QUARTER_ROUNDING) and (
+        end = ev[1] + ev[2]
+        while end > (measure.delta_end + 1 / DIV_TO_QUARTER_ROUNDING) and (
             mindex < len(staff.content) - 1
         ):
             mindex += 1
             measure = staff.content[mindex]
-        # now we know qstop > previous bar end + 1/DIV and
-        #     qstop < this bar end + 1/DIV (unless we ran out of measures), so
+        # now we know end > previous bar end + 1/DIV and
+        #     end < this bar end + 1/DIV (unless we ran out of measures), so
         #     this bar end (measure.delta_end) is the time we are looking for
         print(
             "found bar at",
             measure.delta_end,
             "absdiff",
-            abs(qstop - measure.delta_end),
+            abs(end - measure.delta_end),
         )
-        if abs(qstop - measure.delta_end) < 0.5 / DIV_TO_QUARTER_ROUNDING:
+        if abs(end - measure.delta_end) < 0.5 / DIV_TO_QUARTER_ROUNDING:
             # end of note rounds to the time of the end of measure
-            extend = measure.delta_end - qstop  # could be >0 or <0
+            extend = measure.delta_end - end  # could be >0 or <0
             ev[2] = measure.delta_end - ev[1]
             group[i + 1][1] = measure.delta_end
             # if we extend ev==group[i], we need to shorten group[i+1]
