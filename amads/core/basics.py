@@ -519,7 +519,7 @@ class EventGroup(Event):
         self.duration. If the event is out of order, insert it just before
         the first element with a greater delta. This method is similar
         to append(), but it has different defaults for delta and
-        update_dur.
+        update_duration.
         """
         if self.last and event.delta < self.last.delta:
             # search in reverse from end
@@ -598,7 +598,7 @@ class Sequence(EventGroup):
         else:
             return self.last.last_delta_end()
 
-    def append(self, element, delta=None, update_dur=True):
+    def append(self, element, delta=None, update_duration=True):
         """Append an element. If delta is specified, the element is
         modified to start at this delta, and the duration of self
         is unchanged. If delta is not specified or None, the element
@@ -607,7 +607,7 @@ class Sequence(EventGroup):
         """
         if delta is None:
             element.delta = self.duration
-            if update_dur:
+            if update_duration:
                 self.duration += element.duration
         else:
             element.delta = delta
@@ -681,17 +681,17 @@ class Concurrence(EventGroup):
                 elem.pack()
             self.duration = max(self.duration, elem.duration)
 
-    def append(self, element, delta=0, update_dur=True):
+    def append(self, element, delta=0, update_duration=True):
         """Append an element to the content with the given delta.
         (Specify delta=element.delta to retain the element's delta.)
         By default, the duration(ation) of self is increased to the
         delta_end of element if the delta_end is greater than the
         current duration(ation). To retain the duration(ation) of self, specify
-        update_dur=False.
+        update_duration=False.
         """
         element.delta = delta
         self.insert(element)
-        if update_dur:
+        if update_duration:
             self.duration = max(self.duration, element.delta_end)
 
 
@@ -1141,7 +1141,7 @@ class Staff(Sequence):
                         measure.insert(event.copy())
                     elif event.tie == "start":
                         new_event = event.copy()
-                        new_event.duration = self.tied_dur(event, m_index=m_num)
+                        new_event.duration = self.tied_duration(event, m_index=m_num)
                         new_event.tie = None
                         measure.insert(new_event)
                 elif isinstance(event, Chord):
@@ -1151,7 +1151,7 @@ class Staff(Sequence):
                             new_chord.insert(note.copy())
                         elif note.tie == "start":
                             new_note = note.copy()
-                            new_note.duration = self.tied_dur(note, m_index=m_num)
+                            new_note.duration = self.tied_duration(note, m_index=m_num)
                             new_note.tie = None
                             new_chord.insert(new_note)
                     measure.insert(new_chord)
@@ -1160,7 +1160,7 @@ class Staff(Sequence):
             staff.insert(measure)
         return staff
 
-    def tied_dur(self, note, m_index=None):
+    def tied_duration(self, note, m_index=None):
         """Compute the full duration of note as the sum of notes that note
         is tied to. note.tie must be 'start'
         """
