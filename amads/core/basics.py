@@ -60,7 +60,7 @@ class Event:
         raise Exception("Event is abstract, subclass should override deep_copy()")
 
     @property
-    def end_offset(self):
+    def delta_end(self):
         return self.offset + self.dur
 
     @property
@@ -562,7 +562,7 @@ class Sequence(EventGroup):
             if len(content) == 0:
                 dur = 0
             else:
-                dur = content[-1].end_offset
+                dur = content[-1].delta_end
         super().__init__(offset, dur, content)
 
     def copy(self):
@@ -589,14 +589,14 @@ class Sequence(EventGroup):
         else:
             return self.last.last_qstop()
 
-    def last_end_offset(self):
-        """return the end_offset (in quarters) of the last element,
+    def last_delta_end(self):
+        """return the delta_end (in quarters) of the last element,
         or 0 if the Sequence is empty
         """
         if len(self.content) == 0:
             return 0
         else:
-            return self.last.last_end_offset()
+            return self.last.last_delta_end()
 
     def append(self, element, offset=None, update_dur=True):
         """Append an element. If offset is specified, the element is
@@ -616,8 +616,8 @@ class Sequence(EventGroup):
     def pack(self):
         """Adjust the content to be sequential, with zero offset for the
         first element, and each other object at an offset equal to the
-        end_offset of the previous element. The dur(ation) of self is set
-        to the end_offset of the last element. This method essentially,
+        delta_end of the previous element. The dur(ation) of self is set
+        to the delta_end of the last element. This method essentially,
         arranges the content to eliminate gaps. pack() works recursively
         on elements that are EventGroups.
         """
@@ -642,7 +642,7 @@ class Concurrence(EventGroup):
     # content -- elements contained within this collection
 
     def __init__(self, offset=0, dur=None, content=None):
-        """dur(ation) defaults to the maximum end_offset of provided content
+        """dur(ation) defaults to the maximum delta_end of provided content
         or 0 if content is empty.
         """
         if content is None:
@@ -650,7 +650,7 @@ class Concurrence(EventGroup):
         if dur is None:
             dur = 0
             for elem in content:
-                dur = max(dur, elem.end_offset)
+                dur = max(dur, elem.delta_end)
         super().__init__(offset, dur, content)
 
     def copy(self):
@@ -670,7 +670,7 @@ class Concurrence(EventGroup):
 
     def pack(self):
         """Adjust the content to offsets of zero. The dur(ation) of self
-        is set to the maximum end_offset of the elements. This method
+        is set to the maximum delta_end of the elements. This method
         essentially, arranges the content to eliminate gaps. pack() works
         recursively on elements that are EventGroups.
         """
@@ -685,14 +685,14 @@ class Concurrence(EventGroup):
         """Append an element to the content with the given offset.
         (Specify offset=element.offset to retain the element's offset.)
         By default, the dur(ation) of self is increased to the
-        end_offset of element if the end_offset is greater than the
+        delta_end of element if the delta_end is greater than the
         current dur(ation). To retain the dur(ation) of self, specify
         update_dur=False.
         """
         element.offset = offset
         self.insert(element)
         if update_dur:
-            self.dur = max(self.dur, element.end_offset)
+            self.dur = max(self.dur, element.delta_end)
 
 
 class Chord(Concurrence):
@@ -912,17 +912,17 @@ class Score(Concurrence):
             # do some other extra work to put all notes into score
             score_start = score.qstart()
             new_part = Part()
-            max_end_offset = 0
+            max_delta_end = 0
             for part in score_no_ties.content:
                 for note in part.find_all(Note):
                     note_copy = note.deep_copy()
                     # note offset is now relative to start of part:
                     note_copy.offset = note.qstart() - score_start
-                    max_end_offset = max(max_end_offset, note_copy.end_offset)
+                    max_delta_end = max(max_delta_end, note_copy.delta_end)
                     new_part.insert(note_copy)
             new_part.content = sorted(new_part.content, key=note_qstart)
             score.insert(new_part)
-            score.dur = score.qstart() + max_end_offset
+            score.dur = score.qstart() + max_delta_end
         else:
             for part in self.content:
                 score.insert(part.flatten())

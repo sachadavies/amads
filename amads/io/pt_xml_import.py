@@ -119,25 +119,25 @@ def retie_notes(event, events, i, measure, staff, mindex, part):
         # does ev end near a measure boundary? If so assume it's a tie across
         # the bar:
         qstop = ev[1] + ev[2]
-        while qstop > (measure.end_offset + 1 / DIV_TO_QUARTER_ROUNDING) and (
+        while qstop > (measure.delta_end + 1 / DIV_TO_QUARTER_ROUNDING) and (
             mindex < len(staff.content) - 1
         ):
             mindex += 1
             measure = staff.content[mindex]
         # now we know qstop > previous bar end + 1/DIV and
         #     qstop < this bar end + 1/DIV (unless we ran out of measures), so
-        #     this bar end (measure.end_offset) is the time we are looking for
+        #     this bar end (measure.delta_end) is the time we are looking for
         print(
             "found bar at",
-            measure.end_offset,
+            measure.delta_end,
             "absdiff",
-            abs(qstop - measure.end_offset),
+            abs(qstop - measure.delta_end),
         )
-        if abs(qstop - measure.end_offset) < 0.5 / DIV_TO_QUARTER_ROUNDING:
+        if abs(qstop - measure.delta_end) < 0.5 / DIV_TO_QUARTER_ROUNDING:
             # end of note rounds to the time of the end of measure
-            extend = measure.end_offset - qstop  # could be >0 or <0
-            ev[2] = measure.end_offset - ev[1]
-            group[i + 1][1] = measure.end_offset
+            extend = measure.delta_end - qstop  # could be >0 or <0
+            ev[2] = measure.delta_end - ev[1]
+            group[i + 1][1] = measure.delta_end
             # if we extend ev==group[i], we need to shorten group[i+1]
             group[i + 1][2] -= extend
             # now if group[i+1] duration rounds to zero, we eliminate it
@@ -249,7 +249,7 @@ def partitura_convert_part(ppart, score):
     for i, event in enumerate(events):
         staff = staff_for_note(part, event)
         measure = staff.content[mindex]
-        while event[1] >= measure.end_offset and mindex < len(staff.content) - 1:
+        while event[1] >= measure.delta_end and mindex < len(staff.content) - 1:
             mindex += 1
             measure = staff.content[mindex]
         if event[6] == "start":
@@ -262,7 +262,7 @@ def partitura_convert_part(ppart, score):
     for event in events:
         staff = staff_for_note(part, event)
         measure = staff.content[mindex]
-        while event[1] >= measure.end_offset:
+        while event[1] >= measure.delta_end:
             mindex += 1
             if mindex == len(staff.content):
                 print("Something is wrong; could not find measure for", event)

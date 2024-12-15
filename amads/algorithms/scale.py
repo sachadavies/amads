@@ -39,5 +39,5 @@ def scale(score, factor=2, dim="all"):
                 elem.dur *= factor
             elif dim == "offset":
                 elem.offset *= 2
-        score.dur = max(score.dur, elem.end_offset)
+        score.dur = max(score.dur, elem.delta_end)
     return score
