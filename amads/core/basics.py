@@ -1176,7 +1176,7 @@ class Staff(Sequence):
             staff.insert(measure)
         return staff
 
-    def tied_duration(self, note, m_index=None):
+    def tied_duration(self, note: Note, m_index=None):
         """Compute the full duration of note as the sum of notes that note
         is tied to. note.tie must be 'start'
         """
