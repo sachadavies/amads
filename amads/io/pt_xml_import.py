@@ -91,7 +91,7 @@ def retie_notes(event, events, i, measure, staff, mindex, part):
     Then for each note in order, if tied to the next note and the
     end time rounds to a bar time, then replace the end time with
     the bar time and replace the next not start and duration to
-    move the start time to the bar time (offset=0). If the resulting
+    move the start time to the bar time (delta=0). If the resulting
     duration is < 0.001, assume it was created through rounding error
     and set it to zero, set the current note from tie='continue' to
     tie='stop' or tie='start' to tie=None, and set the tied-to note
@@ -189,11 +189,11 @@ def partitura_convert_part(ppart, score):
             if m[0] == "timesig":
                 # assume timesig is inside a measure, which would be the last
                 # measure (so far) in this staff, and assume we are at the
-                # beginning of the measure; offset=0 overrides putting this
+                # beginning of the measure; delta=0 overrides putting this
                 # at the end of the measure which already has a duration
-                staff.last.append(TimeSignature(m[1], m[2]), offset=0)
+                staff.last.append(TimeSignature(m[1], m[2]), delta=0)
             elif m[0] == "keysig":
-                staff.last.append(KeySignature(m[1], offset=0))
+                staff.last.append(KeySignature(m[1], delta=0))
             else:
                 # convert divs duration to quarters
                 dur = div_to_quarter(durs, m[2], rnd=True) - div_to_quarter(
@@ -268,17 +268,17 @@ def partitura_convert_part(ppart, score):
                 print("Something is wrong; could not find measure for", event)
                 break  # use previous measure, but probably there is a bug here
             measure = staff.content[mindex]
-        offset = event[1] - measure.qstart()
+        delta = event[1] - measure.qstart()
         if event[0] == "Note":
             if event[2] > 0:  # zero dur means skip note
-                note = Note(dur=event[2], pitch=event[4], offset=offset)
+                note = Note(dur=event[2], pitch=event[4], delta=delta)
                 note.tie = event[6]
                 print("Before inserting note:")
                 note.show()
                 # id_to_event[event[5]] = note  # build temporary map in dictionary
                 measure.insert(note)
         elif event[0] == "Rest":
-            measure.insert(Rest(event[2]), offset=measure.offset)
+            measure.insert(Rest(event[2]), delta=measure.delta)
         else:
             assert False
     return part

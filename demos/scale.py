@@ -17,13 +17,13 @@ scaled_score = scale(myscore.deep_copy(), 2, "dur")
 print("------- scaled score")
 scaled_score.show()
 
-print("------- scaling offset by 2")
-scaled_score = scale(myscore.deep_copy(), 2, "offset")
+print("------- scaling delta by 2")
+scaled_score = scale(myscore.deep_copy(), 2, "delta")
 
 print("------- scaled score")
 scaled_score.show()
 
-print("------- scaling everything (dur and offset) by 2")
+print("------- scaling everything (dur and delta) by 2")
 scaled_score = scale(myscore.deep_copy(), 2, "all")
 
 print("------- scaled score")

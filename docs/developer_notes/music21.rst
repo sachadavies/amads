@@ -8,7 +8,7 @@ Note class
 * name:
   e.g. ``'F'``
 * octave:
-  e.g. ``5`` (ISO) 
+  e.g. ``5`` (ISO)
 * pitch:
   e.g. ``'F5'``, ``'B-2'``, ``'D#3'``
 
@@ -61,7 +61,7 @@ properties are:
 Structure
 ---------
 Stream is supertype for Score, Part and Measure
-Streams have time (offset) and a list of components:
+Streams have time (delta) and a list of components:
 * ``Stream``
 * ``Note``
 * ``Chord``
@@ -69,13 +69,13 @@ Streams have time (offset) and a list of components:
 * ``TimeSignature``
 * ``Rest``?
 
-Component offsets are relative to the parent, not global.
+Component deltas are relative to the parent, not global.
 We can add a tempo curve that consists of breakpoints
     starting at (0,0), and map seconds to quarters
     Operations could then include: fix the tempo, e.g.
     linear mapping at some number of quarters/second;
-    convert internal offsets from quarters to seconds;
-    convert internal offsets from seconds to quarters.
+    convert internal deltas from quarters to seconds;
+    convert internal deltas from seconds to quarters.
 
 Ties: in Music21, notes can have durations that take
     them out of the measure, OR notes can have ties.

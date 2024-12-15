@@ -6,8 +6,8 @@ Function input:
     Musical score (as specified in basics.py)
 
 Function output:
-    (note offset, strength) list
-    note that since we are dealing with a monophonic score, each offset
+    (note qstart, strength) list
+    note that since we are dealing with a monophonic score, each qstart
     corresponds to only 1 unique note, we can ensure that each output
     corresponds to a unique monophonic piece of music
 
@@ -42,8 +42,8 @@ to have wildly different output structures?
 For that matter, what should we do with standardizing output structure?
 Note to strength dictionary? Too complex.
 Since we are only dealing with monophonic scores in these algorithms, we can
-leverage the fact that each note offset has a unique note in the score and
-emit offset and strength pairs...
+leverage the fact that each note qstart has a unique note in the score and
+emit qstart and strength pairs...
 """
 
 from ..core.basics import Note, Score
@@ -55,7 +55,7 @@ def boundary(score: Score):
     Given a score, returns the following:
     (1) If score is not monophonic, we raise an exception
     (2) If score has notes, we return a a list of tuples containing
-    note offset and its corresponding strength, respectively
+    note qstart and its corresponding strength, respectively
     """
     if not ismonophonic(score):
         raise ValueError("Score must be monophonic")

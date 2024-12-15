@@ -13,14 +13,14 @@ print("------- finished input from partitura")
 fig = pianoroll(myscore)
 
 print("------- Executing segmentgestalt")
-clang_offsets, segment_offsets = segment_gestalt(myscore)
-print(clang_offsets)
-print(segment_offsets)
+clang_qstarts, segment_qstarts = segment_gestalt(myscore)
+print(clang_qstarts)
+print(segment_qstarts)
 xmin, xmax, ymin, ymax = plt.axis()
 
-plt.vlines(clang_offsets, ymin, ymax, colors="purple", label="clang boundary offsets")
+plt.vlines(clang_qstarts, ymin, ymax, colors="purple", label="clang boundary qstarts")
 plt.vlines(
-    segment_offsets, ymin, ymax, colors="green", label="segment boundary offsets"
+    segment_qstarts, ymin, ymax, colors="green", label="segment boundary qstarts"
 )
 plt.legend(loc="best")
 
