@@ -3,11 +3,12 @@ from .core import *
 from .harmony import *
 from .io import *
 from .melody import *
-from .meter import *
 from .music import example
-from .pitch import *
+from .pitch.key.profiles import *
+from .pitch.pc_sets import *
 from .pitch.serial import *
-from .rhythm import *
+from .pitch.transformations import *
 from .schemata import *
-from .timing import *
-from .tonality import *
+from .time.npvi import *
+from .time.swing import *
+from .time.tempo import *
