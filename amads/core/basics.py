@@ -84,6 +84,18 @@ class Event:
     def end(self):
         return self.start + self.duration
 
+    @start.setter
+    def start(self, value):
+        if self.parent is None:
+            self.delta = value
+        else:
+            self.delta = value - self.parent.start
+
+    @end.setter
+    def end(self, value):
+        self.duration = value - self.start
+        assert self.duration >= 0
+
 
 class Rest(Event):
     """Rest represents a musical rest. It is normally an element of
