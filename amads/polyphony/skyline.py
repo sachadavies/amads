@@ -79,7 +79,7 @@ def skyline(score: Score, threshold: float = 0.1):
                 # shorten the duration of the low note
                 else:
                     note_end = min(note.qstart(), filtered_notes[j].qstop())
-                    filtered_notes[j].dur = note_end - filtered_notes[j].qstart()
+                    filtered_notes[j].duration = note_end - filtered_notes[j].qstart()
 
     # create a new score and part to store the filtered notes
     new_score = Score()

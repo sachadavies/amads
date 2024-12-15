@@ -55,8 +55,8 @@ for window in windows:
         mean_pitch_heights.append(None)
         continue
 
-    total_duration = sum(note.dur for note in window.notes)
-    weighted_sum = sum(note.keynum * note.dur for note in window.notes)
+    total_duration = sum(note.duration for note in window.notes)
+    weighted_sum = sum(note.keynum * note.duration for note in window.notes)
     mean_pitch_heights.append(weighted_sum / total_duration)
 
 # %%

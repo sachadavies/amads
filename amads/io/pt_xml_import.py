@@ -196,12 +196,12 @@ def partitura_convert_part(ppart, score):
                 staff.last.append(KeySignature(m[1], delta=0))
             else:
                 # convert divs duration to quarters
-                dur = div_to_quarter(durs, m[2], rnd=True) - div_to_quarter(
+                duration = div_to_quarter(durs, m[2], rnd=True) - div_to_quarter(
                     durs, m[1], rnd=True
                 )
-                if dur > 0:  # do not append zero-length measures that arise
+                if duration > 0:  # do not append zero-length measures that arise
                     # from rounding errors in Partitura:
-                    staff.append(Measure(dur=dur))
+                    staff.append(Measure(duration=duration))
         print("added measures to staff:")
         staff.show()
         part.append(staff)
@@ -215,13 +215,13 @@ def partitura_convert_part(ppart, score):
         if isinstance(item, pt.score.Note) or isinstance(item, pt.score.Rest):
             start = div_to_quarter(durs, item.start.t)
             print("Note or Rest start", start, "item.start.t", item.start.t)
-            dur = (item.end.t - item.start.t) / item.start.quarter
+            duration = (item.end.t - item.start.t) / item.start.quarter
             if isinstance(item, pt.score.Note):
                 events.append(
                     [
                         "Note",
                         start,
-                        dur,
+                        duration,
                         item.staff,
                         item.midi_pitch,
                         item.id,
@@ -229,7 +229,7 @@ def partitura_convert_part(ppart, score):
                     ]
                 )
             elif isinstance(item, Rest):
-                events.append(["Rest", start, dur, item.staff])
+                events.append(["Rest", start, duration, item.staff])
         elif isinstance(item, pt.score.Tempo):
             start = div_to_quarter(durs, item.start.t)
             print("Tempo start", start, "tempo", item.bpm / 60.0)
@@ -239,8 +239,8 @@ def partitura_convert_part(ppart, score):
     print("events", events)
 
     # Data formats (note that staff number is always event[3])
-    #    (Note, start, dur, staff, midi_pitch, id, tie) -- on events list
-    #    (Rest, start, dur, staff) -- on events list
+    #    (Note, start, duration, staff, midi_pitch, id, tie) -- on events list
+    #    (Rest, start, duration, staff) -- on events list
     # id_to_event = {}
 
     # pass 3: re-tie notes that cross measures in case measure times
@@ -270,8 +270,8 @@ def partitura_convert_part(ppart, score):
             measure = staff.content[mindex]
         delta = event[1] - measure.qstart()
         if event[0] == "Note":
-            if event[2] > 0:  # zero dur means skip note
-                note = Note(dur=event[2], pitch=event[4], delta=delta)
+            if event[2] > 0:  # zero duration means skip note
+                note = Note(duration=event[2], pitch=event[4], delta=delta)
                 note.tie = event[6]
                 print("Before inserting note:")
                 note.show()

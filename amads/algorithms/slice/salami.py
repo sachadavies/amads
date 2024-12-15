@@ -186,7 +186,7 @@ def salami_slice(
             notes = [
                 Note(
                     delta=slice_start,
-                    dur=slice_duration,
+                    duration=slice_duration,
                     pitch=pitch,
                 )
                 for pitch in pitches

@@ -11,8 +11,8 @@ print("------- input from partitura")
 myscore = partitura_midi_import(my_midi_file, ptprint=False)
 print("------- finished input from partitura")
 
-print("------- scaling dur by 2")
-scaled_score = scale(myscore.deep_copy(), 2, "dur")
+print("------- scaling duration by 2")
+scaled_score = scale(myscore.deep_copy(), 2, "duration")
 
 print("------- scaled score")
 scaled_score.show()
@@ -23,7 +23,7 @@ scaled_score = scale(myscore.deep_copy(), 2, "delta")
 print("------- scaled score")
 scaled_score.show()
 
-print("------- scaling everything (dur and delta) by 2")
+print("------- scaling everything (duration and delta) by 2")
 scaled_score = scale(myscore.deep_copy(), 2, "all")
 
 print("------- scaled score")

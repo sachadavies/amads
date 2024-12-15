@@ -45,12 +45,12 @@ class Event:
     """
 
     # delta -- start time in quarters expressed relative to the parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
 
-    def __init__(self, dur, delta):
+    def __init__(self, duration, delta):
         self.delta = delta
-        self.dur = dur
+        self.duration = duration
         self._parent = None
 
     def copy(self):
@@ -61,7 +61,7 @@ class Event:
 
     @property
     def delta_end(self):
-        return self.delta + self.dur
+        return self.delta + self.duration
 
     @property
     def parent(self):
@@ -80,7 +80,7 @@ class Event:
             return self.delta
 
     def qstop(self):
-        return self.qstart() + self.dur
+        return self.qstart() + self.duration
 
 
 class Rest(Event):
@@ -89,28 +89,28 @@ class Rest(Event):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
 
-    def __init__(self, dur=1, delta=0):
-        super().__init__(dur, delta)
+    def __init__(self, duration=1, delta=0):
+        super().__init__(duration, delta)
 
     def copy(self):
         """Make a copy of just this object with no parent."""
-        return Rest(dur=self.dur, delta=self.delta)
+        return Rest(duration=self.duration, delta=self.delta)
 
     def show(self, indent=0):
         print(
             " " * indent,
             f"Rest at {self.qstart():.3f} ",
-            f"delta {self.delta:.3f} dur {self.dur:.3f}",
+            f"delta {self.delta:.3f} duration {self.duration:.3f}",
             sep="",
         )
         return self
 
     def deep_copy(self):
         """Make a deep copy, omitting weak link to parent."""
-        r = Rest(self.dur, self.delta)
+        r = Rest(self.duration, self.delta)
         return r
 
 
@@ -120,7 +120,7 @@ class Note(Event):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
     # pitch -- a Pitch
     # dynamic -- None, integer, or string
@@ -132,11 +132,11 @@ class Note(Event):
     #        Ties are not slurs. There is no representation for slurs
     #        between notes of different pitches.
 
-    def __init__(self, dur=1, pitch=None, dynamic=None, lyric=None, delta=0):
+    def __init__(self, duration=1, pitch=None, dynamic=None, lyric=None, delta=0):
         """pitch is normally a Pitch, but can be an integer MIDI key number
         that will be converted to a Pitch object.
         """
-        super().__init__(dur, delta)
+        super().__init__(duration, delta)
         if isinstance(pitch, Pitch):
             self.pitch = pitch
         elif pitch:
@@ -150,7 +150,7 @@ class Note(Event):
     def copy(self):
         """Make a copy of just this object with no parent."""
         n = Note(
-            dur=self.dur,
+            duration=self.duration,
             pitch=self.pitch,
             dynamic=self.dynamic,
             lyric=self.lyric,
@@ -172,7 +172,7 @@ class Note(Event):
         print(
             " " * indent,
             f"Note at {self.qstart():0.3f} ",
-            f"delta {self.delta:0.3f} dur {self.dur:0.3f} pitch ",
+            f"delta {self.delta:0.3f} duration {self.duration:0.3f} pitch ",
             self.name_with_octave,
             tieinfo,
             dynamicinfo,
@@ -234,7 +234,7 @@ class TimeSignature(Event):
     """TimeSignature is a zero-duration Event with timesig info."""
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
     # beat -- the "numerator" of the key signature: beats per measure, a
     #         number, which may be a fraction.
@@ -269,7 +269,7 @@ class KeySignature(Event):
     """KeySignature is a zero-duration Event with keysig info."""
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
     # keysig -- an integer, number of sharps (if positive) and flats (if
     #         negative), e.g. -3 for Eb major or C minor.
@@ -460,12 +460,12 @@ class EventGroup(Event):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
     # content -- elements contained within this collection
 
-    def __init__(self, delta, dur, content):
-        super().__init__(dur, delta)
+    def __init__(self, delta, duration, content):
+        super().__init__(duration, delta)
         self.content = [] if content is None else content
 
     def copy(self):
@@ -476,7 +476,7 @@ class EventGroup(Event):
             " " * indent,
             label,
             f" at {self.qstart():0.3f} delta ",
-            f"{self.delta:0.3f} dur {self.dur:0.3f}",
+            f"{self.delta:0.3f} duration {self.duration:0.3f}",
             sep="",
         )
         for elem in self.content:
@@ -516,7 +516,7 @@ class EventGroup(Event):
 
     def insert(self, event):
         """insert an event without any changes to event.delta or
-        self.dur. If the event is out of order, insert it just before
+        self.duration. If the event is out of order, insert it just before
         the first element with a greater delta. This method is similar
         to append(), but it has different defaults for delta and
         update_dur.
@@ -547,27 +547,27 @@ class EventGroup(Event):
 
 class Sequence(EventGroup):
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
     # content -- elements contained within this collection
 
-    def __init__(self, delta=0, dur=None, content=None):
+    def __init__(self, delta=0, duration=None, content=None):
         """Sequence represents a temporal sequence of music events.
-        dur(ation) defaults to the duration of provided content or 0
+        duration(ation) defaults to the duration of provided content or 0
         if content is empty or None.
         """
         if content is None:
             content = []
-        if dur is None:
+        if duration is None:
             if len(content) == 0:
-                dur = 0
+                duration = 0
             else:
-                dur = content[-1].delta_end
-        super().__init__(delta, dur, content)
+                duration = content[-1].delta_end
+        super().__init__(delta, duration, content)
 
     def copy(self):
         """Make a copy, omitting weak link to parent."""
-        s = Sequence(delta=self.delta, dur=self.dur)
+        s = Sequence(delta=self.delta, duration=self.duration)
         return s
 
     def show(self, indent=0, label="Sequence"):
@@ -602,13 +602,13 @@ class Sequence(EventGroup):
         """Append an element. If delta is specified, the element is
         modified to start at this delta, and the duration of self
         is unchanged. If delta is not specified or None, the element
-        delta is changed to the dur(ation) of self, which is then
+        delta is changed to the duration(ation) of self, which is then
         incremented by the duration of element.
         """
         if delta is None:
-            element.delta = self.dur
+            element.delta = self.duration
             if update_dur:
-                self.dur += element.dur
+                self.duration += element.duration
         else:
             element.delta = delta
         self.insert(element)  # places element in order and sets element parent
@@ -616,7 +616,7 @@ class Sequence(EventGroup):
     def pack(self):
         """Adjust the content to be sequential, with zero delta for the
         first element, and each other object at an delta equal to the
-        delta_end of the previous element. The dur(ation) of self is set
+        delta_end of the previous element. The duration(ation) of self is set
         to the delta_end of the last element. This method essentially,
         arranges the content to eliminate gaps. pack() works recursively
         on elements that are EventGroups.
@@ -626,7 +626,7 @@ class Sequence(EventGroup):
             elem.delta = 0
             if isinstance(elem, EventGroup):
                 elem.pack()
-            delta += elem.dur
+            delta += elem.duration
 
 
 class Concurrence(EventGroup):
@@ -638,24 +638,24 @@ class Concurrence(EventGroup):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # content -- elements contained within this collection
 
-    def __init__(self, delta=0, dur=None, content=None):
-        """dur(ation) defaults to the maximum delta_end of provided content
+    def __init__(self, delta=0, duration=None, content=None):
+        """duration(ation) defaults to the maximum delta_end of provided content
         or 0 if content is empty.
         """
         if content is None:
             content = []
-        if dur is None:
-            dur = 0
+        if duration is None:
+            duration = 0
             for elem in content:
-                dur = max(dur, elem.delta_end)
-        super().__init__(delta, dur, content)
+                duration = max(duration, elem.delta_end)
+        super().__init__(delta, duration, content)
 
     def copy(self):
         """Make a copy, omitting weak link to parent."""
-        c = Concurrence(delta=self.delta, dur=self.dur)
+        c = Concurrence(delta=self.delta, duration=self.duration)
         return c
 
     def show(self, indent=0, label="Concurrence"):
@@ -669,30 +669,30 @@ class Concurrence(EventGroup):
         return c
 
     def pack(self):
-        """Adjust the content to deltas of zero. The dur(ation) of self
+        """Adjust the content to deltas of zero. The duration(ation) of self
         is set to the maximum delta_end of the elements. This method
         essentially, arranges the content to eliminate gaps. pack() works
         recursively on elements that are EventGroups.
         """
-        self.dur = 0
+        self.duration = 0
         for elem in self.content:
             elem.delta = 0
             if isinstance(elem, EventGroup):
                 elem.pack()
-            self.dur = max(self.dur, elem.dur)
+            self.duration = max(self.duration, elem.duration)
 
     def append(self, element, delta=0, update_dur=True):
         """Append an element to the content with the given delta.
         (Specify delta=element.delta to retain the element's delta.)
-        By default, the dur(ation) of self is increased to the
+        By default, the duration(ation) of self is increased to the
         delta_end of element if the delta_end is greater than the
-        current dur(ation). To retain the dur(ation) of self, specify
+        current duration(ation). To retain the duration(ation) of self, specify
         update_dur=False.
         """
         element.delta = delta
         self.insert(element)
         if update_dur:
-            self.dur = max(self.dur, element.delta_end)
+            self.duration = max(self.duration, element.delta_end)
 
 
 class Chord(Concurrence):
@@ -710,7 +710,7 @@ class Chord(Concurrence):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # _parent -- weak reference to containing object if any
     # content -- elements contained within this collection
 
@@ -718,7 +718,7 @@ class Chord(Concurrence):
         return super().show(indent, "Chord")
 
     def copy(self):
-        return Chord(delta=self.delta, dur=self.dur)
+        return Chord(delta=self.delta, duration=self.duration)
 
     def deep_copy(self):
         """Make a deep copy, omitting weak link to parent."""
@@ -735,18 +735,18 @@ class Measure(Sequence):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # content -- elements contained within this collection
     # number -- A string or None. The number assigned to the measure in the
     #         score (if any). E.g. "22a".
 
-    def __init__(self, number=None, delta=0, dur=4, content=None):
-        super().__init__(delta, dur, content)
+    def __init__(self, number=None, delta=0, duration=4, content=None):
+        super().__init__(delta, duration, content)
         self.number = number
 
     def copy(self):
         """Make a copy, omitting weak link to parent."""
-        m = Measure(number=self.number, delta=self.delta, dur=self.dur)
+        m = Measure(number=self.number, delta=self.delta, duration=self.duration)
         return m
 
     def show(self, indent=0):
@@ -799,27 +799,27 @@ class Score(Concurrence):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # content -- elements contained within this collection
     # time_map -- a map from quarters to seconds (or seconds to quarters)
     #
     # Additional attributes may be assigned, e.g. 'title', 'source_file',
     # 'composer', etc. (TBD)
 
-    def __init__(self, delta=0, dur=0, content=None, time_map=None):
-        super().__init__(delta, dur, content)
+    def __init__(self, delta=0, duration=0, content=None, time_map=None):
+        super().__init__(delta, duration, content)
         self.time_map = time_map if time_map else TimeMap()
 
     def copy(self):
         """Make a copy, omitting weak link to parent."""
-        s = Score(delta=self.delta, dur=self.dur, time_map=self.time_map)
+        s = Score(delta=self.delta, duration=self.duration, time_map=self.time_map)
         return s
 
     def show(self, indent=0):
         print(
             " " * indent,
             f"Score at {self.qstart():0.3f} delta ",
-            f"{self.delta:0.3f} dur {self.dur:0.3f}",
+            f"{self.delta:0.3f} duration {self.duration:0.3f}",
             sep="",
         )
         self.time_map.show(indent + 4)
@@ -922,7 +922,7 @@ class Score(Concurrence):
                     new_part.insert(note_copy)
             new_part.content = sorted(new_part.content, key=note_qstart)
             score.insert(new_part)
-            score.dur = score.qstart() + max_delta_end
+            score.duration = score.qstart() + max_delta_end
         else:
             for part in self.content:
                 score.insert(part.flatten())
@@ -998,14 +998,14 @@ class Part(Concurrence):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # content -- elements contained within this collection
     # number -- None or an integer. Normally, the Parts are numbered according
     #         to their top-to-bottom ordering in the Score, starting with 1.
     # instrument -- None or a string naming the instrument to play this Part.
 
-    def __init__(self, number=None, instrument=None, delta=0, dur=0, content=None):
-        super().__init__(delta, dur, content)
+    def __init__(self, number=None, instrument=None, delta=0, duration=0, content=None):
+        super().__init__(delta, duration, content)
         self.number = number
         self.instrument = instrument
 
@@ -1015,7 +1015,7 @@ class Part(Concurrence):
             number=self.number,
             instrument=self.instrument,
             delta=self.delta,
-            dur=self.dur,
+            duration=self.duration,
         )
         return p
 
@@ -1084,18 +1084,18 @@ class Staff(Sequence):
     """
 
     # delta -- start time in quarters as an delta from parent's start time
-    # dur -- duration in quarters
+    # duration -- duration in quarters
     # content -- elements contained within this collection
     # number -- Normally a Staff is given an integer number where 1 is the
     #         top staff of the part, 2 is the 2nd, etc. number may be None.
 
-    def __init__(self, number=None, delta=0, dur=0, content=None):
-        super().__init__(delta, dur, content)
+    def __init__(self, number=None, delta=0, duration=0, content=None):
+        super().__init__(delta, duration, content)
         self.number = number
 
     def copy(self):
         """Make a shallow copy of just this object with no parent."""
-        return Staff(number=self.number, delta=self.delta, dur=self.dur)
+        return Staff(number=self.number, delta=self.delta, duration=self.duration)
 
     def show(self, indent=0):
         nstr = (" " + str(self.number)) if self.number else ""
@@ -1141,7 +1141,7 @@ class Staff(Sequence):
                         measure.insert(event.copy())
                     elif event.tie == "start":
                         new_event = event.copy()
-                        new_event.dur = self.tied_dur(event, m_index=m_num)
+                        new_event.duration = self.tied_dur(event, m_index=m_num)
                         new_event.tie = None
                         measure.insert(new_event)
                 elif isinstance(event, Chord):
@@ -1151,7 +1151,7 @@ class Staff(Sequence):
                             new_chord.insert(note.copy())
                         elif note.tie == "start":
                             new_note = note.copy()
-                            new_note.dur = self.tied_dur(note, m_index=m_num)
+                            new_note.duration = self.tied_dur(note, m_index=m_num)
                             new_note.tie = None
                             new_chord.insert(new_note)
                     measure.insert(new_chord)
@@ -1189,9 +1189,9 @@ class Staff(Sequence):
                         if n.keynum == note.keynum:
                             # add durations until 'stop'
                             if n.tie == "continue" or n.tie == "stop":
-                                dur = n.end_event - note.delta
+                                duration = n.end_event - note.delta
                                 if n.tie == "stop":
-                                    return dur
+                                    return duration
                 n_index += 1
             n_index = 0
             m_index += 1

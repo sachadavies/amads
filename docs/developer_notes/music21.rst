@@ -17,7 +17,7 @@ Maybe it would make more sense to have an alter (alteration)? Music21 uses, e.g.
 because they have some interesting attributes like position 'left' or 'above'
 
 Canonical note representation could be:
-* ``<start, dur, pitch, lyric>``  (see Pitch and Duration below)
+* ``<start, duration, pitch, lyric>``  (see Pitch and Duration below)
 
 derived from this are:
 * ``name_with_octave``
@@ -36,7 +36,7 @@ methods include:
 Rests class - another class. Accessing pitch gives an exception
 
 For convenience, Note has a lot of methods, but Note should be composed of:
-* ``<start, dur, pitch, tie>``, where tie is ``'start'``, ``'stop'``, or ``'continue'`` (both)
+* ``<start, duration, pitch, tie>``, where tie is ``'start'``, ``'stop'``, or ``'continue'`` (both)
 
 Pitch is ``<name, octave, alter>``
 and derived are:

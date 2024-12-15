@@ -90,7 +90,7 @@ class Window(Slice):
             # preserve any other attributes that might be useful in downstream tasks.
             note = note.copy()
             note.delta = max(note.delta, start)
-            note.dur = min(note.dur, end - note.delta)
+            note.duration = min(note.duration, end - note.delta)
 
             notes.append(note)
 
