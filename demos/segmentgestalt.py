@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 
+from amads.all import partitura_midi_import, pianoroll, segment_gestalt
 from amads.music import example
-from amads.pianoroll import pianoroll
-from amads.pt_midi_import import partitura_midi_import
-from amads.segmentgestalt import segmentgestalt
 
 my_midi_file = example.fullpath("midi/sarabande.mid")
 
@@ -15,7 +13,7 @@ print("------- finished input from partitura")
 fig = pianoroll(myscore)
 
 print("------- Executing segmentgestalt")
-clang_offsets, segment_offsets = segmentgestalt(myscore)
+clang_offsets, segment_offsets = segment_gestalt(myscore)
 print(clang_offsets)
 print(segment_offsets)
 xmin, xmax, ymin, ymax = plt.axis()

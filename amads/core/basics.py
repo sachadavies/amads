@@ -142,7 +142,7 @@ class Note(Event):
         elif pitch:
             self.pitch = Pitch(pitch)
         else:
-            self.pitch = Pitch.C4
+            self.pitch = Pitch(60)
         self.dynamic = dynamic
         self.lyric = lyric
         self.tie = None

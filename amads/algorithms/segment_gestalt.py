@@ -105,7 +105,6 @@ def segment_gestalt(score: Score) -> tuple[list[float], list[float]]:
     (2) If score is monophonic, we return a 2-tuple of lists for clang boundary
     offsets and segment boundary offsets, respectively
     """
-    breakpoint()
     if not ismonophonic(score):
         raise Exception("score not monophonic, input is not valid.")
 

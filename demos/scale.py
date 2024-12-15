@@ -1,8 +1,7 @@
 # scale_test.py - simple test for scale() function
 
+from amads.all import partitura_midi_import, scale
 from amads.music import example
-from amads.pt_midi_import import partitura_midi_import
-from amads.scale import scale
 
 # "midi/tones.mid"
 my_midi_file = example.fullpath("midi/twochan.mid")
