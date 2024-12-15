@@ -65,7 +65,9 @@ class Event:
 
     @property
     def parent(self):
-        return self._parent and self._parent
+        if self._parent is None:
+            return None
+        return self._parent()
 
     @parent.setter
     def parent(self, p):
@@ -75,10 +77,9 @@ class Event:
     def start(self):
         """Retrieve the start time in quarters."""
         p = self.parent  # save it to prevent race condition
-        if p:
-            return p().start + self.delta
-        else:
+        if p is None:
             return self.delta
+        return p.start + self.delta
 
     @property
     def end(self):
@@ -86,7 +87,7 @@ class Event:
 
     @start.setter
     def start(self, value):
-        if self.parent:
+        if self.parent is None:
             self.delta = value
         else:
             self.delta = value - self.parent.start
