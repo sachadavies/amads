@@ -80,6 +80,7 @@ class Event:
         else:
             return self.delta
 
+    @property
     def qstop(self):
         return self.qstart + self.duration
 
@@ -1183,7 +1184,7 @@ class Staff(Sequence):
                 event = measure.content[n_index]
                 if isinstance(event, Note) and event.keynum == note.keynum:
                     if event.tie == "stop":
-                        return event.qstop() - qstart
+                        return event.qstop - qstart
                     elif event.tie != "continue":
                         raise Exception("inconsistent tie attributes or notes")
                 elif isinstance(event, Chord):
