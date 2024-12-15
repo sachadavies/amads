@@ -47,7 +47,7 @@ emit offset and strength pairs...
 """
 
 from ..core.basics import Note, Score
-from .ismonophonic import ismonophonic
+from ..pitch.ismonophonic import ismonophonic
 
 
 def boundary(score: Score):

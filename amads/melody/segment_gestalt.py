@@ -66,8 +66,8 @@ the *exact* same implementation and 2 filenames...
 from operator import lt
 
 from ..core.basics import Note, Part, Score
-from .ismonophonic import ismonophonic
-from .pitch_mean import pitch_mean
+from ..pitch.ismonophonic import ismonophonic
+from ..pitch.pitch_mean import pitch_mean
 
 
 def construct_score_list(notes, intervals):

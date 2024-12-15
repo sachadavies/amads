@@ -17,8 +17,8 @@ and not really named algorithms in sense used elsewhere on this code base.
 
 from typing import List, Tuple, Union
 
-from ..pitch import pc_sets
-from ..pitch import transformations as pitch_list_transformations
+from . import pc_sets
+from . import transformations as pitch_list_transformations
 
 
 def set_classes_from_cardinality(cardinality: int):

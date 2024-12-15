@@ -6,7 +6,7 @@ Tests functionality for regrouping and quantizing musical durations.
 
 import pytest
 
-from amads.algorithms.break_it_up import (
+from amads.time.meter.break_it_up import (
     ReGrouper,
     qstart_hierarchy_examples,
     qstart_hierarchy_from_ts,

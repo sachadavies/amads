@@ -23,7 +23,7 @@ from typing import List, Union
 
 from ..core.basics import Note, Score
 from ..core.distribution import Distribution
-from .ismonophonic import ismonophonic
+from ..pitch.ismonophonic import ismonophonic
 
 
 def update_dd(

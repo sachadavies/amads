@@ -8,6 +8,7 @@ from .pitch.key.profiles import *
 from .pitch.pc_sets import *
 from .pitch.serial import *
 from .pitch.transformations import *
+from .polyphony import skyline
 from .schemata import *
 from .time.npvi import *
 from .time.swing import *
