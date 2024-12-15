@@ -71,16 +71,17 @@ class Event:
     def parent(self, p):
         self._parent = weakref.ref(p)
 
+    @property
     def qstart(self):
         """Retrieve the start time in quarters."""
         p = self.parent  # save it to prevent race condition
         if p:
-            return p().qstart() + self.delta
+            return p().qstart + self.delta
         else:
             return self.delta
 
     def qstop(self):
-        return self.qstart() + self.duration
+        return self.qstart + self.duration
 
 
 class Rest(Event):
@@ -102,7 +103,7 @@ class Rest(Event):
     def show(self, indent=0):
         print(
             " " * indent,
-            f"Rest at {self.qstart():.3f} ",
+            f"Rest at {self.qstart:.3f} ",
             f"delta {self.delta:.3f} duration {self.duration:.3f}",
             sep="",
         )
@@ -171,7 +172,7 @@ class Note(Event):
             lyricinfo = " lyric " + self.lyric
         print(
             " " * indent,
-            f"Note at {self.qstart():0.3f} ",
+            f"Note at {self.qstart:0.3f} ",
             f"delta {self.delta:0.3f} duration {self.duration:0.3f} pitch ",
             self.name_with_octave,
             tieinfo,
@@ -253,7 +254,7 @@ class TimeSignature(Event):
     def show(self, indent=0):
         print(
             " " * indent,
-            f"TimeSignature at {self.qstart():0.3f} delta ",
+            f"TimeSignature at {self.qstart:0.3f} delta ",
             f"{self.delta:0.3f}: {self.beat}/{self.beat_type}",
             sep="",
         )
@@ -286,7 +287,7 @@ class KeySignature(Event):
     def show(self, indent=0):
         print(
             " " * indent,
-            f"KeySignature at {self.qstart():0.3f} delta ",
+            f"KeySignature at {self.qstart:0.3f} delta ",
             f"{self.delta:0.3f}",
             abs(self.keysig),
             " sharps" if self.keysig > 0 else " flats",
@@ -475,7 +476,7 @@ class EventGroup(Event):
         print(
             " " * indent,
             label,
-            f" at {self.qstart():0.3f} delta ",
+            f" at {self.qstart:0.3f} delta ",
             f"{self.delta:0.3f} duration {self.duration:0.3f}",
             sep="",
         )
@@ -585,7 +586,7 @@ class Sequence(EventGroup):
         or the Sequence start time if the Sequence is empty
         """
         if len(self.content) == 0:
-            return self.qstart()
+            return self.qstart
         else:
             return self.last.last_qstop()
 
@@ -790,7 +791,7 @@ class Measure(Sequence):
 
 def note_qstart(note):
     """helper function to sort notes"""
-    return note.qstart()
+    return note.qstart
 
 
 class Score(Concurrence):
@@ -818,7 +819,7 @@ class Score(Concurrence):
     def show(self, indent=0):
         print(
             " " * indent,
-            f"Score at {self.qstart():0.3f} delta ",
+            f"Score at {self.qstart:0.3f} delta ",
             f"{self.delta:0.3f} duration {self.duration:0.3f}",
             sep="",
         )
@@ -910,19 +911,19 @@ class Score(Concurrence):
         score_no_ties = self.strip_ties()  # strip ties
         if collapse:  # similar to Part.flatten() but we have to sort and
             # do some other extra work to put all notes into score
-            score_start = score.qstart()
+            score_start = score.qstart
             new_part = Part()
             max_delta_end = 0
             for part in score_no_ties.content:
                 for note in part.find_all(Note):
                     note_copy = note.deep_copy()
                     # note delta is now relative to start of part:
-                    note_copy.delta = note.qstart() - score_start
+                    note_copy.delta = note.qstart - score_start
                     max_delta_end = max(max_delta_end, note_copy.delta_end)
                     new_part.insert(note_copy)
             new_part.content = sorted(new_part.content, key=note_qstart)
             score.insert(new_part)
-            score.duration = score.qstart() + max_delta_end
+            score.duration = score.qstart + max_delta_end
         else:
             for part in self.content:
                 score.insert(part.flatten())
@@ -1068,11 +1069,11 @@ class Part(Concurrence):
         """
         part = self.strip_ties()
         flat = self.copy()
-        part_start = self.qstart()
+        part_start = self.qstart
         for note in part.find_all(Note):
             note_copy = note.deep_copy()
             # note delta is now relative to start of part:
-            note_copy.delta = note.qstart() - part_start
+            note_copy.delta = note.qstart - part_start
             flat.insert(note_copy)
         return flat
 
@@ -1171,7 +1172,7 @@ class Staff(Sequence):
         if m_index is None:  # get measure index
             m_index = self.content.index(measure)
         n_index = measure.content.index(note) + 1  # get note index
-        qstart = note.qstart()
+        qstart = note.qstart
         # search across all measures for tied-to note:
         while m_index < len(self.content):  # search all measures
             measure = self.content[m_index]
