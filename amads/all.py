@@ -6,8 +6,8 @@ from .melody import *
 from .meter import *
 from .music import example
 from .pitch import *
-from .resources import *
+from .pitch.serial import *
 from .rhythm import *
-from .serial import *
+from .schemata import *
 from .timing import *
 from .tonality import *
