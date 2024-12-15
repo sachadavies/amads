@@ -581,6 +581,7 @@ class Sequence(EventGroup):
             s.insert(event.deep_copy())
         return s
 
+    @property
     def last_qstop(self):
         """return the end time (in quarters) of the last element,
         or the Sequence start time if the Sequence is empty
@@ -588,8 +589,9 @@ class Sequence(EventGroup):
         if len(self.content) == 0:
             return self.qstart
         else:
-            return self.last.last_qstop()
+            return self.last.last_qstop
 
+    @property
     def last_delta_end(self):
         """return the delta_end (in quarters) of the last element,
         or 0 if the Sequence is empty
@@ -597,7 +599,7 @@ class Sequence(EventGroup):
         if len(self.content) == 0:
             return 0
         else:
-            return self.last.last_delta_end()
+            return self.last.last_delta_end
 
     def append(self, element, delta=None, update_duration=True):
         """Append an element. If delta is specified, the element is
