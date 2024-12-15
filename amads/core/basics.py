@@ -1168,10 +1168,10 @@ class Staff(Sequence):
         """Compute the full duration of note as the sum of notes that note
         is tied to. note.tie must be 'start'
         """
-        measure = note.parent
+        measure = note.parent()
         # if note was in chord we need the note's grandparent:
         if isinstance(measure, Chord):
-            measure = measure.parent
+            measure = measure.parent()
         if m_index is None:  # get measure index
             m_index = self.content.index(measure)
         n_index = measure.content.index(note) + 1  # get note index
