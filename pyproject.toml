@@ -12,7 +12,6 @@ maintainers = [
     { name = "Roger Dannenberg"},
     { name = "Mark Gotham"}
 ]
-license = MIT
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
