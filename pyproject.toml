@@ -52,5 +52,5 @@ melsim = [
 "GitHub" = "https://github.com/music-computing/amads"  # Update with your repo URL
 "Documentation website" = "https://music-computing.github.io/amads/"
 
-[tool.setuptools]
-packages = ["amads"]
+[tool.setuptools.packages.find]
+include = ["amads", "amads.*"]
