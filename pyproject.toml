@@ -9,7 +9,7 @@ description = "A toolkit for symbolic music analysis"
 readme = "README.md"
 maintainers = [
     { name = "Peter Harrison", email = "pmch2@cam.ac.uk"},
-    { name = "Roger Dannenberg},
+    { name = "Roger Dannenberg"},
     { name = "Mark Gotham"}
 ]
 license = MIT
