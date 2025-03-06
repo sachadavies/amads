@@ -47,7 +47,7 @@ class InterpolationContour:
         --------
         >>> happy_birthday_pitches = [
         ...     60, 60, 62, 60, 65, 64, 60, 60, 62, 60, 67, 65,
-        ...     60, 60, 72, 69, 67, 65, 64, 70, 69, 65, 67, 65
+        ...     60, 60, 72, 69, 65, 64, 62, 70, 69, 65, 67, 65
         ... ]
         >>> happy_birthday_times = [
         ...     0, 0.75, 1, 2, 3, 4, 6, 6.75, 7, 8, 9, 10,
@@ -63,9 +63,9 @@ class InterpolationContour:
         >>> ic.class_label
         'ccbc'
         >>> ic.mean_gradient
-        2.512...
+        2.702...
         >>> ic.gradient_std
-        5.496...
+        5.655...
         >>> ic.global_direction
         1
 
