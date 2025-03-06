@@ -6,6 +6,8 @@ and also included in the FANTASTIC toolbox of Müllensiefen (2009) [2]
 
 __author__ = "Mark Gotham"
 
+from . import sign
+
 
 class HuronContour:
     """Implementation of the contour classification scheme proposed by Huron (1996) [1]
@@ -138,31 +140,3 @@ class HuronContour:
             self.contour_class = shorthand_dict[return_string]
         else:
             self.contour_class = return_string
-
-
-def sign(x: float) -> [-1, 0, 1]:
-    """
-    Basic, static function for returning the sign of a value.
-
-    >>> sign(-15)
-    -1
-
-    >>> sign(-1)
-    -1
-
-    >>> sign(-0.5)
-    -1
-
-    >>> sign(-0)
-    0
-
-    >>> sign(+0)
-    0
-
-    >>> sign(+0.5)
-    1
-
-    >>> sign(15.2)
-    1
-    """
-    return bool(x > 0) - bool(x < 0)
