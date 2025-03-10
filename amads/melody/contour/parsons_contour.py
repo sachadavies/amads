@@ -22,7 +22,7 @@ class ParsonsContour:
         self,
         pitches: list[int],
         character_dict: Optional[dict] = None,
-        initial_asterisk: bool = True,
+        initial_asterisk: bool = False,
     ):
         """
         The 'Parsons code' returns simply the direction of each successive melodic interval.
@@ -50,20 +50,20 @@ class ParsonsContour:
         >>> pc.interval_sequence_sign
         [0, 1, -1, 1, -1, -1, 0, 1, -1, 1, -1, -1, 0, 1, -1, -1, -1, -1, 1, -1, -1, 1, -1]
         >>> pc.as_string
-        '*rududdrududdrudddduddu'
+        'rududdrududdrudddduddu'
 
         >>> twinkle_ints = [72, 72, 79, 79, 81, 81, 79, 77, 77, 76, 76, 74, 74, 72]
         >>> pc = ParsonsContour(twinkle_ints)
         >>> pc.as_string
-        '*rururddrdrdr'
+        'rururddrdrdr'
 
         >>> pc_symbols = ParsonsContour(twinkle_ints, {1: "<", 0: "=", -1: ">"})
         >>> pc_symbols.as_string
-        '*=<=<=>>=>=>='
+        '=<=<=>>=>=>='
 
-        >>> pc_no_asterisk = ParsonsContour(twinkle_ints, initial_asterisk=False)
+        >>> pc_no_asterisk = ParsonsContour(twinkle_ints, initial_asterisk=True)
         >>> pc_no_asterisk.as_string
-        'rururddrdrdr'
+        '*rururddrdrdr'
 
         References
         ----------
