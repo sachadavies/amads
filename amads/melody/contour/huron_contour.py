@@ -79,9 +79,7 @@ class HuronContour:
 
         self.mean_pitch = None
         self.first_to_mean = None
-        self.first_to_mean_sign = None
         self.mean_to_last = None
-        self.mean_to_last_sign = None
         self.calculate_mean_attributes()
 
         self.contour_class = None
@@ -98,10 +96,7 @@ class HuronContour:
         )
 
         self.first_to_mean = self.mean_pitch - self.first_pitch
-        self.first_to_mean_sign = sign(self.first_to_mean)
-
         self.mean_to_last = self.last_pitch - self.mean_pitch
-        self.mean_to_last_sign = sign(self.mean_to_last)
 
     def class_label(self):
         """Classify a contour into Huron's categories.
@@ -127,7 +122,12 @@ class HuronContour:
 
         direction_dict = {-1: "Descending", 0: "Horizontal", 1: "Ascending"}
 
-        return_string = f"{direction_dict[self.first_to_mean_sign]}-{direction_dict[self.mean_to_last_sign]}"
+        first_to_mean_sign = sign(self.first_to_mean)
+        mean_to_last_sign = sign(self.mean_to_last)
+
+        return_string = (
+            f"{direction_dict[first_to_mean_sign]}-{direction_dict[mean_to_last_sign]}"
+        )
 
         shorthand_dict = {
             "Ascending-Descending": "Convex",
