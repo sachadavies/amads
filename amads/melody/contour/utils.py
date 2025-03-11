@@ -23,4 +23,7 @@ def sign(x: float) -> [-1, 0, 1]:
     >>> sign(15.2)
     1
     """
-    return bool(x > 0) - bool(x < 0)
+    if x is None:
+        return None
+    else:
+        return bool(x > 0) - bool(x < 0)
