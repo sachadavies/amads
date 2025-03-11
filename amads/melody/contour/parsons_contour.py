@@ -46,24 +46,26 @@ class ParsonsContour:
         >>> happy = [60, 60, 62, 60, 65, 64, 60, 60, 62, 60, 67, 65, 60, 60, 72, 69, 65, 64, 62, 70, 69, 65, 67, 65]
         >>> pc = ParsonsContour(happy)
         >>> pc.interval_sequence
-        [0, 2, -2, 5, -1, -4, 0, 2, -2, 7, -2, -5, 0, 12, -3, -4, -1, -2, 8, -1, -4, 2, -2]
+        [None, 0, 2, -2, 5, -1, -4, 0, 2, -2, 7, -2, -5, 0, 12, -3, -4, -1, -2, 8, -1, -4, 2, -2]
+
         >>> pc.interval_sequence_sign
-        [0, 1, -1, 1, -1, -1, 0, 1, -1, 1, -1, -1, 0, 1, -1, -1, -1, -1, 1, -1, -1, 1, -1]
+        [None, 0, 1, -1, 1, -1, -1, 0, 1, -1, 1, -1, -1, 0, 1, -1, -1, -1, -1, 1, -1, -1, 1, -1]
+
         >>> pc.as_string
-        'rududdrududdrudddduddu'
+        'rududdrududdrudddduddud'
 
         >>> twinkle_ints = [72, 72, 79, 79, 81, 81, 79, 77, 77, 76, 76, 74, 74, 72]
         >>> pc = ParsonsContour(twinkle_ints)
         >>> pc.as_string
-        'rururddrdrdr'
-
-        >>> pc_symbols = ParsonsContour(twinkle_ints, {1: "<", 0: "=", -1: ">"})
-        >>> pc_symbols.as_string
-        '=<=<=>>=>=>='
+        'rururddrdrdrd'
 
         >>> pc_no_asterisk = ParsonsContour(twinkle_ints, initial_asterisk=True)
         >>> pc_no_asterisk.as_string
-        '*rururddrdrdr'
+        '*rururddrdrdrd'
+
+        >>> pc_symbols = ParsonsContour(twinkle_ints, {1: "<", 0: "=", -1: ">"})
+        >>> pc_symbols.as_string
+        '=<=<=>>=>=>=>'
 
         References
         ----------
@@ -76,20 +78,29 @@ class ParsonsContour:
         )
         self.initial_asterisk = initial_asterisk
 
-        self.interval_sequence = [
-            pitches[i + 1] - pitches[i] for i in range(len(pitches) - 1)
-        ]
-        self.interval_sequence_sign = [sign(x) for x in self.interval_sequence]
-
+        self.interval_sequence = None
+        self.interval_sequence_sign = None
         self.as_string = None
+
+        self.get_intervals()
         self.make_string()
+
+    def get_intervals(self):
+        self.interval_sequence = [
+            None
+        ]  # Now as lists, still initialised with None, as per AMADS policy ...
+        self.interval_sequence_sign = [None]
+        for i in range(len(self.pitches) - 1):
+            this_diff = self.pitches[i + 1] - self.pitches[i]
+            self.interval_sequence.append(this_diff)
+            self.interval_sequence_sign.append(sign(this_diff))
 
     def make_string(self):
         """Create a flat, string representation of the contour directions."""
         self.as_string = ""
         if self.initial_asterisk:
             self.as_string += "*"
-        for i in range(len(self.interval_sequence_sign) - 1):
+        for i in range(1, len(self.interval_sequence_sign)):
             self.as_string += self.character_dict[self.interval_sequence_sign[i]]
 
 
