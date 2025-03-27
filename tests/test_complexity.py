@@ -2,7 +2,7 @@
 
 import pytest
 
-from amads.algorithms.complexity import lz77_decode, lz77_encode
+from amads.algorithms.complexity import lz77_complexity, lz77_decode, lz77_encode
 
 DECODED_SEQUENCES = [
     # The following four examples are from https://timguite.github.io/jekyll/update/2020/03/15/lz77-in-python.html
@@ -30,6 +30,8 @@ ENCODED_SEQUENCES = [
         (5, 3, "A"),
     ],
 ]
+ENCODED_SIZES = [1, 3, 6, 3, 7]
+ENCODED_PROPORTIONAL_SIZES = [1, 1, 2 / 3, 3 / 8, 7 / 9]
 
 
 @pytest.mark.parametrize(
@@ -43,3 +45,25 @@ def test_lz77_encode_decode(to_encode, to_decode):
     assert encoded == to_decode
     # Decoding the sequence should give the original input
     assert decoded == to_encode
+
+
+@pytest.mark.parametrize(
+    "to_encode,size,size_proportional",
+    zip(DECODED_SEQUENCES, ENCODED_SIZES, ENCODED_PROPORTIONAL_SIZES),
+)
+def test_lz77_complexity(to_encode, size, size_proportional):
+    # Encode and get raw complexity
+    actual = lz77_complexity(to_encode, normalized=False)
+    assert actual == size
+    # Encode and get normalized complexity
+    actual_proportional = lz77_complexity(to_encode, normalized=True)
+    assert actual_proportional == size_proportional
+
+
+def test_bad_sequence():
+    # Test some empty sequences
+    for seq in [[], "", tuple()]:
+        with pytest.raises(ValueError):
+            lz77_decode(seq)
+        with pytest.raises(ValueError):
+            lz77_encode(seq)
