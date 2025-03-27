@@ -110,7 +110,7 @@ def tempo_fluctuation(beats: Iterable[float]) -> float:
     """
 
     # Validate the input before going any further (e.g., raise an error on NaN values)
-    validate_beats(beats)
+    _validate_beats(beats)
     # Compute instantaneous tempo values
     tempos = beats_to_tempo(beats)
     # Compute tempo fluctuation
@@ -118,7 +118,7 @@ def tempo_fluctuation(beats: Iterable[float]) -> float:
     return float(np.std(tempos) / np.mean(tempos))
 
 
-def validate_beats(beats: Iterable[float]) -> None:
+def _validate_beats(beats: Iterable[float]) -> None:
     """Checks an iterable of beat timestamps and raises errors as required"""
 
     beats_arr = np.array(beats, dtype=float)  # expecting a float dtype
@@ -190,7 +190,7 @@ def fit_tempo_linear_regression(beats: Iterable[float]) -> LinearRegressionWrapp
     """Fits linear regression of BPM measurements vs. onset time."""
 
     # Validate our input before going any further
-    validate_beats(beats)
+    _validate_beats(beats)
     # Target variable: BPM measurements
     # This will also raise an error on NaN values
     beats_arr = np.array(beats)
