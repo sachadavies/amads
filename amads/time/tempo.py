@@ -4,7 +4,7 @@
 """This module implements various functions related to linear tempo modeling e.g., `tempo_slope`, `tempo_drift`"""
 
 from collections import namedtuple
-from typing import Iterable
+from typing import Iterable, Union
 
 import numpy as np
 
@@ -109,36 +109,36 @@ def tempo_fluctuation(beats: Iterable[float]) -> float:
 
     """
 
-    # Validate the input before going any further (e.g., raise an error on NaN values)
-    _validate_beats(beats)
-    # Compute instantaneous tempo values
+    # Compute instantaneous tempo values: this will also validate the input
     tempos = beats_to_tempo(beats)
     # Compute tempo fluctuation
     # No need for np.nanstd etc. here, we won't have NaN values
     return float(np.std(tempos) / np.mean(tempos))
 
 
-def _validate_beats(beats: Iterable[float]) -> None:
+def _validate_beats(beats: Union[Iterable[float], np.ndarray]) -> None:
     """Checks an iterable of beat timestamps and raises errors as required"""
 
-    beats_arr = np.array(beats, dtype=float)  # expecting a float dtype
-    if np.isnan(np.sum(beats_arr)):
+    if not isinstance(beats, np.ndarray):
+        beats = np.array(beats, dtype=float)  # expecting a float dtype
+    if np.isnan(np.sum(beats)):
         raise ValueError(
             "Cannot calculate instantaneous tempo measurements from array of beats with missing values"
         )
-    if len(beats_arr) < 2:
+    if len(beats) < 2:
         raise ValueError("Must pass at least two beat timestamps")
-    if len(beats_arr.shape) != 1:
+    if len(beats.shape) != 1:
         raise ValueError("Beat timestamps must be 1-dimensional")
-    if not np.array_equal(np.sort(beats_arr), beats_arr):
+    if not np.array_equal(np.sort(beats), beats):
         raise ValueError("Beat timestamps must increase linearly")
-    if len(np.unique(beats_arr)) != len(beats_arr):
+    if len(np.unique(beats)) != len(beats):
         raise ValueError("Beat timestamps must not contain duplicates")
 
 
 def beats_to_tempo(beats: np.ndarray) -> np.ndarray:
-    """Converts beat timestamps to instantaneous tempo measurements. Raises ValueError if any beats are missing."""
-
+    """Converts beat timestamps to instantaneous tempo measurements."""
+    # Raise error on invalid inputs
+    _validate_beats(beats)
     return np.array(60 / np.diff(beats))
 
 
@@ -189,10 +189,8 @@ def linregress(x: np.ndarray, y: np.ndarray) -> LinearRegressionWrapper:
 def fit_tempo_linear_regression(beats: Iterable[float]) -> LinearRegressionWrapper:
     """Fits linear regression of BPM measurements vs. onset time."""
 
-    # Validate our input before going any further
-    _validate_beats(beats)
     # Target variable: BPM measurements
-    # This will also raise an error on NaN values
+    # This will also validate the input
     beats_arr = np.array(beats)
     y = beats_to_tempo(beats_arr)
     # Predictor variable: the onset time
