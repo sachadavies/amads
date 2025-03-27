@@ -52,6 +52,15 @@ def normalized_pairwise_variability_index(durations: Iterable[float]) -> float:
 
     """
 
+    # Explicitly check to make sure we have enough elements to calculate nPVI
+    if len(durations) < 2:
+        raise ValueError(
+            f"Must have at least 2 durations to calculate nPVI, but got {len(durations)} duration(s)"
+        )
+    # Also raise an error if any of the durations are zero or below
+    if any(d <= 0.0 for d in durations):
+        raise ValueError(f"All durations must be positive, but got {durations}!")
+
     numerator = (
         sum(
             [

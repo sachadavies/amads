@@ -82,3 +82,21 @@ class NPVITest(unittest.TestCase):
         for duration, expected in zip(all_durations, expected_results):
             actual = normalized_pairwise_variability_index(duration)
             self.assertEqual(expected, round(actual, 1))
+
+    def test_not_enough_durations(self):
+        """Test we raise an error with not enough durations"""
+        with self.assertRaises(ValueError):
+            bad_durations = [2.0]
+            _ = normalized_pairwise_variability_index(bad_durations)
+        with self.assertRaises(ValueError):
+            also_bad_durations = []
+            _ = normalized_pairwise_variability_index(also_bad_durations)
+
+    def test_non_positive_durations(self):
+        """Test we raise an error with negative or non-positive durations"""
+        with self.assertRaises(ValueError):
+            bad_durations = [1.0, 0.0, 3.0, 2.0]
+            _ = normalized_pairwise_variability_index(bad_durations)
+        with self.assertRaises(ValueError):
+            also_bad_durations = [3.0, 3.0, -3.0, 2.0]
+            _ = normalized_pairwise_variability_index(also_bad_durations)
