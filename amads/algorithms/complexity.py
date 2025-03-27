@@ -60,7 +60,7 @@ def lz77_decode(encoded: list[int, int, Hashable]) -> list[Hashable]:
 
 
 def lz77_complexity(
-    sequence: Iterable[Hashable], proportional: bool = False
+    sequence: Iterable[Hashable], normalized: bool = False
 ) -> Union[int, float]:
     """
     Applies the LZ77 compression algorithm [1] to a discrete `sequence` and returns the length of the compressed result.
@@ -73,7 +73,7 @@ def lz77_complexity(
     sequence : Iterable[Hashable]
         A discrete sequence, which could be pitch classes, inter-onset intervals, etc.
 
-    proportional : bool, optional
+    normalized : bool, optional
         If True, the complexity is expressed with respect to the size of the input, such that 1.0 means the input
         cannot be compressed (i.e., maximum possible complexity). Default is False.
 
@@ -96,7 +96,7 @@ def lz77_complexity(
     # Compress the sequence
     compressed = lz77_encode(sequence)
     # Express with relation to length of input string if required: returns a float
-    if proportional:
+    if normalized:
         return len(compressed) / len(sequence)
     # Otherwise, take the length of the compressed string as the complexity of the input: returns an int
     else:
