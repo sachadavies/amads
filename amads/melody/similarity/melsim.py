@@ -88,7 +88,6 @@ Num:        Name:
 
 """
 
-import logging
 from functools import cache, wraps
 from types import SimpleNamespace
 
@@ -107,8 +106,6 @@ github_repos = {
 }
 
 R = SimpleNamespace()
-
-logger = logging.getLogger(__name__)
 
 
 @cache
