@@ -7,6 +7,7 @@ from amads.time.tempo import (
     _validate_beats,
     beats_to_tempo,
     tempo_fluctuation,
+    tempo_mean,
     tempo_slope,
 )
 
@@ -14,6 +15,21 @@ from amads.time.tempo import (
 STABLE_PERFORMANCE = [1.0, 2.0, 3.0, 4.0]
 ACCELERATING_PERFORMANCE = [1.0, 1.9, 2.7, 3.4]
 DECELERATING_PERFORMANCE = [1.0, 2.1, 3.3, 4.6]
+
+
+def test_mean_tempo():
+    stable_bpm_mean = 60.0
+    assert pytest.approx(tempo_mean(STABLE_PERFORMANCE)) == stable_bpm_mean
+    accelerating_bpm_mean = 75.7936
+    assert (
+        pytest.approx(tempo_mean(ACCELERATING_PERFORMANCE), abs=1e-4)
+        == accelerating_bpm_mean
+    )
+    decelerating_bpm_mean = 50.2331
+    assert (
+        pytest.approx(tempo_mean(DECELERATING_PERFORMANCE), abs=1e-4)
+        == decelerating_bpm_mean
+    )
 
 
 def test_tempo_slope():

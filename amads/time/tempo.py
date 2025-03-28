@@ -31,7 +31,7 @@ def tempo_slope(beats: Iterable[float]) -> float:
     The tempo slope represents the overall tempo change per second in a performance.
     It is determined by the slope of a linear regression of instantaneous tempo against
     beat onset time. A negative slope indicates deceleration, while a positive slope
-    indicates acceleration.
+    indicates acceleration. The units are (quarter-note) beats-per-minute-per-second
 
     The equation is:
 
@@ -39,7 +39,7 @@ def tempo_slope(beats: Iterable[float]) -> float:
         \hat{S} = \frac{\sum\limits_{i=1}^N (x_i - \bar{x}) (y_i - \bar{y})}{\sum\limits_{i=1}^N (x_i - \bar{x})^2},
 
     where :math:`x_i` is the time of beat :math:`i` and :math:`y_i` is the tempo value in
-    quarter-note beats-per-minute.
+    (quarter-note) beats-per-minute.
 
     Parameters
     ----------
@@ -69,7 +69,7 @@ def tempo_fluctuation(beats: Iterable[float]) -> float:
     .. math::
         \text{F} = \dfrac{\sqrt{\frac{1}{N-1} \sum\limits_{i=1}^N (y_i - \bar{y})^2}}{\bar{y}},
 
-    where :math:`y_i` is the tempo value in quarter-note beats-per-minute at beat :math:`i`.
+    where :math:`y_i` is the tempo value in (quarter-note) beats-per-minute at beat :math:`i`.
 
     Parameters
     ----------
@@ -88,6 +88,32 @@ def tempo_fluctuation(beats: Iterable[float]) -> float:
     # Compute tempo fluctuation
     # No need for np.nanstd etc. here, we won't have NaN values
     return float(np.std(tempos) / np.mean(tempos))
+
+
+def tempo_mean(beats: Iterable[float]):
+    r"""
+    Calculates the mean tempo from an iterable of timestamps in quarter-note beats-per-minute.
+
+    The mean tempo can be calculated simply as:
+
+    .. math::
+        \bar{y} = \dfrac{\sum\limits_{i=1}^N\frac{60}{x_i - x_{i-1}}}{N-1}
+
+    where :math:`x_i` is the time of beat :math:`i` (and :math:`i \geq 1`) and :math:`N` is the number of beats.
+
+    Parameters
+    ----------
+    beats : Iterable[float]
+        An iterable of beat timestamps in seconds, such as quarter-note onsets.
+
+    Returns
+    -------
+    float
+        The computed mean tempo value.
+
+    """
+
+    return np.mean(beats_to_tempo(beats))
 
 
 def _validate_beats(beats: Union[Iterable[float], np.ndarray]) -> None:
