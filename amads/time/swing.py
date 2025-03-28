@@ -113,12 +113,16 @@ def beat_upbeat_ratio(
 
 def mean_bur(beats: Iterable[float], upbeats: Iterable[float], **kwargs) -> float:
     """Calculates mean BUR (or :math:`log_2` BUR) given a list of beats and upbeats"""
-    return float(np.mean(beat_upbeat_ratio(beats, upbeats, **kwargs)))
+    # We use nanmean here as we may have null values in cases where multiple upbeats match with a
+    #  single pair of beats, or where no upbeats match with a beat.
+    #  I think this makes sense to avoid the user having to chop a large list into multiple sublists
+    #  depending on the presence of nans.
+    return float(np.nanmean(beat_upbeat_ratio(beats, upbeats, **kwargs)))
 
 
 def std_bur(beats: Iterable[float], upbeats: Iterable[float], **kwargs) -> float:
     """Calculates standard deviation BUR (or :math:`log_2` BUR) given a list of beats and upbeats"""
-    return np.std(beat_upbeat_ratio(beats, upbeats, **kwargs))
+    return np.nanstd(beat_upbeat_ratio(beats, upbeats, **kwargs))
 
 
 def _validate_bur_inputs(beats: np.ndarray, upbeats: np.ndarray) -> None:
