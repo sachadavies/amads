@@ -62,25 +62,52 @@ def beat_upbeat_ratio(
     Additionally, the function can calculate the :math:`log_2` of the BUR values, where a value of 0.0
     corresponds to "triplet" swing. This can be enabled by setting `log2=True`. The values can also
     be filtered to remove outliers by setting `bounded=True`, with the default values for the boundaries
-    coming from Corcoran & Frieler (2021)
+    coming from Corcoran & Frieler (2021).
 
-    Args:
-        beats (Iterable[float]):
-            An array of beat timestamps. Should not overlap with `upbeats`.
-        upbeats (Iterable[float]):
-            An array of upbeat timestamps.
-        log2 (bool, optional):
-            If True, computes the log base 2 of BUR values, as used in [2]. Defaults to False.
-        bounded (bool, optional):
-            If True, filters out BUR values outside the specified range. Defaults to False.
-        lower_bound (float, optional):
-            Lower boundary for filtering BUR values. Defaults to 0.25 (:math:`log_2` -2).
-        upper_bound (float, optional):
-            Upper boundary for filtering BUR values. Defaults to 4.0 (:math:`log_2` 2).
+    Parameters
+    ----------
+    beats : Iterable[float]
+        An array of beat timestamps. Should not overlap with `upbeats`.
+    upbeats : Iterable[float]
+        An array of upbeat timestamps.
+    log2 : bool, optional
+        If True, computes the log base 2 of BUR values, as used in [2]. Defaults to False.
+    bounded : bool, optional
+        If True, filters out BUR values outside the specified range. Defaults to False.
+    lower_bound : float, optional
+        Lower boundary for filtering BUR values. Defaults to 0.25 (:math:`log_2` -2).
+    upper_bound : float, optional
+        Upper boundary for filtering BUR values. Defaults to 4.0 (:math:`log_2` 2).
 
-    Returns:
-        list[float]:
-            A list of the calculated BUR values.
+    Returns
+    -------
+    list[float]
+        A list of the calculated BUR values.
+
+    Examples
+    --------
+    >>> my_beats = [0., 1., 2., 3.]
+    >>> my_upbeats = [0.5, 1.75, 2.2]
+    >>> beat_upbeat_ratio(my_beats, my_upbeats)
+    [1., 3., 0.25]
+
+    >>> # Consecutive beats without a matching upbeat will be skipped.
+    >>> my_beats = [0., 1., 2., 3.]
+    >>> my_upbeats = [0.5, 2.2]
+    >>> beat_upbeat_ratio(my_beats, my_upbeats)
+    [1., None, 0.25]
+
+    >>> # Consecutive beats with multiple matching upbeats will be skipped.
+    >>> my_beats = [0., 1., 2., 3.]
+    >>> my_upbeats = [0.5, 1.5, 1.75, 1.8, 2.2]
+    >>> beat_upbeat_ratio(my_beats, my_upbeats)
+    [1., None, 0.25]
+
+    >>> # Filter out outlying values by setting `bounded=True`.
+    >>> my_beats = [0., 1., 2., 3.]
+    >>> my_upbeats = [0.5, 1.75, 2.99]
+    >>> beat_upbeat_ratio(my_beats, my_upbeats)
+    [1., 3., None]
 
     """
 
