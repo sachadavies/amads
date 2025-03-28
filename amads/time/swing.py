@@ -106,7 +106,7 @@ def beat_upbeat_ratio(
     >>> # Filter out outlying values by setting `bounded=True`.
     >>> my_beats = [0., 1., 2., 3.]
     >>> my_upbeats = [0.5, 1.75, 2.99]
-    >>> beat_upbeat_ratio(my_beats, my_upbeats)
+    >>> beat_upbeat_ratio(my_beats, my_upbeats, bounded=True)
     [1., 3., None]
 
     """
