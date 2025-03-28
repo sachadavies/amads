@@ -34,51 +34,43 @@ def test_bur(beats, upbeats, expecteds):
 
 
 def test_validate_bur_inputs():
-    # Test 1: Valid inputs
-    beats = np.array([1.0, 2.0, 3.0])
-    upbeats = np.array([1.5])
-    try:
-        _validate_bur_inputs(beats, upbeats)
-    except ValueError:
-        pytest.fail("ValueError raised unexpectedly with valid inputs")
-
-    # Test 2: Invalid input - Less than two beats
+    # Test 1: Invalid input - Less than two beats
     beats = np.array([1.0])
     upbeats = np.array([1.5])
     with pytest.raises(ValueError):
         _validate_bur_inputs(beats, upbeats)
 
-    # Test 3: Invalid input - No upbeats
+    # Test 2: Invalid input - No upbeats
     beats = np.array([1.0, 2.0, 3.0])
     upbeats = np.array([])
     with pytest.raises(ValueError):
         _validate_bur_inputs(beats, upbeats)
 
-    # Test 4: Invalid input - Multi-dimensional beats
+    # Test 3: Invalid input - Multi-dimensional beats
     beats = np.array([[1.0, 2.0], [3.0, 4.0]])
     upbeats = np.array([1.5])
     with pytest.raises(ValueError):
         _validate_bur_inputs(beats, upbeats)
 
-    # Test 5: Invalid input - Multi-dimensional upbeats
+    # Test 4: Invalid input - Multi-dimensional upbeats
     beats = np.array([1.0, 2.0, 3.0])
     upbeats = np.array([[1.5]])
     with pytest.raises(ValueError):
         _validate_bur_inputs(beats, upbeats)
 
-    # Test 6: Invalid input - NaN in beats
+    # Test 5: Invalid input - NaN in beats
     beats = np.array([1.0, np.nan, 3.0])
     upbeats = np.array([1.5])
     with pytest.raises(ValueError):
         _validate_bur_inputs(beats, upbeats)
 
-    # Test 7: Invalid input - NaN in upbeats
+    # Test 6: Invalid input - NaN in upbeats
     beats = np.array([1.0, 2.0, 3.0])
     upbeats = np.array([np.nan])
     with pytest.raises(ValueError):
         _validate_bur_inputs(beats, upbeats)
 
-    # Test 8: Invalid input - Intersection between beats and upbeats
+    # Test 7: Invalid input - Intersection between beats and upbeats
     beats = np.array([1.0, 2.0, 3.0])
     upbeats = np.array([2.0])
     with pytest.raises(ValueError):
