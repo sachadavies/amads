@@ -1,12 +1,27 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+"""
+This module provides functions for analyzing tempo characteristics in musical performances.
+It includes calculations for tempo slope, tempo drift, and tempo fluctuation.
 
-"""This module implements various functions related to linear tempo modeling e.g., `tempo_slope`, `tempo_drift`"""
+References:
+    - Cheston, H., Schlichting, J. L., Cross, I., & Harrison, P. M. C. (2024).
+      Jazz Trio Database: Automated Annotation of Jazz Piano Trio Recordings Processed Using
+      Audio Source Separation. Transactions of the International Society for Music Information
+      Retrieval, 7(1), 144–158. https://doi.org/10.5334/tismir.186
+
+    - Cheston, H., Cross, I., & Harrison, P. (2024). Trade-offs in Coordination Strategies
+      for Duet Jazz Performances Subject to Network Delay and Jitter.
+      Music Perception, 42(1), 48–72. https://doi.org/10.1525/mp.2024.42.1.48
+
+Author:
+    Huw Cheston (2025)
+"""
 
 from collections import namedtuple
 from typing import Iterable, Union
 
 import numpy as np
+
+__author__ = "Huw Cheston"
 
 # Little wrapper class we can use to return regression results nicely
 LinearRegressionWrapper = namedtuple(
@@ -15,97 +30,96 @@ LinearRegressionWrapper = namedtuple(
 )
 
 
+# flake8: noqa: W605
 def tempo_slope(beats: Iterable[float]) -> float:
-    """
-    Return the tempo slope for an array of beats.
+    r"""
+    Calculates the tempo slope for a sequence of beat timestamps.
 
-    The tempo slope is the signed overall tempo change per second within a performance, equivalent
-    to the slope of a linear regression of instantaneous tempo against beat onset time,
-    such that a negative slope implies deceleration over time and a positive slope acceleration [1].
+    The tempo slope represents the overall tempo change per second in a performance.
+    It is determined by the slope of a linear regression of instantaneous tempo against
+    beat onset time. A negative slope indicates deceleration, while a positive slope
+    indicates acceleration.
 
-    Parameters
-    ----------
-    beats : Iterable[float]
-        An iterable of beat timestamps in seconds corresponding to, e.g., quarter notes.
+    The equation is:
 
-    Returns
-    -------
-    float
-        The tempo slope value.
+    .. math::
+        \hat{S} = \frac{\sum\limits_{i=1}^N (x_i - \bar{x}) (y_i - \bar{y})}{\sum\limits_{i=1}^N (x_i - \bar{x})^2},
 
-    Raises
-    ------
-    ValueError
-        If linear regression cannot be calculated.
+    where :math:`x_i` is the time of beat :math:`i` and :math:`y_i` is the tempo value in
+    quarter-note beats-per-minute.
 
-    References
-    ----------
-    [1] Cheston H., Cross, I., Harrison, P. (2024). Trade-offs in Coordination Strategies for
-        Duet Jazz Performances Subject to Network Delay and Jitter. Music Perception, 42/1 (pp. 48–72).
-        https://doi.org/10.1525/mp.2024.42.1.48
+    Args:
+        beats (Iterable[float]):
+            An iterable of beat timestamps in seconds, such as quarter-note onsets.
+
+    Returns:
+        float: The computed tempo slope value.
 
     """
 
     return float(fit_tempo_linear_regression(beats).slope)
 
 
+# flake8: noqa: W605
 def tempo_drift(beats: Iterable[float]) -> float:
-    """
-    Return the tempo drift for an array of beats.
+    r"""
+    Calculates the tempo drift for a sequence of beat timestamps.
 
     The tempo drift is the standard error of the slope of the overall tempo change in a performance,
     such that larger values imply a greater departure from a linear tempo slope (i.e., not just
     accelerating or decelerating).
 
-    Parameters
-    ----------
-    beats : Iterable[float]
-        An iterable of beat timestamps in seconds corresponding to, e.g., quarter notes.
+    The equation is:
 
-    Returns
-    -------
-    float
-        The tempo drift value.
+    .. math::
+        SE_\hat{S} = \frac{\sigma}{\sqrt{\sum\limits_{i=1}^{N} (x_i - \bar{x})^2}},
 
-    Raises
-    ------
-    ValueError
-        If linear regression cannot be calculated.
+    where:
+
+    .. math::
+        \sigma = \sqrt{\frac{\sum\limits_{i=1}^{N} (y_i - (\hat{S} x_i + \hat{b}))^2}{N - 2}},
+
+    and:
+
+    - :math:`x_i` is the time of beat :math:`i`.
+    - :math:`y_i` is the tempo value in quarter-note beats-per-minute.
+    - :math:`\hat{S}` is the estimated slope of the regression.
+    - :math:`\hat{b}` is the intercept.
+    - :math:`N` is the number of data points.
+
+    Args:
+        beats (Iterable[float]):
+            An iterable of beat timestamps in seconds, such as quarter-note onsets.
+
+    Returns:
+        float: The computed tempo drift value.
 
     """
 
     return float(fit_tempo_linear_regression(beats).slope_stderr)
 
 
+# flake8: noqa: W605
 def tempo_fluctuation(beats: Iterable[float]) -> float:
-    """
-    Calculates the percentage fluctuation about the overall tempo of provided `beats`.
+    r"""
+    Calculates the percentage fluctuation around the overall tempo of a sequence of beats.
 
-    Tempo fluctuation can be calculated as the standard deviation of the tempo of a
-    performance normalized by the mean tempo [1].
+    Tempo fluctuation is measured as the standard deviation of the instantaneous tempo,
+    normalized by the mean tempo. Higher values indicate greater variability in tempo.
 
-    Parameters
-    ----------
-    beats : Iterable[float]
-        An iterable of beat timestamps in seconds corresponding to, e.g., quarter notes.
+    The equation is:
 
-    Returns
-    -------
-    float
-        The tempo fluctuation value.
+    .. math::
+        \text{F} = \dfrac{\sqrt{\frac{1}{N-1} \sum\limits_{i=1}^N (y_i - \bar{y})^2}}{\bar{y}},
 
-    Examples
-    --------
-    >>> my_beats = [1., 2., 3., 4.]  # stable performance
-    >>> tempo_fluctuation(my_beats)
-    0.0
+    where :math:`y_i` is the tempo value in quarter-note beats-per-minute at beat :math:`i`.
 
-    References
-    ----------
-    [1] Cheston, H., Schlichting, J.L., Cross, I., and Harrison, P.M.C. (2024).
-        Jazz Trio Database: Automated Annotation of Jazz Piano Trio Recordings Processed Using
-        Audio Source Separation. Transactions of the International Society for Music Information
-        Retrieval, 7/1 (pp. 144–158). https://doi.org/10.5334/tismir.186
+    Args:
+        beats (Iterable[float]):
+            An iterable of beat timestamps in seconds, such as quarter-note onsets.
+
+    Returns:
+        float: The computed tempo fluctuation value.
 
     """
 
@@ -137,6 +151,7 @@ def _validate_beats(beats: Union[Iterable[float], np.ndarray]) -> None:
 
 def beats_to_tempo(beats: np.ndarray) -> np.ndarray:
     """Converts beat timestamps to instantaneous tempo measurements."""
+
     # Raise error on invalid inputs
     _validate_beats(beats)
     return np.array(60 / np.diff(beats))
