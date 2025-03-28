@@ -16,7 +16,6 @@ Author:
     Huw Cheston (2025)
 """
 
-from collections import namedtuple
 from typing import Iterable, Union
 
 import numpy as np
