@@ -20,7 +20,7 @@ import numpy as np
 
 __author__ = "Huw Cheston"
 
-TINY = 1e-4
+TINY = 1e-8
 LOW_BUR, HIGH_BUR = (
     0.25,
     4.0,
@@ -50,7 +50,7 @@ def beat_upbeat_ratio(
     .. math::
         \text{BUR} = \frac{t_{a,b} - t_{a}}{t_{b} - t_{a,b}},
 
-    where :math:`t_a` is the beat at position :math:`a`, math:`t_b` is the beat at position :math:`b`,
+    where :math:`t_a` is the beat at position :math:`a`, :math:`t_b` is the beat at position :math:`b`,
     and :math:`t_{a,b}` is the single upbeat between beats :math:`a` and :math:`b`.
 
     The function takes two iterables of timestamps: `beats` and `upbeats`. Both lists should be
@@ -65,9 +65,9 @@ def beat_upbeat_ratio(
     coming from Corcoran & Frieler (2021)
 
     Args:
-        beats (Iterable):
+        beats (Iterable[float]):
             An array of beat timestamps. Should not overlap with `upbeats`.
-        upbeats (Iterable):
+        upbeats (Iterable[float]):
             An array of upbeat timestamps.
         log2 (bool, optional):
             If True, computes the log base 2 of BUR values, as used in [2]. Defaults to False.
@@ -137,7 +137,7 @@ def _validate_bur_inputs(beats: np.ndarray, upbeats: np.ndarray) -> None:
 
 
 def match_beats_and_upbeats(beats: np.ndarray, upbeats: np.ndarray) -> np.ndarray:
-    """Iterates over consecutive beats and creates an array of [[beat1, upbeat, beat2], [beat2, upbeat, beat3]]"""
+    """Iterates over consecutive beats and creates an array of `[[beat1, upbeat, beat2], [beat2, upbeat, beat3]]`"""
 
     matched = []
     # Iterate over consecutive pairs of beats
