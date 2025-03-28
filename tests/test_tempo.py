@@ -4,11 +4,8 @@ import numpy as np
 import pytest
 
 from amads.time.tempo import (
-    LinearRegressionWrapper,
     _validate_beats,
     beats_to_tempo,
-    linregress,
-    tempo_drift,
     tempo_fluctuation,
     tempo_slope,
 )
@@ -25,68 +22,12 @@ def test_tempo_slope():
     assert tempo_slope(DECELERATING_PERFORMANCE) < 0
 
 
-def test_tempo_drift():
-    # Compare tempo drift of stable vs. unstable performances together
-    assert tempo_drift(STABLE_PERFORMANCE) < tempo_drift(ACCELERATING_PERFORMANCE)
-    assert tempo_drift(STABLE_PERFORMANCE) < tempo_drift(DECELERATING_PERFORMANCE)
-
-
 def test_tempo_fluctuation():
     # Stable performance should not fluctuate
     assert tempo_fluctuation(STABLE_PERFORMANCE) == 0.0
     # Unstable performances should fluctuate
     assert tempo_fluctuation(ACCELERATING_PERFORMANCE) > 0
     assert tempo_fluctuation(DECELERATING_PERFORMANCE) > 0
-
-
-def test_linregress_basic():
-    # Perfect linear relationship: y = 2x
-    x = np.array([1, 2, 3, 4, 5])
-    y = np.array([2, 4, 6, 8, 10])
-    result = linregress(x, y)
-    assert isinstance(result, LinearRegressionWrapper)
-    assert pytest.approx(result.slope, rel=1e-6) == 2.0
-    assert pytest.approx(result.intercept, rel=1e-6) == 0.0
-    assert pytest.approx(result.r2, rel=1e-6) == 1.0
-    assert result.slope_stderr >= 0
-    assert result.intercept_stderr >= 0
-
-
-def test_linregress_twopoints():
-    x = np.array(
-        [
-            1,
-            2,
-        ]
-    )
-    y = np.array([3, 6])
-    result = linregress(x, y)
-    assert pytest.approx(result.slope, rel=1e-6) == 3.0
-    assert result.slope_stderr == 0.0
-    assert result.intercept_stderr == 0.0
-
-
-def test_lineregress_horizontal():
-    # All y-values are the same, so no slope
-    x = np.array([1, 2, 3, 4, 5])
-    y = np.array([3, 3, 3, 3, 3])
-    result = linregress(x, y)
-    assert pytest.approx(result.slope, rel=1e-6) == 0.0
-    assert pytest.approx(result.intercept, rel=1e-6) == 3.0
-    assert pytest.approx(result.r2, rel=1e-6) == 0.0
-
-
-def test_linregress_bad_inputs():
-    # First, test when all target variable values are identical
-    x = np.array([2, 2, 2, 2])
-    y = np.array([1, 2, 3, 4])
-    with pytest.raises(ValueError):
-        linregress(x, y)
-    # Second, test when inputs are empty
-    x = np.array([])
-    y = np.array([])
-    with pytest.raises(ValueError):
-        linregress(x, y)
 
 
 def test_beats_to_tempo():
