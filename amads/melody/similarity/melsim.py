@@ -91,7 +91,7 @@ Num:        Name:
 from functools import cache, wraps
 from types import SimpleNamespace
 
-from tenacity import RetryError, Retrying, stop_after_attempt
+from tenacity import RetryError, Retrying, stop_after_attempt, wait_exponential
 
 from amads.core.basics import Note, Score
 from amads.pitch.ismonophonic import ismonophonic
@@ -139,6 +139,7 @@ def check_r_packages_installed(install_missing: bool = False, n_retries: int = 3
                 try:
                     for attempt in Retrying(
                         stop=stop_after_attempt(n_retries),
+                        wait=wait_exponential(multiplier=1, min=1, max=10),
                     ):
                         with attempt:
                             install_r_package(package)
