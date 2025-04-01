@@ -151,7 +151,7 @@ def check_r_packages_installed(install_missing: bool = False, n_retries: int = 3
             else:
                 raise ImportError(
                     f"Package '{package}' is required but not installed. "
-                    "You can run install it by running the following command: "
+                    "You can install it by running the following command: "
                     "from amads.melody.similarity.melsim import install_dependencies; install_dependencies()"
                 )
 
