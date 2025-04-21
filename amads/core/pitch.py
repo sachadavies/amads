@@ -202,53 +202,6 @@ class Pitch:
         """
         return (self.key_num, -self.alt) < (other.key_num, -other.alt)
 
-
-    def enharmonic(self) -> "Pitch":
-        """If alt is non-zero, return a Pitch where alt is zero
-        or has the opposite sign and where alt is minimized. E.g.
-        enharmonic(Cbb) is A# (not Bb). If alt is zero, return a
-        Pitch with alt of +1 or -1 if possible. Otherwise, return
-        a Pitch with alt of -2 (Ebb, Abb or Bbb).
-        Note the difference between this and `to_simplest_enharmonic`.
-
-        Returns
-        -------
-        Pitch
-            A new Pitch object representing the enharmonic equivalent.
-
-        Examples
-        --------
-        >>> bds = Pitch("B##3")
-        >>> bds
-        Pitch(name='B##3', key_num=61)
-
-        >>> bds.enharmonic()  # change of direction
-        Pitch(name='Db4', key_num=61)
-
-        >>> bds.upper_enharmonic()
-        Pitch(name='C#4', key_num=61)
-        """
-        alt = self.alt
-        unaltered = round(self.key_num - alt)
-        if alt < 0:
-            while alt < 0 or (unaltered % 12) not in [0, 2, 4, 5, 7, 9, 11]:
-                unaltered -= 1
-                alt += 1
-        elif alt > 0:
-            while alt > 0 or (unaltered % 12) not in [0, 2, 4, 5, 7, 9, 11]:
-                unaltered += 1
-                alt -= 1
-        else:  # alt == 0
-            unaltered = unaltered % 12
-            if unaltered in [0, 5]:  # C->B#, F->E#
-                alt = 1
-            elif unaltered in [11, 4]:  # B->Cb, E->Fb
-                alt = -1
-            else:  # A->Bbb, D->Ebb, G->Abb
-                alt = -2
-        return Pitch(self.key_num, alt=alt)
-
-
     @classmethod
     def from_name(cls, name: str,
                   octave: Optional[float],
@@ -365,25 +318,6 @@ class Pitch:
             The string representation of the pitch name with octave.
         """
         return self.name + str(self.octave)
-
-
-    def lower_enharmonic(self):
-        """Return a valid Pitch with alt increased by 1 or 2, e.g., Db->C#,
-        D->C##, D#->C###
-
-        Returns
-        -------
-        Pitch
-            A Pitch object representing the lower enharmonic equivalent.
-        """
-        alt = self.alt
-        unaltered = round(self.key_num - alt) % 12
-        if unaltered in [2, 4, 7, 9, 11]:  # D->C, E->D, G->F, A->G, B->A
-            alt += 2
-        else:  # F->E, C->B
-            alt += 1
-        return Pitch(self.key_num, alt=alt)
-
 
     @property
     def step(self) -> str:
@@ -508,9 +442,65 @@ class Pitch:
 #        old_reg = self.register
 #        self.key_num += (reg - old_reg) * 12
 
+    def enharmonic(self) -> "Pitch":
+        """If alt is non-zero, return a Pitch where alt is zero
+        or has the opposite sign and where alt is minimized. E.g.
+        enharmonic(Cbb) is A# (not Bb). If alt is zero, return a
+        Pitch with alt of +1 or -1 if possible. Otherwise, return
+        a Pitch with alt of -2 (Ebb, Abb or Bbb).
+        Note the difference between this and `to_simplest_enharmonic`.
 
-    def simplest_enharmonic(self, 
-                            sharp_or_flat: Optional[str] = 'default') -> "Pitch":
+        Returns
+        -------
+        Pitch
+            A new Pitch object representing the enharmonic equivalent.
+
+        Examples
+        --------
+        >>> Pitch("C4").enharmonic()
+        Pitch(name='B#3', key_num=60)
+
+        >>> Pitch("B3").enharmonic()
+        Pitch(name='Cb4', key_num=59)
+
+        >>> Pitch("B#3").enharmonic()
+        Pitch(name='C4', key_num=60)
+
+        >>> bds = Pitch("B##3")
+        >>> bds.enharmonic() # change of direction
+        Pitch(name='Db4', key_num=61)
+
+        >>> bds.upper_enharmonic()  # note the difference
+        Pitch(name='C#4', key_num=61)
+
+        >>> Pitch("Dbb4").enharmonic()
+        Pitch(name='C4', key_num=60)
+        """
+        alt = self.alt
+        unaltered = round(self.key_num - alt)
+        if alt < 0:
+            while alt < 0 or (unaltered % 12) not in [0, 2, 4, 5, 7, 9, 11]:
+                unaltered -= 1
+                alt += 1
+        elif alt > 0:
+            while alt > 0 or (unaltered % 12) not in [0, 2, 4, 5, 7, 9, 11]:
+                unaltered += 1
+                alt -= 1
+        else:  # alt == 0
+            unaltered = unaltered % 12
+            if unaltered in [0, 5]:  # C->B#, F->E#
+                alt = 1
+            elif unaltered in [11, 4]:  # B->Cb, E->Fb
+                alt = -1
+            else:  # A->Bbb, D->Ebb, G->Abb
+                alt = -2
+        return Pitch(self.key_num, alt=alt)
+
+
+    def simplest_enharmonic(
+            self,
+            sharp_or_flat: Optional[str] = 'default'
+    ) -> "Pitch":
         """
         Create a new Pitch object with the simplest enharmonic representation
         of the current pitch. I.e., if there exists an enharmonic-equivalent
@@ -529,17 +519,14 @@ class Pitch:
         --------
 
         >>> bds = Pitch("B##3")
-        >>> bds
-        Pitch(name='B##3', key_num=61)
-
-        >>> bds.alt
-        2
-
         >>> bds.simplest_enharmonic()
         Pitch(name='C#4', key_num=61)
 
         >>> bds.simplest_enharmonic(sharp_or_flat="flat")
         Pitch(name='Db4', key_num=61)
+
+        >>> Pitch("C4").simplest_enharmonic()
+        Pitch(name='C4', key_num=60)
 
         Returns
         -------
@@ -585,9 +572,11 @@ class Pitch:
         >>> des
         Pitch(name='Db4', key_num=61)
 
-        >>> des = des.upper_enharmonic()
-        >>> des
+        >>> des.upper_enharmonic()
         Pitch(name='Ebbb4', key_num=61)
+
+        >>> Pitch("D4").upper_enharmonic()
+        Pitch(name='Ebb4', key_num=62)
 
         """
         alt = self.alt
@@ -598,6 +587,39 @@ class Pitch:
             alt -= 1
         return Pitch(self.key_num, alt=alt)
 
+    def lower_enharmonic(self) -> "Pitch":
+        """Return a valid Pitch with alt increased by 1 or 2, e.g., Db->C#,
+        D->C##, D#->C###
+
+        Returns
+        -------
+        Pitch
+            A Pitch object representing the lower enharmonic equivalent.
+
+        Returns
+        -------
+        Pitch
+            A Pitch object representing the upper enharmonic equivalent.
+
+        Examples
+        --------
+        >>> Pitch("Db4").lower_enharmonic()
+        Pitch(name='C#4', key_num=61)
+
+        >>> Pitch("D4").lower_enharmonic()
+        Pitch(name='C##4', key_num=62)
+
+        >>> Pitch("C#4").lower_enharmonic()
+        Pitch(name='B##3', key_num=61)
+
+        """
+        alt = self.alt
+        unaltered = round(self.key_num - alt) % 12
+        if unaltered in [2, 4, 7, 9, 11]:  # D->C, E->D, G->F, A->G, B->A
+            alt += 2
+        else:  # F->E, C->B
+            alt += 1
+        return Pitch(self.key_num, alt=alt)
 
 
 @dataclass
