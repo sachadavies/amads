@@ -596,11 +596,6 @@ class Pitch:
         Pitch
             A Pitch object representing the lower enharmonic equivalent.
 
-        Returns
-        -------
-        Pitch
-            A Pitch object representing the upper enharmonic equivalent.
-
         Examples
         --------
         >>> Pitch("Db4").lower_enharmonic()
