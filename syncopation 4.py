@@ -7,7 +7,7 @@ __author__ = "Mark Gotham"
 from fractions import Fraction
 
 from typing import Optional
-!pip install partitura
+
 
 
 from partitura import load_score
